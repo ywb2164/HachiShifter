@@ -23,6 +23,8 @@ from pypinyin import Style, lazy_pinyin
 AGENT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(AGENT / "tools"))
 from mcp_client import HachiMcp  # noqa: E402
+sys.path.insert(0, str(AGENT / "annotator"))
+from kana import candidates as kana_candidates, to_romaji  # noqa: E402
 
 MIRROR = AGENT / "library"
 EXE = str(cfg.EXE)
@@ -41,8 +43,11 @@ def asr_model():
     return _ASR
 
 
-def quality_metrics(y: np.ndarray, sr: int) -> dict:
-    """整段渲染的音质指标（只用你 7 个评分做过方向检查，权重没有拟合）。"""
+def quality_metrics(y: np.ndarray, sr: int, ref: dict | None = None) -> dict:
+    """整段渲染的音质指标（只用你 7 个评分做过方向检查，权重没有拟合）。
+
+    ref = 素材库自身的基线 {"harmonic_ratio", "voicing_mean"}：给了就按“相对素材本身”打分
+    （和素材一样纯净 = 1，只剩一半 = 0），没给就用中文语音素材上定的绝对标准。"""
     clipped = float(np.mean(np.abs(y) > 0.98)) * 1000
     H, _ = librosa.effects.hpss(y)
     harm = float(np.sum(H ** 2) / (np.sum(y ** 2) + 1e-12))
@@ -51,9 +56,32 @@ def quality_metrics(y: np.ndarray, sr: int) -> dict:
     loud = rms > rms.max() * 0.1
     n = min(len(vp), len(loud))
     vmean = float(np.nanmean(vp[:n][loud[:n]])) if loud[:n].any() else 0.0
+    if ref:
+        hn = float(np.clip((harm / max(ref["harmonic_ratio"], 1e-3) - 0.5) / 0.5, 0, 1))
+        vn = float(np.clip((vmean / max(ref["voicing_mean"], 1e-3) - 0.5) / 0.5, 0, 1))
+    else:
+        hn = float(np.clip((harm - 0.5) / 0.45, 0, 1))
+        vn = float(np.clip((vmean - 0.45) / 0.35, 0, 1))
     return {"clipped_permille": round(clipped, 2), "harmonic_ratio": round(harm, 2), "voicing_mean": round(vmean, 2),
-            "harmonic_norm": float(np.clip((harm - 0.5) / 0.45, 0, 1)),
-            "voicing_norm": float(np.clip((vmean - 0.45) / 0.35, 0, 1))}
+            "harmonic_norm": hn, "voicing_norm": vn}
+
+
+def library_reference(folder: Path, sample: int = 30) -> dict:
+    """素材库自身的谐波占比 / 有声概率基线（抽样计算，缓存到 quality_ref.json）。"""
+    cache = folder / "quality_ref.json"
+    if cache.exists():
+        return json.loads(cache.read_text(encoding="utf-8"))
+    files = sorted(folder.rglob("*.wav"))
+    files = files[:: max(1, len(files) // sample)][:sample]
+    hs, vs = [], []
+    for f in files:
+        y, sr = librosa.load(f, sr=22050, mono=True)
+        q = quality_metrics(y, sr)
+        hs.append(q["harmonic_ratio"])
+        vs.append(q["voicing_mean"])
+    ref = {"harmonic_ratio": round(float(np.mean(hs)), 3), "voicing_mean": round(float(np.mean(vs)), 3), "files": len(files)}
+    cache.write_text(json.dumps(ref, ensure_ascii=False), encoding="utf-8")
+    return ref
 
 
 def han(s: str) -> str:
@@ -72,6 +100,13 @@ class Session:
                 self.index[row["region_id"]] = {**row, "folder": r}
         self.mcp = HachiMcp(EXE, [f"--roots={MIRROR}"])
         self.cands: dict[str, dict] = {}
+        self.lang = task.get("language", "zh")
+        self._qcache: dict = {}
+        # 日语歌声切片等“本身就不纯净”的素材库：音质按相对素材自身基线打分
+        self.qref = None
+        if self.lang == "ja":
+            refs = [library_reference(MIRROR / r) for r in task["roots"]]
+            self.qref = {k: float(np.mean([r[k] for r in refs])) for k in ("harmonic_ratio", "voicing_mean")}
         self.renders = 0
         self.finished = False
         self.final_summary = ""
@@ -112,6 +147,15 @@ class Session:
             self.notes.append({"index": i, "id": n["id"], "start": m["start_beat"] * sec_per_beat,
                                "duration": m["beats"] * sec_per_beat, "midi": m["midi"],
                                "char": None, "pinyin": None, "material": None})
+        for n, m in zip(self.notes, self.task["melody"]):
+            if m.get("lyric"):
+                n["char"] = m["lyric"]
+                n["pinyin"] = to_romaji(m["lyric"]) if self.lang == "ja" else None
+                self.mcp.call("set_note", note_id=n["id"], label=m["lyric"])
+        if self.lang != "ja" and any(n["char"] for n in self.notes):
+            seq = [n for n in self.notes if n["char"]]
+            for n, py in zip(seq, lazy_pinyin("".join(n["char"] for n in seq), style=Style.NORMAL)):
+                n["pinyin"] = py
 
     def _notes_view(self):
         return [{"note": n["index"], "start_s": round(n["start"], 3), "dur_ms": round(n["duration"] * 1000),
@@ -121,6 +165,7 @@ class Session:
     # ---------- 工具 ----------
     def get_task(self):
         return {"title": self.task["title"], "bpm": self.task["bpm"], "lyrics": self.task["lyrics"],
+                "language": self.lang, "lyrics_prefilled": all(n["char"] for n in self.notes),
                 "brief": self.task.get("brief", ""), "note_count": len(self.notes),
                 "material_folders": self.task["roots"], "notes": self._notes_view()}
 
@@ -130,16 +175,22 @@ class Session:
             i = int(a["note"])
             if not 0 <= i < len(self.notes):
                 return {"error": f"音符编号越界: {i}"}
-            ch = han(str(a["char"]))
-            if len(ch) != 1:
-                return {"error": f"每个音符只能放一个汉字，收到 {a['char']!r}"}
+            if self.lang == "ja":
+                ch = str(a["char"]).strip()
+                if not to_romaji(ch):
+                    return {"error": f"无法识别的假名: {a['char']!r}"}
+            else:
+                ch = han(str(a["char"]))
+                if len(ch) != 1:
+                    return {"error": f"每个音符只能放一个汉字，收到 {a['char']!r}"}
             chars[i] = ch
         for i, ch in chars.items():
             self.notes[i]["char"] = ch
             self.notes[i]["material"] = None
         # 按整句上下文转拼音（处理多音字）
         seq = [n for n in self.notes if n["char"]]
-        pys = lazy_pinyin("".join(n["char"] for n in seq), style=Style.NORMAL)
+        pys = ([to_romaji(n["char"]) for n in seq] if self.lang == "ja"
+               else lazy_pinyin("".join(n["char"] for n in seq), style=Style.NORMAL))
         for n, py in zip(seq, pys):
             n["pinyin"] = py
             self.mcp.call("set_note", note_id=n["id"], label=n["char"])
@@ -155,9 +206,16 @@ class Session:
         n = self.notes[int(note)]
         if not n["char"]:
             return {"error": "这个音符还没有分配歌词，先调用 assign_lyrics"}
-        q = self._query([n["char"], n["pinyin"]])
+        if self.lang == "ja":
+            terms = [(r, "同音") for r in kana_candidates(n["pinyin"])] + [(n["char"], "同音")]
+        else:
+            terms = [(n["char"], "同字"), (n["pinyin"], "同音")]
+        key = tuple(t for t, _ in terms)
+        if key not in self._qcache:
+            self._qcache[key] = self._query(list(key))
+        q = self._qcache[key]
         seen, out = set(), []
-        for kind, item in zip(("同字", "同音"), q["lyrics"]):
+        for (_, kind), item in zip(terms, q["lyrics"]):
             for c in item["candidates"]:
                 if c["region_id"] in seen:
                     continue
@@ -173,17 +231,38 @@ class Session:
                 score -= 0.12 * max(0.0, np.log2(max(stretch, 1e-3)) - 1.0)  # 拉伸超过 2 倍开始扣分（盲听：拉太长电音重）
                 score -= 0.15 * max(0.0, 0.5 - stretch)  # 素材比音符长很多也扣一点
                 if shift is not None:
-                    score -= 0.04 * max(0.0, abs(shift) - 5)  # 移调超过 5 个半音开始扣分
+                    if self.lang == "ja":  # 歌声素材：源音高可信，移调越少越不电
+                        score -= 0.05 * max(0.0, abs(shift) - 3)
+                    else:
+                        score -= 0.04 * max(0.0, abs(shift) - 5)  # 移调超过 5 个半音开始扣分
+                cons_ratio = cons / max(1.0, n["duration"] * 1000)
+                score -= 0.6 * max(0.0, cons_ratio - 0.5)  # 辅音超过音符一半：元音被挤掉
                 cid = f"n{n['index']}_c{len(self.cands)}"
                 self.cands[cid] = {"note": n["index"], "audio_path": c["audio_path"], "audio_id": c["audio_id"],
                                    "region_id": c["region_id"], "alias": c["alias"]}
                 out.append({"candidate_id": cid, "match": kind, "source": f"{meta.get('folder', '?')}/{meta.get('name_in_library', Path(c['audio_path']).name)}",
                             "said_in_source": meta.get("asr_text") or "(单字素材)", "confidence": meta.get("confidence"),
-                            "consonant_ms": round(cons), "vowel_ms": round(vowel), "stretch_x": round(stretch, 2),
+                            "version": meta.get("version"),
+                            "consonant_ms": round(cons), "consonant_ratio": round(cons_ratio, 2),
+                            "vowel_ms": round(vowel), "stretch_x": round(stretch, 2),
                             "semitone_shift": shift, "score": round(score, 3)})
         out.sort(key=lambda x: -x["score"])
         return {"note": n["index"], "lyric": n["char"], "pinyin": n["pinyin"], "target_midi": n["midi"],
                 "note_ms": round(n["duration"] * 1000), "total_found": len(out), "candidates": out[:int(limit)]}
+
+    def search_materials_batch(self, first_note: int, last_note: int, top: int = 3):
+        """一次给一段音符各返回前几名候选（精简字段），省步数。"""
+        out = []
+        for i in range(int(first_note), int(last_note) + 1):
+            r = self.search_materials(i, limit=int(top))
+            if "error" in r:
+                out.append({"note": i, "error": r["error"]})
+                continue
+            out.append({"note": i, "lyric": r["lyric"], "romaji": r["pinyin"], "note_ms": r["note_ms"], "target_midi": r["target_midi"],
+                        "found": r["total_found"],
+                        "top": [{k: c[k] for k in ("candidate_id", "version", "confidence", "consonant_ms", "consonant_ratio",
+                                                   "vowel_ms", "stretch_x", "semitone_shift", "score")} for c in r["candidates"]]})
+        return {"notes": out}
 
     def search_phrase(self, first_note: int, last_note: int):
         idx = list(range(int(first_note), int(last_note) + 1))
@@ -278,11 +357,16 @@ class Session:
             voicing = float(np.nanmean(vp[m])) if m.any() else 0.0
             per.append({"note": n["index"], "lyric": n["char"], "has_material": bool(n["material"]),
                         "pitch_error_cents": cents, "loudness": round(loud, 2), "voicing": round(voicing, 2)})
-        y16 = librosa.resample(y, orig_sr=sr, target_sr=16000)
-        heard = han(asr_model().generate(input=y16)[0].get("text", ""))
+        if self.lang == "ja":
+            heard = None  # 中文 ASR 听不了日语，跳过可懂度
+        else:
+            y16 = librosa.resample(y, orig_sr=sr, target_sr=16000)
+            heard = han(asr_model().generate(input=y16)[0].get("text", ""))
         want = [n for n in self.notes if n["char"]]
         want_py = [n["pinyin"] for n in want]
         heard_py = lazy_pinyin(heard, style=Style.NORMAL) if heard else []
+        if heard is None:
+            want = []
         sm = difflib.SequenceMatcher(a=want_py, b=heard_py, autojunk=False)
         ok_idx = set()
         for a, _, size in sm.get_matching_blocks():
@@ -290,23 +374,29 @@ class Session:
         for k, n in enumerate(want):
             per[n["index"]]["heard_by_asr"] = k in ok_idx
         cov = sum(1 for n in self.notes if n["material"]) / len(self.notes)
-        intel = len(ok_idx) / max(1, len(want))
+        intel = len(ok_idx) / max(1, len(want)) if heard is not None else None
         pitched = [p for p in per if p["pitch_error_cents"] is not None]
         in_tune = sum(1 for p in pitched if abs(p["pitch_error_cents"]) <= 30) / max(1, len(self.notes))
         quiet = [p["note"] for p in per if p["has_material"] and p["loudness"] < 0.08]
-        q = quality_metrics(y, sr)
-        weak = [p["note"] for p in per if p["has_material"] and p["voicing"] < 0.5]
-        score_v1 = round(100 * (0.5 * intel + 0.3 * in_tune + 0.2 * cov))
-        score = round(100 * (0.25 * intel + 0.2 * in_tune + 0.1 * cov + 0.25 * q["harmonic_norm"] + 0.2 * q["voicing_norm"])
-                      - 5 * q["clipped_permille"])
+        q = quality_metrics(y, sr, self.qref)
+        weak_th = 0.6 * self.qref["voicing_mean"] if self.qref else 0.5
+        weak = [p["note"] for p in per if p["has_material"] and p["voicing"] < weak_th]
+        score_v1 = None if intel is None else round(100 * (0.5 * intel + 0.3 * in_tune + 0.2 * cov))
+        if intel is None:
+            score = round(100 * (0.3 * in_tune + 0.15 * cov + 0.3 * q["harmonic_norm"] + 0.25 * q["voicing_norm"])
+                          - 5 * q["clipped_permille"])
+        else:
+            score = round(100 * (0.25 * intel + 0.2 * in_tune + 0.1 * cov + 0.25 * q["harmonic_norm"] + 0.2 * q["voicing_norm"])
+                          - 5 * q["clipped_permille"])
         problems = [p for p in per if (not p["has_material"]) or (p.get("heard_by_asr") is False)
                     or (p["pitch_error_cents"] is not None and abs(p["pitch_error_cents"]) > 30)
                     or p["note"] in quiet or p["note"] in weak]
         self.last_check = {"render": str(wav), "score": score, "score_v1": score_v1, "asr_heard": heard,
                            "intended": "".join(n["char"] or "＿" for n in self.notes),
-                           "intelligibility": round(intel, 2), "in_tune_ratio": round(in_tune, 2), "coverage": round(cov, 2),
+                           "intelligibility": None if intel is None else round(intel, 2), "in_tune_ratio": round(in_tune, 2), "coverage": round(cov, 2),
                            "harmonic_ratio": q["harmonic_ratio"], "voicing_mean": q["voicing_mean"],
-                           "clipped_permille": q["clipped_permille"]}
+                           "clipped_permille": q["clipped_permille"],
+                           "quality_reference": self.qref}
         if self.best is None or score > self.best["score"]:
             self.best = {"score": score, "render": self.renders,
                          "picks": {n["index"]: n.get("pick") for n in self.notes if n.get("pick")}}
@@ -346,6 +436,9 @@ TOOL_SPECS = [
     {"name": "assign_lyrics", "description": "把填词的字分配到音符上，每个音符一个汉字。可多次调用覆盖。",
      "parameters": {"type": "object", "properties": {"assignments": {"type": "array", "items": {"type": "object", "properties": {
          "note": {"type": "integer"}, "char": {"type": "string"}}, "required": ["note", "char"]}}}, "required": ["assignments"]}},
+    {"name": "search_materials_batch", "description": "一次为 first_note..last_note 每个音符各返回前 top 名候选（精简字段：版本、置信度、辅音长度与占音符比例、元音长度、拉伸倍数、移调半音、综合分）。音符多时用它代替逐个 search_materials。",
+     "parameters": {"type": "object", "properties": {"first_note": {"type": "integer"}, "last_note": {"type": "integer"}, "top": {"type": "integer"}},
+                    "required": ["first_note", "last_note"]}},
     {"name": "search_phrase", "description": "查找同一条录音里连续说出的一串字（first_note..last_note 的歌词）。连续取用最自然，优先尝试。",
      "parameters": {"type": "object", "properties": {"first_note": {"type": "integer"}, "last_note": {"type": "integer"}},
                     "required": ["first_note", "last_note"]}},

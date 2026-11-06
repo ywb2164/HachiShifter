@@ -1,0 +1,17 @@
+{
+ "1": {
+  "version": "greedy_baseline",
+  "src": "agent/runs/t10_greedy_baseline/render_1.wav",
+  "md5": "19856c1352b00eb276ca659b498b388a"
+ },
+ "2": {
+  "version": "agent_first",
+  "src": "agent\\runs\\t10_wonder_1106-121620\\render_1.wav",
+  "md5": "8791e539559df0517c6f23504bb14b13"
+ },
+ "3": {
+  "version": "agent_final",
+  "src": "agent\\runs\\t10_wonder_1106-121620\\render_3.wav",
+  "md5": "7c6b5ef9381a6170cfb3f04e268090fd"
+ }
+}

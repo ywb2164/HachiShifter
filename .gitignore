@@ -17,6 +17,7 @@
 !pilot/variants/key.json
 !pilot/variants2/key.json
 !pilot/variants3/key.json
+!pilot/ja_renders/key.json
 !bench/blind_rule.json
 !bench/mfa_initials.json
 
@@ -30,3 +31,4 @@ tools/cmake/
 agent/runs/
 materials_test/
 demo/
+agent/tasks_local/
