@@ -25,6 +25,7 @@ sys.path.insert(0, str(AGENT / "tools"))
 from mcp_client import HachiMcp  # noqa: E402
 sys.path.insert(0, str(AGENT / "annotator"))
 from kana import candidates as kana_candidates, to_romaji  # noqa: E402
+from legato import apply_legato, split_alternate  # noqa: E402
 
 MIRROR = AGENT / "library"
 EXE = str(cfg.EXE)
@@ -101,6 +102,8 @@ class Session:
         self.mcp = HachiMcp(EXE, [f"--roots={MIRROR}"])
         self.cands: dict[str, dict] = {}
         self.lang = task.get("language", "zh")
+        self.legato_done = False
+        self.pitch_source = None
         self._qcache: dict = {}
         # 日语歌声切片等“本身就不纯净”的素材库：音质按相对素材自身基线打分
         self.qref = None
@@ -166,6 +169,7 @@ class Session:
     def get_task(self):
         return {"title": self.task["title"], "bpm": self.task["bpm"], "lyrics": self.task["lyrics"],
                 "language": self.lang, "lyrics_prefilled": all(n["char"] for n in self.notes),
+                "pitch_curve_sources": list(self.task.get("pitch_curves", {})) + ["flat"],
                 "brief": self.task.get("brief", ""), "note_count": len(self.notes),
                 "material_folders": self.task["roots"], "notes": self._notes_view()}
 
@@ -235,6 +239,9 @@ class Session:
                         score -= 0.05 * max(0.0, abs(shift) - 3)
                     else:
                         score -= 0.04 * max(0.0, abs(shift) - 5)  # 移调超过 5 个半音开始扣分
+                robust = meta.get("robust")
+                if robust is not None:
+                    score += 0.4 * (robust - 0.5)  # 初审：处理后仍干净的素材优先
                 cons_ratio = cons / max(1.0, n["duration"] * 1000)
                 score -= 0.6 * max(0.0, cons_ratio - 0.5)  # 辅音超过音符一半：元音被挤掉
                 cid = f"n{n['index']}_c{len(self.cands)}"
@@ -243,6 +250,7 @@ class Session:
                 out.append({"candidate_id": cid, "match": kind, "source": f"{meta.get('folder', '?')}/{meta.get('name_in_library', Path(c['audio_path']).name)}",
                             "said_in_source": meta.get("asr_text") or "(单字素材)", "confidence": meta.get("confidence"),
                             "version": meta.get("version"),
+                            "robust": robust, "short_consonant": meta.get("variant") == "short_consonant",
                             "consonant_ms": round(cons), "consonant_ratio": round(cons_ratio, 2),
                             "vowel_ms": round(vowel), "stretch_x": round(stretch, 2),
                             "semitone_shift": shift, "score": round(score, 3)})
@@ -260,7 +268,7 @@ class Session:
                 continue
             out.append({"note": i, "lyric": r["lyric"], "romaji": r["pinyin"], "note_ms": r["note_ms"], "target_midi": r["target_midi"],
                         "found": r["total_found"],
-                        "top": [{k: c[k] for k in ("candidate_id", "version", "confidence", "consonant_ms", "consonant_ratio",
+                        "top": [{k: c[k] for k in ("candidate_id", "version", "robust", "short_consonant", "confidence", "consonant_ms", "consonant_ratio",
                                                    "vowel_ms", "stretch_x", "semitone_shift", "score")} for c in r["candidates"]]})
         return {"notes": out}
 
@@ -288,6 +296,8 @@ class Session:
                 "hint": "链表示同一条录音里连续说出的几个字，整段取用最自然" if chains else "没有找到连续说出这些字的录音，逐字选"}
 
     def apply_materials(self, choices: list | None = None, chain_ids: list | None = None):
+        if self.legato_done:
+            return {"error": "已经做过 finalize_legato（拆成两轨），不能再换素材；直接 render_and_check 或 finish"}
         picks = {}
         for cid in chain_ids or []:
             c = self.cands.get(cid)
@@ -316,8 +326,100 @@ class Session:
             meta = self.index.get(picks[i]["region_id"], {})
             self.notes[i]["pick"] = picks[i]
             self.notes[i]["material"] = f"{meta.get('name_in_library', Path(picks[i]['audio_path']).name)}#{picks[i]['alias']}"
+        redrawn = 0
+        curves = self._curves(self.pitch_source)
+        for i in order:  # 换了素材的音按当前来源重画（没选来源时也按伴奏定音拉平）
+            redrawn += self._draw(self.notes[i], self.pitch_source, curves)
         done = sum(1 for n in self.notes if n["material"])
-        return {"ok": True, "applied": len(order), "notes_with_material": done, "notes_total": len(self.notes)}
+        return {"ok": True, "applied": len(order), "notes_with_material": done, "notes_total": len(self.notes),
+                "pitch_redrawn": redrawn}
+
+    def _tune(self) -> float:
+        """整体定音偏移（半音），来自伴奏估计，如 -0.12。"""
+        return float(self.task.get("tuning_offset_cents", 0.0)) / 100.0
+
+    def _draw(self, n: dict, source: str | None, curves: dict | None) -> bool:
+        """给一个音画线；返回是否画了曲线。同时记下 n["target"]（稳定段目标音高，给音准检查用）。"""
+        tune = self._tune()
+        absolute = source in set(self.task.get("pitch_curves_absolute", ["reference"]))
+        pts = (curves or {}).get(str(n["index"])) if source and source != "flat" else None
+        pts = [(float(t), float(v) + (0.0 if absolute else tune)) for t, v in (pts or []) if 0 <= t <= n["duration"]]
+        if len(pts) >= 2:
+            self.mcp.call("set_pitch_curve", note_id=n["id"], points=[{"time_seconds": t, "midi": v} for t, v in pts])
+            stable = [v for t, v in pts if t >= 0.3 * n["duration"]] or [v for _, v in pts]
+            n["target"] = float(np.median(stable))
+            return True
+        if abs(tune) > 1e-6:  # 拉平也要对齐伴奏定音
+            self.mcp.call("set_pitch_curve", note_id=n["id"], points=[{"time_seconds": 0.0, "midi": n["midi"] + tune},
+                                                                     {"time_seconds": n["duration"], "midi": n["midi"] + tune}])
+        n["target"] = n["midi"] + tune
+        return False
+
+    def _curves(self, source):
+        if not source or source == "flat":
+            return None
+        return json.loads(Path(self.task["pitch_curves"][source]).read_text(encoding="utf-8"))
+
+    def apply_pitch_curves(self, source: str = "reference"):
+        """按任务登记的音高线来源画线；source="flat" 表示全部拉平。"""
+        if self.legato_done:
+            return {"error": "finalize_legato 之后不能再改音高线"}
+        srcs = self.task.get("pitch_curves", {})
+        if source != "flat" and source not in srcs:
+            return {"error": f"任务没有这个音高线来源：{source}；可用 {list(srcs) + ['flat']}"}
+        curves = self._curves(source)
+        drawn = 0
+        for n in self.notes:
+            if n.get("material"):
+                self.mcp.call("set_note", note_id=n["id"], drift=0, modulation=0)
+                drawn += self._draw(n, source, curves)
+        self.pitch_source = source
+        return {"ok": True, "source": source, "notes_with_curve": drawn, "notes_total": len(self.notes),
+                "tuning_offset_cents": round(self._tune() * 100), "hint": "没画线的音保持拉平（参考里那段不可信或没有素材）；音准检查会和画上的线比较，不是和乐谱比"}
+
+    def balance_loudness(self, max_db: float = 6.0):
+        """按最近一次渲染，把每个音元音段响度拉向全曲中位数（±max_db）。"""
+        if self.legato_done:
+            return {"error": "finalize_legato 之后不能再调音量"}
+        if not self.last_check:
+            return {"error": "先 render_and_check 一次，再根据渲染结果平衡音量"}
+        y, sr = librosa.load(self.last_check["render"], sr=22050, mono=True)
+        song_end = max(n["start"] + n["duration"] for n in self.notes)
+        pre = len(y) / sr - song_end
+        pre = pre if 0 < pre < 0.6 else 0.0
+        loud = {}
+        for n in self.notes:
+            a = n["start"] + pre + min(0.05, n["duration"] * 0.3)
+            b = n["start"] + pre + n["duration"] - 0.02
+            seg = y[int(a * sr):int(b * sr)]
+            if len(seg) > 200 and n.get("material"):
+                loud[n["index"]] = 20 * np.log10(np.sqrt(np.mean(seg ** 2)) + 1e-9)
+        if not loud:
+            return {"error": "测不到音量"}
+        med = float(np.median(list(loud.values())))
+        changed = []
+        for n in self.notes:
+            if n["index"] not in loud:
+                continue
+            g = float(np.clip(med - loud[n["index"]], -max_db, max_db))
+            if abs(g) >= 1.0:
+                new_gain = n.get("gain", 1.0) * 10 ** (g / 20)
+                self.mcp.call("set_note", note_id=n["id"], gain=round(new_gain, 4))
+                n["gain"] = new_gain
+                changed.append({"note": n["index"], "db": round(g, 1)})
+        spread = float(np.std(list(loud.values())))
+        return {"ok": True, "median_db": round(med, 1), "spread_before_db": round(spread, 1), "adjusted": len(changed),
+                "largest": sorted(changed, key=lambda c: -abs(c["db"]))[:8], "hint": "再 render_and_check 看效果"}
+
+    def finalize_legato(self, tail_ms: float = 60.0):
+        """收尾：两轨交替 + 音尾延长淡出叠到下一个音头上。做完不能再换素材/音高/音量。"""
+        if self.legato_done:
+            return {"error": "已经做过了"}
+        tail_ms = float(np.clip(tail_ms, 20, 150))
+        a_tr, b_tr = split_alternate(self.mcp, self.track_id, dict(RENDER, volume=self.volume))
+        info = apply_legato(self.mcp, a_tr, b_tr, tail_ms=tail_ms)
+        self.legato_done = True
+        return {"ok": True, **info, "tail_ms": tail_ms}
 
     def render_and_check(self):
         self.renders += 1
@@ -353,7 +455,7 @@ class Session:
             loud = float(np.median(rms[: len(m)][m[: len(rms)]])) / peak if m.any() else 0.0
             cents = None
             if len(seg) >= 3:
-                cents = round(100 * (float(np.median(librosa.hz_to_midi(seg))) - n["midi"]))
+                cents = round(100 * (float(np.median(librosa.hz_to_midi(seg))) - n.get("target", n["midi"] + self._tune())))
             voicing = float(np.nanmean(vp[m])) if m.any() else 0.0
             per.append({"note": n["index"], "lyric": n["char"], "has_material": bool(n["material"]),
                         "pitch_error_cents": cents, "loudness": round(loud, 2), "voicing": round(voicing, 2)})
@@ -407,7 +509,7 @@ class Session:
 
     def finish(self, summary: str):
         restored = None
-        if self.best and self.last_check and self.last_check["score"] < self.best["score"] and self.best["picks"]:
+        if not self.legato_done and self.best and self.last_check and self.last_check["score"] < self.best["score"] and self.best["picks"]:
             last_score = self.last_check["score"]
             picks = self.best["picks"]
             req = [{"note_id": self.notes[i]["id"], **{k: picks[i][k] for k in ("audio_path", "audio_id", "region_id", "alias")}}
@@ -449,6 +551,12 @@ TOOL_SPECS = [
          "choices": {"type": "array", "items": {"type": "object", "properties": {"note": {"type": "integer"}, "candidate_id": {"type": "string"}},
                                                 "required": ["note", "candidate_id"]}},
          "chain_ids": {"type": "array", "items": {"type": "string"}}}}},
+    {"name": "apply_pitch_curves", "description": "给已放好素材的音符画音高线。source 取任务登记的来源（get_task 的 pitch_curve_sources，如 reference=原唱分离人声、ds_*=DiffSinger 音高模型）或 flat（全部拉平）。",
+     "parameters": {"type": "object", "properties": {"source": {"type": "string"}}, "required": ["source"]}},
+    {"name": "balance_loudness", "description": "根据最近一次渲染，把每个音的响度拉向全曲中位数（默认最多 ±6 dB）。在素材和音高线都定下来之后做一次，然后再渲染检查。",
+     "parameters": {"type": "object", "properties": {"max_db": {"type": "number"}}}},
+    {"name": "finalize_legato", "description": "收尾衔接：两轨交替，前一个音尾延长 tail_ms（默认 60）并淡出叠到下一个音头上。做完后不能再换素材/音高/音量，只能 render_and_check 和 finish。",
+     "parameters": {"type": "object", "properties": {"tail_ms": {"type": "number"}}}},
     {"name": "render_and_check", "description": "渲染当前工程并自动检查：每个音的音高误差、响度、有声概率(虚)、ASR 能否听出歌词、整段谐波占比(杂音/痰音)、削波，给出 0-100 分、历史最高分和问题音符列表。",
      "parameters": {"type": "object", "properties": {}}},
     {"name": "finish", "description": "完成任务并保存工程。summary 写清楚做了什么、还有哪些已知问题。",

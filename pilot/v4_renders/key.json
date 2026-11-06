@@ -1,0 +1,18 @@
+{
+ "1": {
+  "version": "v4_run1_qixuan_bug",
+  "md5": "483e770d46842394ef2f89b38ea2159d"
+ },
+ "2": {
+  "version": "prev_best_v3materials_refcurve",
+  "md5": "a4fad5a612294016feea0533699552e5"
+ },
+ "3": {
+  "version": "v4_run2_before_balance_legato",
+  "md5": "6b57c251fb5626460b5eefecae670033"
+ },
+ "4": {
+  "version": "v4_run2_final",
+  "md5": "72c916c3406e280e3b9cc9d061ba4b4c"
+ }
+}
