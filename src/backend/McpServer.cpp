@@ -1,5 +1,7 @@
 #include "McpServer.h"
 #include "../MelodyneImportOptimization.h"
+#include "../MaterialPronunciationCatalog.h"
+#include "../OttoMaterialIO.h"
 #include "LegacyTextCodec.h"
 #include "MelodyneProvider.h"
 #include "AudioFileReader.h"
@@ -109,6 +111,18 @@ juce::var regionRowShape()
           .description = "Level as a multiplier" },
         { .name = "melodyne_sibilant_balance", .type = "number",
           .description = "Sibilance against the rest of the sound" },
+    });
+}
+
+// One note -> material pronunciation choice, as material_query lists them.
+juce::var materialChoiceShape()
+{
+    return typedSchema({
+        { .name = "note_id", .type = "string", .description = "The score note to bind", .required = true },
+        { .name = "audio_path", .type = "string", .description = "Candidate audio_path", .required = true },
+        { .name = "audio_id", .type = "string", .description = "Candidate audio_id (annotation variant)", .required = true },
+        { .name = "region_id", .type = "string", .description = "Candidate region_id (pronunciation row)", .required = true },
+        { .name = "alias", .type = "string", .description = "Candidate alias; default the row's primary alias" },
     });
 }
 
@@ -405,6 +419,223 @@ std::vector<SampleRegionSetting> sampleRowsFromJson(const juce::var& source)
                 rows.push_back(std::move(row));
         }
     return rows;
+}
+}
+
+// material_query / replace_note_material: shared implementation.  Kept out of
+// dispatch() so each tool has its own branch there (tools/check_mcp_schemas.py
+// attributes argument reads per branch).
+namespace
+{
+std::vector<MaterialPronunciationCatalog::Root> materialRoots(const std::vector<juce::String>& paths,
+                                                              const juce::String& mode)
+{
+    const auto otoMode = mode == "jie" ? UtauMode::jie : mode == "mou" ? UtauMode::mou : UtauMode::classic;
+    std::vector<MaterialPronunciationCatalog::Root> roots;
+    for (const auto& path : paths)
+        roots.push_back({ juce::File(path), otoMode });
+    return roots;
+}
+
+const char* materialFormatName(MaterialPronunciationCatalog::Format format)
+{
+    using F = MaterialPronunciationCatalog::Format;
+    return format == F::otto ? "otto" : format == F::classicOto ? "oto" : format == F::jieOto ? "jie_oto" : "mou_oto";
+}
+
+juce::var materialEntryJson(const MaterialPronunciationCatalog::Entry& entry)
+{
+    auto value = object();
+    set(value, "audio_path", entry.audio.getFullPathName());
+    set(value, "audio_id", entry.audioId);
+    set(value, "region_id", entry.regionId);
+    set(value, "alias", entry.alias);
+    set(value, "format", materialFormatName(entry.format));
+    const auto& row = entry.row;
+    set(value, "region_start_seconds", row.regionStartSeconds);
+    set(value, "region_end_seconds", row.regionEndSeconds);
+    set(value, "duration_seconds", row.regionEndSeconds - row.regionStartSeconds);
+    // P: where a note's start lands; consonant = start..P is protected from stretching.
+    set(value, "alignment_seconds", row.alignmentSeconds);
+    set(value, "preutterance_seconds", row.alignmentSeconds - row.regionStartSeconds);
+    set(value, "fixed_duration_seconds", row.fixedDurationSeconds);
+    set(value, "pronunciation_kind", pronunciationKindName(row.pronunciationKind));
+    set(value, "native_confidence", row.confidence);
+    set(value, "native_provenance", row.provenance);
+    set(value, "connected_next_region_id", row.connectedNextRegionId);
+    std::vector<juce::var> segments;
+    for (const auto& segment : row.segments)
+    {
+        auto s = object();
+        set(s, "role", nativeSegmentRoleName(segment.role));
+        set(s, "start_seconds", segment.sourceStartSeconds);
+        set(s, "end_seconds", segment.sourceEndSeconds);
+        segments.push_back(std::move(s));
+    }
+    set(value, "segments", array(std::move(segments)));
+    return value;
+}
+
+bool indexMaterials(const std::vector<MaterialPronunciationCatalog::Root>& roots,
+                    MaterialPronunciationCatalog::Result& catalog, juce::String& error)
+{
+    if (roots.empty()) { error = "roots must name at least one material folder"; return false; }
+    catalog = MaterialPronunciationCatalog::index(roots);
+    if (catalog.entries.empty() && !catalog.errors.isEmpty())
+    {
+        error = "Material index failed: " + catalog.errors.joinIntoString(" | ");
+        return false;
+    }
+    return true;
+}
+
+juce::var materialQueryTool(const std::vector<MaterialPronunciationCatalog::Root>& roots,
+                            const std::vector<juce::String>& lyrics, int requestedLimit, bool includeSequences)
+{
+    MaterialPronunciationCatalog::Result catalog;
+    juce::String error;
+    if (!indexMaterials(roots, catalog, error)) return McpServer::result(error, true);
+    if (lyrics.empty()) return McpServer::result("lyrics must contain at least one lyric", true);
+    const auto limit = juce::jlimit(1, 200, requestedLimit);
+    auto value = object();
+    set(value, "entry_count", static_cast<int>(catalog.entries.size()));
+    std::vector<juce::var> warnings;
+    for (const auto& w : catalog.warnings) warnings.emplace_back(w);
+    for (const auto& e : catalog.errors) warnings.emplace_back("error: " + e);
+    set(value, "warnings", array(std::move(warnings)));
+    std::vector<juce::var> perLyric;
+    for (const auto& lyric : lyrics)
+    {
+        std::vector<juce::var> candidates;
+        int total = 0;
+        for (const auto& entry : catalog.entries)
+            if (entry.alias.equalsIgnoreCase(lyric.trim()) && ++total <= limit)
+                candidates.push_back(materialEntryJson(entry));
+        auto item = object();
+        set(item, "lyric", lyric);
+        set(item, "total", total);
+        set(item, "candidates", array(std::move(candidates)));
+        perLyric.push_back(std::move(item));
+    }
+    set(value, "lyrics", array(std::move(perLyric)));
+    if (includeSequences)
+    {
+        std::vector<juce::var> chains;
+        for (std::size_t start = 0; start + 1 < lyrics.size(); ++start)
+        {
+            juce::StringArray remaining;
+            for (auto i = start; i < lyrics.size(); ++i) remaining.add(lyrics[i]);
+            std::vector<MaterialPronunciationCatalog::Sequence> sequences;
+            juce::String sequenceError;
+            if (!MaterialPronunciationCatalog::matchSequences(catalog.entries, remaining, sequences, sequenceError))
+                continue;
+            for (const auto& sequence : sequences)
+            {
+                auto chain = object();
+                set(chain, "start_lyric_index", static_cast<int>(start));
+                set(chain, "length", static_cast<int>(sequence.members.size()));
+                std::vector<juce::var> members;
+                for (const auto& member : sequence.members) members.push_back(materialEntryJson(member));
+                set(chain, "members", array(std::move(members)));
+                chains.push_back(std::move(chain));
+            }
+        }
+        set(value, "sequences", array(std::move(chains)));
+    }
+    return McpServer::result(juce::JSON::toString(value, false));
+}
+
+juce::var replaceNoteMaterialTool(ProjectModel& project, const std::vector<MaterialPronunciationCatalog::Root>& roots,
+                                  const juce::var& choicesValue, bool analyse, AnalysisConfig config)
+{
+    MaterialPronunciationCatalog::Result catalog;
+    juce::String error;
+    if (!indexMaterials(roots, catalog, error)) return McpServer::result(error, true);
+    const auto* choiceValues = choicesValue.getArray();
+    if (choiceValues == nullptr || choiceValues->isEmpty())
+        return McpServer::result("choices must contain at least one note choice", true);
+    std::vector<ProjectModel::MaterialSourceChoice> choices;
+    std::map<juce::String, std::pair<std::shared_ptr<const std::vector<SampleRegionSetting>>, juce::String>> rowCache;
+    for (const auto& c : *choiceValues)
+    {
+        const juce::File audioFile(string(c, "audio_path"));
+        const auto audioId = string(c, "audio_id"), regionId = string(c, "region_id");
+        const auto alias = string(c, "alias");
+        const MaterialPronunciationCatalog::Entry* found = nullptr;
+        for (const auto& entry : catalog.entries)
+            if (entry.audio == audioFile && entry.audioId == audioId && entry.regionId == regionId
+                && (alias.isEmpty() ? entry.alias == entry.row.name : entry.alias == alias))
+            { found = &entry; break; }
+        if (found == nullptr)
+            return McpServer::result("Choice not found in the given roots (re-run material_query): note "
+                                     + string(c, "note_id") + " -> " + audioFile.getFileName() + " " + regionId, true);
+        MaterialPronunciationCatalog::Entry current;
+        std::vector<SampleRegionSetting> rows;
+        if (!MaterialPronunciationCatalog::resolve(*found, current, error, &rows))
+            return McpServer::result("Material changed on disk: " + error, true);
+        OttoMaterialIO::Document document;
+        document.audio = { { current.audioId, current.audio.getFileName(), rows } };
+        juce::String canonical;
+        if (!OttoMaterialIO::encode(document, canonical, error)) return McpServer::result(error, true);
+        const auto key = current.manifest.getFullPathName() + "\n" + current.audio.getFullPathName() + "\n" + current.audioId;
+        auto cached = rowCache.find(key);
+        if (cached == rowCache.end())
+            cached = rowCache.emplace(key, std::make_pair(
+                std::make_shared<const std::vector<SampleRegionSetting>>(std::move(rows)), canonical)).first;
+        else if (cached->second.second != canonical)
+            return McpServer::result("Source annotations changed while resolving the choices", true);
+        choices.push_back({ string(c, "note_id"), current.audio, cached->second.first,
+                            current.audioId, current.regionId, current.alias });
+    }
+    ProjectModel::MaterialSourceReplacementReport report;
+    if (choices.size() == 1)
+    {
+        const auto& c = choices.front();
+        report = project.replaceNoteMaterialSource(c.noteId, c.audio, *c.completeRows, c.audioId,
+                                                   c.regionId, c.alias, error);
+    }
+    else
+        report = project.replaceNotesMaterialSources(choices, project.revisionNumber(), error);
+    if (report.rejected) return McpServer::result("Replacement rejected: " + error, true);
+
+    std::vector<ProjectModel::MaterialSourceBindingTicket> tickets = report.tickets;
+    if (tickets.empty() && report.pendingAnalysis) tickets.push_back(report.ticket);
+    int analysed = 0, fromCache = 0;
+    juce::StringArray analysisNotes;
+    if (analyse)
+    {
+        config.preserveFullSourcePitch = true;
+        std::map<juce::String, AnalysisResult> byFile;
+        for (const auto& ticket : tickets)
+        {
+            juce::String attachError;
+            if (project.completeMaterialSourceAnalysis(ticket, {}, attachError)) { ++fromCache; continue; }
+            const auto fileKey = ticket.sourceFile.getFullPathName();
+            auto it = byFile.find(fileKey);
+            if (it == byFile.end())
+            {
+                juce::String analysisError;
+                auto result = AnalysisService::analyse(ticket.sourceFile, config, analysisError);
+                if (analysisError.isNotEmpty()) analysisNotes.add(ticket.sourceFile.getFileName() + ": " + analysisError);
+                it = byFile.emplace(fileKey, std::move(result)).first;
+            }
+            const auto& result = it->second;
+            const auto& facts = result.sourcePitchNotes.empty() ? result.notes : result.sourcePitchNotes;
+            if (!facts.empty() && project.completeMaterialSourceAnalysis(ticket, facts, attachError)) ++analysed;
+            else if (attachError.isNotEmpty()) analysisNotes.add(ticket.noteId + ": " + attachError);
+        }
+    }
+    auto value = object();
+    set(value, "changed", report.changed);
+    set(value, "notes", static_cast<int>(choices.size()));
+    set(value, "pending_analysis", static_cast<int>(tickets.size()));
+    set(value, "analysed", analysed);
+    set(value, "analysis_from_cache", fromCache);
+    std::vector<juce::var> diagnostics;
+    for (const auto& d : report.diagnostics) diagnostics.emplace_back(d);
+    for (const auto& d : analysisNotes) diagnostics.emplace_back(d);
+    set(value, "diagnostics", array(std::move(diagnostics)));
+    return McpServer::result(juce::JSON::toString(value, false));
 }
 }
 
@@ -777,6 +1008,41 @@ juce::var McpServer::diagnosticTools()
                 { .name="enabled", .type="boolean", .description="Enable or remove the selected pitch bridges; default true" },
                 { .name="duration_seconds", .type="number", .description="Requested total bridge duration; default 0.1 seconds" },
             }),
+            makeTool("split_note", "Split one note at a time inside it / 在音符内部切分为两个音符", {
+                { .name = "note_id", .type = "string", .description = "Which note to split", .required = true },
+                { .name = "local_seconds", .type = "number",
+                  .description = "Where to cut, in seconds from the note's own start; must lie strictly inside it",
+                  .required = true },
+            }),
+            makeTool("merge_notes", "Merge adjacent notes of one clip into one / 合并相邻音符", {
+                { .name = "note_ids", .type = "array", .description = "Two or more adjacent notes in one clip",
+                  .required = true, .shape = [](){ return typedSchema({}); } },
+            }),
+            makeTool("material_query", "Find registered material pronunciations for lyrics (otto.ini / oto.ini) / 按歌词查找已登记素材", {
+                { .name = "roots", .type = "array",
+                  .description = "Material folders to search. Each needs an otto.ini (or classic oto.ini) at or below it; "
+                                 "filenames alone are never treated as pronunciations",
+                  .required = true, .shape = [](){ return typedSchema({}); } },
+                { .name = "lyrics", .type = "array",
+                  .description = "Lyrics in sung order; candidates are listed per lyric (case-insensitive exact alias match)",
+                  .required = true, .shape = [](){ return typedSchema({}); } },
+                { .name = "oto_mode", .type = "string", .description = "How classic OTO folders are read; default classic",
+                  .choices = { "classic", "jie", "mou" } },
+                { .name = "limit", .type = "integer", .description = "Most candidates per lyric, 1..200; default 20" },
+                { .name = "include_sequences", .type = "boolean",
+                  .description = "Also list continuous same-recording chains that sing 2+ consecutive lyrics; default true" },
+            }),
+            makeTool("replace_note_material", "Bind score notes to chosen material pronunciations, aligning P to note start / 把素材替换到乐谱音符上（P 对齐音符起点）", withAnalysis({
+                { .name = "roots", .type = "array", .description = "Material folders the choices came from (as given to material_query)",
+                  .required = true, .shape = [](){ return typedSchema({}); } },
+                { .name = "choices", .type = "array",
+                  .description = "One entry per note, in time order. Consecutive notes from one continuous chain keep a shared source clock",
+                  .required = true, .shape = materialChoiceShape },
+                { .name = "oto_mode", .type = "string", .description = "As for material_query; default classic",
+                  .choices = { "classic", "jie", "mou" } },
+                { .name = "analyse", .type = "boolean",
+                  .description = "Run GAME+FCPE on each new source so its original pitch is known; default true" },
+            })),
             makeTool("remove_clip", "Delete a clip / 删除采样", {
                 { .name = "clip_id", .type = "string",
                   .description = "Which clip to delete", .required = true },
@@ -1584,6 +1850,33 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
         if(error.isNotEmpty())return toolResult(error,true);
         return toolResult(changed?"changed=1":"changed=0");
     }
+    else if (name == "split_note")
+    {
+        const auto created = project.splitNote(string(args, "note_id"), number(args, "local_seconds"));
+        if (created.isEmpty())
+            return toolResult("Split rejected: the note was not found or local_seconds is not strictly inside it", true);
+        auto value = object();
+        set(value, "note_id", string(args, "note_id"));
+        set(value, "new_note_id", created);
+        return toolResult(juce::JSON::toString(value, false));
+    }
+    else if (name == "merge_notes")
+    {
+        const auto ids = strings(args, "note_ids");
+        if (ids.size() < 2) return toolResult("At least two note IDs are required", true);
+        const auto merged = project.mergeNotes(ids);
+        if (merged.isEmpty())
+            return toolResult("Merge rejected: notes must be adjacent notes of one clip", true);
+        return toolResult("note_id=" + merged);
+    }
+    else if (name == "material_query")
+        return materialQueryTool(materialRoots(strings(args, "roots"), string(args, "oto_mode")),
+                                 strings(args, "lyrics"), static_cast<int>(number(args, "limit", 20)),
+                                 static_cast<bool>(args.getProperty("include_sequences", true)));
+    else if (name == "replace_note_material")
+        return replaceNoteMaterialTool(project, materialRoots(strings(args, "roots"), string(args, "oto_mode")),
+                                       args.getProperty("choices", {}),
+                                       static_cast<bool>(args.getProperty("analyse", true)), analysisConfig(args));
     else if (name == "remove_clip")
     {
         project.removeClip(string(args, "clip_id"));

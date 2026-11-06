@@ -29,7 +29,7 @@ bool in(const juce::String& name, const char* list)
 { return juce::StringArray::fromTokens(list, " ", "").contains(name); }
 bool readOnly(const juce::String& name)
 {
-    return in(name, "hamood_get_context hamood_alignment_preview hamood_analyse_audio hamood_audio_context hamood_preview editor_selection editor_status editor_query editor_job_status project_snapshot render_status transport_status analysis_status analyse_audio read_file list_directory sample_settings_read ds_capabilities ds_query_phonemes");
+    return in(name, "material_query hamood_get_context hamood_alignment_preview hamood_analyse_audio hamood_audio_context hamood_preview editor_selection editor_status editor_query editor_job_status project_snapshot render_status transport_status analysis_status analyse_audio read_file list_directory sample_settings_read ds_capabilities ds_query_phonemes");
 }
 juce::int64 renderEditFingerprint(const ProjectData& data)
 {
@@ -633,7 +633,7 @@ juce::var MainComponent::handleLiveMcp(const juce::var& request,bool& respond)
             return fail("UNSAVED_DOCUMENT: save first, or explicitly pass discard_unsaved=true");
         // Read/file/import operations may be slow. They run on a captured draft,
         // then compare revision before a single, undoable commit on the UI thread.
-        const bool background=in(name,"hamood_analyse_audio project_open import_audio analyse_audio analysis_status import_midi import_ust import_melodyne export_midi export_ust sample_settings_read sample_settings_save oto_import oto_export jie_oto_create voicebank_import read_file list_directory ds_capabilities ds_query_phonemes");
+        const bool background=in(name,"material_query replace_note_material hamood_analyse_audio project_open import_audio analyse_audio analysis_status import_midi import_ust import_melodyne export_midi export_ust sample_settings_read sample_settings_save oto_import oto_export jie_oto_create voicebank_import read_file list_directory ds_capabilities ds_query_phonemes");
         auto draft=std::make_shared<ProjectModel>();draft->replace(project.snapshot());
         auto roots=mcp->roots;for(const auto& r:Server::projectRoots(project.snapshot()))roots.addIfNotAlreadyThere(r.getFullPathName());
         if(currentProjectFile!=juce::File())roots.addIfNotAlreadyThere(currentProjectFile.getParentDirectory().getFullPathName());
@@ -732,7 +732,7 @@ juce::var MainComponent::handleLiveMcp(const juce::var& request,bool& respond)
                 for(const auto& c:*commands.getArray())
                 {
                     const auto command=str(c,"name");auto a=c.getProperty("arguments",obj());
-                    if(!in(command,"add_track set_track set_clip move_clip resize_clip duplicate_clip transpose_note edit_notes_pitch duplicate_notes resize_note set_note set_pitch_curve add_note remove_note toggle_note_connection remove_clip remove_track set_tempo ds_set_pitch_offset ds_set_parameter ds_set_pronunciation ds_set_timing"))return fail("Command not allowed in atomic batch: "+command);
+                    if(!in(command,"split_note merge_notes add_track set_track set_clip move_clip resize_clip duplicate_clip transpose_note edit_notes_pitch duplicate_notes resize_note set_note set_pitch_curve add_note remove_note toggle_note_connection remove_clip remove_track set_tempo ds_set_pitch_offset ds_set_parameter ds_set_pronunciation ds_set_timing"))return fail("Command not allowed in atomic batch: "+command);
                     put(a,"expected_revision",(juce::int64)draft->revisionNumber());
                     if(const auto e=validate(command,a);e.isNotEmpty())return fail(e);
                     const auto r=one(command,a);if((bool)r["isError"])return r;
