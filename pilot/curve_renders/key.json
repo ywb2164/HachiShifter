@@ -1,0 +1,14 @@
+{
+ "1": {
+  "version": "flat",
+  "md5": "73a76cfffdc7ae471237662ddf3120a0"
+ },
+ "2": {
+  "version": "curve_smooth",
+  "md5": "a4fad5a612294016feea0533699552e5"
+ },
+ "3": {
+  "version": "curve",
+  "md5": "93027f8393755d67d84778166222030e"
+ }
+}
