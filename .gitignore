@@ -22,6 +22,7 @@
 !pilot/ds_renders/key.json
 !pilot/legato_renders/key.json
 !pilot/v4_renders/key.json
+!pilot/v5_renders/key.json
 !bench/blind_rule.json
 !bench/mfa_initials.json
 

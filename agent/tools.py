@@ -103,6 +103,7 @@ class Session:
         self.cands: dict[str, dict] = {}
         self.lang = task.get("language", "zh")
         self.legato_done = False
+        self.final_picks = None
         self.pitch_source = None
         self._qcache: dict = {}
         # 日语歌声切片等“本身就不纯净”的素材库：音质按相对素材自身基线打分
@@ -225,6 +226,8 @@ class Session:
                     continue
                 seen.add(c["region_id"])
                 meta = self.index.get(c["region_id"], {})
+                if meta.get("variant") == "short_consonant" and not self.task.get("allow_short_consonant", False):
+                    continue  # 人工盲听：短辅音版本让衔接变差，默认不用
                 cons = (c["alignment_seconds"] - c["region_start_seconds"]) * 1000
                 vowel = (c["region_end_seconds"] - c["alignment_seconds"]) * 1000
                 need = max(60.0, n["duration"] * 1000 - 20)
@@ -360,6 +363,23 @@ class Session:
             return None
         return json.loads(Path(self.task["pitch_curves"][source]).read_text(encoding="utf-8"))
 
+    def apply_picks(self, picks: dict):
+        """（实验用，不暴露给模型）按运行记录里的最终选择直接放素材，用于“同一套素材只改一个变量”的对照。"""
+        req, idx = [], []
+        for k, pk in picks.items():
+            i = int(k)
+            req.append({"note_id": self.notes[i]["id"], **{f: pk[f] for f in ("audio_path", "audio_id", "region_id", "alias")}})
+            idx.append(i)
+        ok, text = self.mcp.call("replace_note_material", roots=self.roots, choices=req,
+                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"))
+        if not ok:
+            raise RuntimeError(text)
+        for i, k in zip(idx, picks):
+            self.mcp.call("set_note", note_id=self.notes[i]["id"], **FLAT)
+            self.notes[i]["pick"] = {f: picks[k][f] for f in ("audio_path", "audio_id", "region_id", "alias")}
+            self.notes[i]["material"] = picks[k].get("material", "")
+        return len(idx)
+
     def apply_pitch_curves(self, source: str = "reference"):
         """按任务登记的音高线来源画线；source="flat" 表示全部拉平。"""
         if self.legato_done:
@@ -411,15 +431,16 @@ class Session:
         return {"ok": True, "median_db": round(med, 1), "spread_before_db": round(spread, 1), "adjusted": len(changed),
                 "largest": sorted(changed, key=lambda c: -abs(c["db"]))[:8], "hint": "再 render_and_check 看效果"}
 
-    def finalize_legato(self, tail_ms: float = 60.0):
-        """收尾：两轨交替 + 音尾延长淡出叠到下一个音头上。做完不能再换素材/音高/音量。"""
+    def finalize_legato(self, tail_ratio: float = 0.35, tail_min_ms: float = 20.0):
+        """收尾：两轨交替 + 元音尾部按音符时长延长 tail_ratio（默认 12.5%，夹在 20～200 ms）并淡出叠到下一个音头上。"""
         if self.legato_done:
             return {"error": "已经做过了"}
-        tail_ms = float(np.clip(tail_ms, 20, 150))
+        tail_ratio = float(np.clip(tail_ratio, 0.05, 0.5))
+        self.final_picks = {n["index"]: dict(n["pick"], material=n["material"]) for n in self.notes if n.get("pick")}
         a_tr, b_tr = split_alternate(self.mcp, self.track_id, dict(RENDER, volume=self.volume))
-        info = apply_legato(self.mcp, a_tr, b_tr, tail_ms=tail_ms)
+        info = apply_legato(self.mcp, a_tr, b_tr, tail_ratio=tail_ratio, tail_min_ms=float(tail_min_ms))
         self.legato_done = True
-        return {"ok": True, **info, "tail_ms": tail_ms}
+        return {"ok": True, **info, "tail_ratio": tail_ratio}
 
     def render_and_check(self):
         self.renders += 1
@@ -555,8 +576,8 @@ TOOL_SPECS = [
      "parameters": {"type": "object", "properties": {"source": {"type": "string"}}, "required": ["source"]}},
     {"name": "balance_loudness", "description": "根据最近一次渲染，把每个音的响度拉向全曲中位数（默认最多 ±6 dB）。在素材和音高线都定下来之后做一次，然后再渲染检查。",
      "parameters": {"type": "object", "properties": {"max_db": {"type": "number"}}}},
-    {"name": "finalize_legato", "description": "收尾衔接：两轨交替，前一个音尾延长 tail_ms（默认 60）并淡出叠到下一个音头上。做完后不能再换素材/音高/音量，只能 render_and_check 和 finish。",
-     "parameters": {"type": "object", "properties": {"tail_ms": {"type": "number"}}}},
+    {"name": "finalize_legato", "description": "收尾衔接：两轨交替，前一个音的元音尾部按自身时长延长 tail_ratio（默认 0.35，即 35%，范围 0.05～0.5；最多 200 ms，且不超过下一个音长度的一半）并淡出叠到下一个音头上。做完后不能再换素材/音高/音量，只能 render_and_check 和 finish。",
+     "parameters": {"type": "object", "properties": {"tail_ratio": {"type": "number"}}}},
     {"name": "render_and_check", "description": "渲染当前工程并自动检查：每个音的音高误差、响度、有声概率(虚)、ASR 能否听出歌词、整段谐波占比(杂音/痰音)、削波，给出 0-100 分、历史最高分和问题音符列表。",
      "parameters": {"type": "object", "properties": {}}},
     {"name": "finish", "description": "完成任务并保存工程。summary 写清楚做了什么、还有哪些已知问题。",

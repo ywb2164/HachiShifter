@@ -107,7 +107,9 @@ def main() -> None:
                "finished": session.finished, "error": error, "seconds": round(time.time() - t0),
                "tokens": usage, "cost_usd_est": round(cost, 4), "renders": session.renders,
                "final_check": session.last_check, "agent_summary": session.final_summary,
-               "notes": session._notes_view()}
+               "notes": session._notes_view(),
+               "picks": session.final_picks or {n["index"]: dict(n["pick"], material=n["material"]) for n in session.notes if n.get("pick")},
+               "pitch_source": session.pitch_source}
     (run_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
     log("end", **{k: v for k, v in summary.items() if k != "notes"})
     trace.close()

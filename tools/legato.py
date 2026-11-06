@@ -36,7 +36,9 @@ def split_alternate(mcp, track_id, settings: dict) -> tuple[str, str]:
 
 
 def apply_legato(mcp, a_track: str, b_track: str, tail_ms: float = 60.0, fade_floor_db: float = -40.0,
-                 head_cut: dict[int, float] | None = None) -> dict:
+                 head_cut: dict[int, float] | None = None, tail_ratio: float | None = None,
+                 tail_min_ms: float = 20.0, tail_max_ms: float = 200.0) -> dict:
+    """tail_ratio 给定时，音尾延长 = 音符时长 × tail_ratio（夹在 tail_min_ms～tail_max_ms），否则固定 tail_ms。"""
     """在交替的两轨上延长音尾并淡出；head_cut = {全局音符序号: 压低 dB}。"""
     _, a_clip, a_notes = notes_of(mcp, a_track)
     _, b_clip, b_notes = notes_of(mcp, b_track)
@@ -56,7 +58,9 @@ def apply_legato(mcp, a_track: str, b_track: str, tail_ms: float = 60.0, fade_fl
             nstart, nxt, _ = tagged[k + 1]
             gap = nstart - (start + dur)
             if abs(gap) < 0.03:
-                ext = min(tail_ms / 1000.0, 0.5 * nxt["duration_seconds"])
+                want = (dur * tail_ratio * 1000.0 if tail_ratio else tail_ms)
+                want = min(max(want, tail_min_ms), tail_max_ms) if tail_ratio else want
+                ext = min(want / 1000.0, 0.5 * nxt["duration_seconds"])
                 ncons = float(nxt.get("consonant_seconds") or 0.03)
                 fade_from = max(0.5 * dur, (nstart - ncons) - start)
                 new_dur = dur + ext

@@ -1,0 +1,18 @@
+{
+ "1": {
+  "version": "v5_full_consonant_ratio35",
+  "md5": "8b3df6c808687f586cd734e68ea39f0c"
+ },
+ "2": {
+  "version": "v5_full_consonant_fixed60",
+  "md5": "6e05005ca314c7a6503f9e79d22ecd11"
+ },
+ "3": {
+  "version": "v4_final_short_consonant_fixed60_(上轮5分)",
+  "md5": "72c916c3406e280e3b9cc9d061ba4b4c"
+ },
+ "4": {
+  "version": "v5_full_consonant_ratio12.5",
+  "md5": "d441a67b3d331098ab83bb3a8bb17e61"
+ }
+}
