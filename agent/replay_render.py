@@ -26,6 +26,7 @@ def main():
     ap.add_argument("--modulation", type=float, default=None)
     ap.add_argument("--no-balance", action="store_true", help="不做逐音音量平衡")
     ap.add_argument("--no-legato", action="store_true", help="不做两轨交替衔接")
+    ap.add_argument("--split", type=int, default=1, help="把音符轮流铺到 K 条轨（不延长、不加包络）")
     ap.add_argument("--save", default=None, help="渲染后另存工程 .hjpx")
     ap.add_argument("--ref-audio", default=None, help="另存前加一条静音参考轨（从 0 秒开始的原唱片段）")
     a = ap.parse_args()
@@ -56,6 +57,9 @@ def main():
         for n in s.notes:
             if n.get("material"):
                 s.mcp.call("set_note", note_id=n["id"], **kw)
+    if a.split > 1:
+        from multitrack import split_round_robin
+        split_round_robin(s.mcp, s.track_id, dict(tools.RENDER, volume=s.volume), a.split)
     s.render_and_check()
     if not a.no_balance:
         s.balance_loudness()
@@ -81,7 +85,7 @@ def main():
     result = json.loads(vj.read_text(encoding="utf-8")) if vj.exists() else {}
     result[a.name] = {"wav": str(wav), "score": chk["score"], "md5": hashlib.md5(wav.read_bytes()).hexdigest(),
                       "render": tools.RENDER, "tracks": tracks, "pitch": a.pitch, "drift": a.drift, "modulation": a.modulation,
-                      "balance": not a.no_balance, "legato": not a.no_legato, "project": a.save,
+                      "balance": not a.no_balance, "split": a.split, "legato": not a.no_legato, "project": a.save,
                       "check": {k: chk.get(k) for k in ("in_tune_ratio", "harmonic_ratio", "voicing_mean")},
                       "notes_sample": notes_sample}
     vj.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
