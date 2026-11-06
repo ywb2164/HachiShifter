@@ -1,0 +1,69 @@
+{
+ "id": "t02_duanwei",
+ "title": "上不去下不来的这个段位",
+ "lyrics": "上不去下不来的这个段位",
+ "bpm": 130,
+ "melody": [
+  {
+   "start_beat": 0.0,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 0.5,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 1.0,
+   "beats": 1,
+   "midi": 67
+  },
+  {
+   "start_beat": 2.0,
+   "beats": 0.5,
+   "midi": 62
+  },
+  {
+   "start_beat": 2.5,
+   "beats": 0.5,
+   "midi": 62
+  },
+  {
+   "start_beat": 3.0,
+   "beats": 1,
+   "midi": 65
+  },
+  {
+   "start_beat": 4.0,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 4.5,
+   "beats": 0.5,
+   "midi": 62
+  },
+  {
+   "start_beat": 5.0,
+   "beats": 0.5,
+   "midi": 60
+  },
+  {
+   "start_beat": 5.5,
+   "beats": 1,
+   "midi": 62
+  },
+  {
+   "start_beat": 6.5,
+   "beats": 2,
+   "midi": 60
+  }
+ ],
+ "brief": "素材库里有这句原话，考察能否整段取用。",
+ "roots": [
+  "棍の音/棍音源",
+  "棍の音/水母卡组",
+  "张顺飞素材/张顺飞活字印刷"
+ ]
+}

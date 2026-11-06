@@ -1,0 +1,500 @@
+{
+ "b000": {
+  "syllable": "gai",
+  "start": 0.0,
+  "pyin_onset": 0.005,
+  "low_rise10": 0.0299,
+  "low_rise6": 0.0349,
+  "low_rise3": 0.0449,
+  "low_slope": 0.0274,
+  "hf_drop": 0.0
+ },
+ "b001": {
+  "syllable": "sha",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0449,
+  "low_rise6": 0.0524,
+  "low_rise3": 0.0574,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b002": {
+  "syllable": "dan",
+  "start": 0.0,
+  "pyin_onset": 0.0449,
+  "low_rise10": 0.0574,
+  "low_rise6": 0.0748,
+  "low_rise3": 0.0823,
+  "low_slope": 0.005,
+  "hf_drop": 0.0
+ },
+ "b003": {
+  "syllable": "fen",
+  "start": 0.0,
+  "pyin_onset": 0.0698,
+  "low_rise10": 0.0823,
+  "low_rise6": 0.0848,
+  "low_rise3": 0.0898,
+  "low_slope": 0.0798,
+  "hf_drop": 0.0773
+ },
+ "b004": {
+  "syllable": "zhong",
+  "start": 0.0,
+  "pyin_onset": 0.0399,
+  "low_rise10": 0.0574,
+  "low_rise6": 0.0599,
+  "low_rise3": 0.0649,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0
+ },
+ "b005": {
+  "syllable": "xiang",
+  "start": 0.0,
+  "pyin_onset": null,
+  "low_rise10": 0.1197,
+  "low_rise6": 0.1222,
+  "low_rise3": 0.1247,
+  "hf_drop": 0.1172
+ },
+ "b006": {
+  "syllable": "da",
+  "start": 0.0,
+  "pyin_onset": 0.0349,
+  "low_rise10": 0.0599,
+  "low_rise6": 0.0624,
+  "low_rise3": 0.0698,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0025
+ },
+ "b007": {
+  "syllable": "zuo",
+  "start": 0.0,
+  "pyin_onset": 0.0499,
+  "low_rise10": 0.0673,
+  "low_rise6": 0.0773,
+  "low_rise3": 0.1048,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0
+ },
+ "b008": {
+  "syllable": "mei",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0075,
+  "low_rise6": 0.0599,
+  "low_rise3": 0.0998,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b009": {
+  "syllable": "shao",
+  "start": 0.0,
+  "pyin_onset": 0.1347,
+  "low_rise10": 0.0773,
+  "low_rise6": 0.0773,
+  "low_rise3": 0.0798,
+  "low_slope": 0.0948,
+  "hf_drop": 0.0748
+ },
+ "b010": {
+  "syllable": "zi",
+  "start": 0.0,
+  "pyin_onset": 0.015,
+  "low_rise10": 0.0574,
+  "low_rise6": 0.0624,
+  "low_rise3": 0.0698,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0449
+ },
+ "b011": {
+  "syllable": "qing",
+  "start": 0.0,
+  "pyin_onset": 0.0898,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.0998,
+  "low_rise3": 0.1023,
+  "low_slope": 0.0998,
+  "hf_drop": 0.0
+ },
+ "b012": {
+  "syllable": "feng",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0599,
+  "low_rise6": 0.0723,
+  "low_rise3": 0.0748,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0574
+ },
+ "b013": {
+  "syllable": "wang",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0399,
+  "low_rise6": 0.0524,
+  "low_rise3": 0.0624,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b014": {
+  "syllable": "zai",
+  "start": 0.0,
+  "pyin_onset": 0.0449,
+  "low_rise10": 0.0549,
+  "low_rise6": 0.0574,
+  "low_rise3": 0.0599,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0549
+ },
+ "b015": {
+  "syllable": "mao",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0175,
+  "low_rise6": 0.02,
+  "low_rise3": 0.0274,
+  "low_slope": 0.015,
+  "hf_drop": 0.0
+ },
+ "b016": {
+  "syllable": "chao",
+  "start": 0.0,
+  "pyin_onset": 0.1896,
+  "low_rise10": 0.0424,
+  "low_rise6": 0.217,
+  "low_rise3": 0.3642,
+  "low_slope": 0.2569,
+  "hf_drop": 0.0
+ },
+ "b017": {
+  "syllable": "hun",
+  "start": 0.0,
+  "pyin_onset": 0.0449,
+  "low_rise10": 0.0599,
+  "low_rise6": 0.0748,
+  "low_rise3": 0.0948,
+  "low_slope": 0.0549,
+  "hf_drop": 0.0
+ },
+ "b018": {
+  "syllable": "pei",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0125,
+  "low_rise6": 0.0175,
+  "low_rise3": 0.02,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b019": {
+  "syllable": "ai",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.005,
+  "low_rise3": 0.01,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b020": {
+  "syllable": "shui",
+  "start": 0.0,
+  "pyin_onset": 0.1197,
+  "low_rise10": 0.1447,
+  "low_rise6": 0.1522,
+  "low_rise3": 0.1621,
+  "low_slope": 0.1247,
+  "hf_drop": 0.1397
+ },
+ "b021": {
+  "syllable": "e",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.0075,
+  "low_rise3": 0.0175,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b022": {
+  "syllable": "nong",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0524,
+  "low_rise6": 0.0624,
+  "low_rise3": 0.0673,
+  "low_slope": 0.005,
+  "hf_drop": 0.015
+ },
+ "b023": {
+  "syllable": "xiu",
+  "start": 0.0,
+  "pyin_onset": 0.0898,
+  "low_rise10": 0.1098,
+  "low_rise6": 0.1122,
+  "low_rise3": 0.1447,
+  "low_slope": 0.1048,
+  "hf_drop": 0.1073
+ },
+ "b024": {
+  "syllable": "bai",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.01,
+  "low_rise6": 0.0125,
+  "low_rise3": 0.015,
+  "low_slope": 0.005,
+  "hf_drop": 0.0
+ },
+ "b025": {
+  "syllable": "xia",
+  "start": 0.0,
+  "pyin_onset": 0.5488,
+  "low_rise10": 0.2195,
+  "low_rise6": 0.2968,
+  "low_rise3": 0.3342,
+  "low_slope": 0.5463,
+  "hf_drop": 0.0848
+ },
+ "b026": {
+  "syllable": "tan",
+  "start": 0.0,
+  "pyin_onset": 0.0299,
+  "low_rise10": 0.0474,
+  "low_rise6": 0.0499,
+  "low_rise3": 0.0524,
+  "low_slope": 0.005,
+  "hf_drop": 0.0224
+ },
+ "b027": {
+  "syllable": "ye",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.005,
+  "low_rise3": 0.005,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b028": {
+  "syllable": "liu",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.005,
+  "low_rise3": 0.0249,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b029": {
+  "syllable": "er",
+  "start": 0.01,
+  "pyin_onset": 0.0249,
+  "low_rise10": 0.0249,
+  "low_rise6": 0.0349,
+  "low_rise3": 0.0399,
+  "low_slope": 0.0175,
+  "hf_drop": 0.01
+ },
+ "b030": {
+  "syllable": "hun",
+  "start": 0.0,
+  "pyin_onset": 0.0848,
+  "low_rise10": 0.005,
+  "low_rise6": 0.0998,
+  "low_rise3": 0.1023,
+  "low_slope": 0.0973,
+  "hf_drop": 0.0
+ },
+ "b031": {
+  "syllable": "lai",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0175,
+  "low_rise6": 0.0249,
+  "low_rise3": 0.0574,
+  "low_slope": 0.005,
+  "hf_drop": 0.0
+ },
+ "b032": {
+  "syllable": "nei",
+  "start": 0.0,
+  "pyin_onset": 0.0599,
+  "low_rise10": 0.0175,
+  "low_rise6": 0.02,
+  "low_rise3": 0.0249,
+  "low_slope": 0.02,
+  "hf_drop": 0.0
+ },
+ "b033": {
+  "syllable": "ei",
+  "start": 0.0,
+  "pyin_onset": 0.0299,
+  "low_rise10": 0.005,
+  "low_rise6": 0.01,
+  "low_rise3": 0.0374,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b034": {
+  "syllable": "xing",
+  "start": 0.0,
+  "pyin_onset": 0.1746,
+  "low_rise10": 0.1796,
+  "low_rise6": 0.1821,
+  "low_rise3": 0.1846,
+  "low_slope": 0.1796,
+  "hf_drop": 0.1796
+ },
+ "b035": {
+  "syllable": "tun",
+  "start": 0.0,
+  "pyin_onset": 0.0848,
+  "low_rise10": 0.0998,
+  "low_rise6": 0.1023,
+  "low_rise3": 0.1048,
+  "low_slope": 0.0998,
+  "hf_drop": 0.0
+ },
+ "b036": {
+  "syllable": "kiu",
+  "start": 0.0,
+  "pyin_onset": 0.0698,
+  "low_rise10": 0.0873,
+  "low_rise6": 0.0898,
+  "low_rise3": 0.1546,
+  "low_slope": 0.0848,
+  "hf_drop": 0.0324
+ },
+ "b037": {
+  "syllable": "diao",
+  "start": 0.01,
+  "pyin_onset": 0.015,
+  "low_rise10": 0.0549,
+  "low_rise6": 0.0673,
+  "low_rise3": 0.0723,
+  "low_slope": 0.015,
+  "hf_drop": 0.01
+ },
+ "b038": {
+  "syllable": "cuo",
+  "start": 0.0,
+  "pyin_onset": 0.0599,
+  "low_rise10": 0.0848,
+  "low_rise6": 0.0898,
+  "low_rise3": 0.0948,
+  "low_slope": 0.0748,
+  "hf_drop": 0.0
+ },
+ "b039": {
+  "syllable": "que",
+  "start": 0.0,
+  "pyin_onset": 0.1646,
+  "low_rise10": 0.1696,
+  "low_rise6": 0.1746,
+  "low_rise3": 0.1796,
+  "low_slope": 0.1646,
+  "hf_drop": 0.1696
+ },
+ "b040": {
+  "syllable": "gang",
+  "start": 0.0,
+  "pyin_onset": 0.005,
+  "low_rise10": 0.02,
+  "low_rise6": 0.0224,
+  "low_rise3": 0.0249,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b041": {
+  "syllable": "sheng",
+  "start": 0.005,
+  "pyin_onset": 0.1147,
+  "low_rise10": 0.1297,
+  "low_rise6": 0.1297,
+  "low_rise3": 0.1322,
+  "low_slope": 0.1272,
+  "hf_drop": 0.1272
+ },
+ "b042": {
+  "syllable": "ne",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.005,
+  "low_rise3": 0.01,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b043": {
+  "syllable": "nian",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.005,
+  "low_rise3": 0.0175,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b044": {
+  "syllable": "zeng",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0524,
+  "low_rise6": 0.0599,
+  "low_rise3": 0.0649,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b045": {
+  "syllable": "ci",
+  "start": 0.0,
+  "pyin_onset": 0.0848,
+  "low_rise10": 0.1522,
+  "low_rise6": 0.1796,
+  "low_rise3": 0.1896,
+  "low_slope": 0.1098,
+  "hf_drop": 0.1796
+ },
+ "b046": {
+  "syllable": "xin",
+  "start": 0.0,
+  "pyin_onset": 0.1646,
+  "low_rise10": 0.0125,
+  "low_rise6": 0.1696,
+  "low_rise3": 0.1721,
+  "low_slope": 0.1646,
+  "hf_drop": 0.2295
+ },
+ "b047": {
+  "syllable": "lin",
+  "start": 0.0,
+  "pyin_onset": 0.0,
+  "low_rise10": 0.0025,
+  "low_rise6": 0.0025,
+  "low_rise3": 0.005,
+  "low_slope": 0.0025,
+  "hf_drop": 0.0
+ },
+ "b048": {
+  "syllable": "qiang",
+  "start": 0.0599,
+  "pyin_onset": null,
+  "low_rise10": 0.1846,
+  "low_rise6": 0.1921,
+  "low_rise3": 0.1995,
+  "hf_drop": 0.1871
+ },
+ "b049": {
+  "syllable": "ku",
+  "start": 0.0,
+  "pyin_onset": 0.1147,
+  "low_rise10": 0.1272,
+  "low_rise6": 0.1297,
+  "low_rise3": 0.1347,
+  "low_slope": 0.1272,
+  "hf_drop": 0.0
+ }
+}

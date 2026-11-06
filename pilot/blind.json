@@ -1,0 +1,402 @@
+[
+ {
+  "folder": "棍の音/棍音源",
+  "file": "gai.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\gai.wav",
+  "repeat_of": null,
+  "id": "b000",
+  "duration": 0.2032
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "sha.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\sha.wav",
+  "repeat_of": null,
+  "id": "b001",
+  "duration": 0.2
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "dan.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\dan.wav",
+  "repeat_of": "s019",
+  "id": "b002",
+  "duration": 0.9733
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "fen.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\fen.wav",
+  "repeat_of": null,
+  "id": "b003",
+  "duration": 0.1714
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "zhong.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\zhong.wav",
+  "repeat_of": null,
+  "id": "b004",
+  "duration": 0.2247
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "xiang.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\xiang.wav",
+  "repeat_of": null,
+  "id": "b005",
+  "duration": 0.24
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "da.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\da.wav",
+  "repeat_of": "s014",
+  "id": "b006",
+  "duration": 0.4532
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "zuo.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\zuo.wav",
+  "repeat_of": null,
+  "id": "b007",
+  "duration": 0.2629
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "mei.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\mei.wav",
+  "repeat_of": null,
+  "id": "b008",
+  "duration": 0.1668
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "shao.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\shao.wav",
+  "repeat_of": null,
+  "id": "b009",
+  "duration": 0.1878
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "zi.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\zi.wav",
+  "repeat_of": null,
+  "id": "b010",
+  "duration": 0.16
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "qing.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\qing.wav",
+  "repeat_of": "s021",
+  "id": "b011",
+  "duration": 0.1991
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "feng.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\feng.wav",
+  "repeat_of": null,
+  "id": "b012",
+  "duration": 0.4
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "wang.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\wang.wav",
+  "repeat_of": null,
+  "id": "b013",
+  "duration": 0.4401
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "zai.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\zai.wav",
+  "repeat_of": null,
+  "id": "b014",
+  "duration": 0.16
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "mao.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\mao.wav",
+  "repeat_of": null,
+  "id": "b015",
+  "duration": 0.2
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "chao.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\chao.wav",
+  "repeat_of": "s010",
+  "id": "b016",
+  "duration": 1.0526
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "hun.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\hun.wav",
+  "repeat_of": "s012",
+  "id": "b017",
+  "duration": 0.292
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "pei.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\pei.wav",
+  "repeat_of": null,
+  "id": "b018",
+  "duration": 0.2
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "ai.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\ai.wav",
+  "repeat_of": null,
+  "id": "b019",
+  "duration": 0.2667
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "shui.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\shui.wav",
+  "repeat_of": null,
+  "id": "b020",
+  "duration": 0.3075
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "e.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\e.wav",
+  "repeat_of": null,
+  "id": "b021",
+  "duration": 0.4241
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "nong.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\nong.wav",
+  "repeat_of": null,
+  "id": "b022",
+  "duration": 0.2
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "xiu.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\xiu.wav",
+  "repeat_of": null,
+  "id": "b023",
+  "duration": 0.2293
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "bai.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\bai.wav",
+  "repeat_of": null,
+  "id": "b024",
+  "duration": 0.1146
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "xia.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\xia.wav",
+  "repeat_of": "s023",
+  "id": "b025",
+  "duration": 1.1761
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "tan.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\tan.wav",
+  "repeat_of": null,
+  "id": "b026",
+  "duration": 0.2
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "ye.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\ye.wav",
+  "repeat_of": null,
+  "id": "b027",
+  "duration": 0.2
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "liu.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\liu.wav",
+  "repeat_of": null,
+  "id": "b028",
+  "duration": 0.2667
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "er.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\er.wav",
+  "repeat_of": null,
+  "id": "b029",
+  "duration": 0.1728
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "hun.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\hun.wav",
+  "repeat_of": null,
+  "id": "b030",
+  "duration": 0.2634
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "lai.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\lai.wav",
+  "repeat_of": null,
+  "id": "b031",
+  "duration": 0.367
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "nei.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\nei.wav",
+  "repeat_of": null,
+  "id": "b032",
+  "duration": 0.2086
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "ei.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\ei.wav",
+  "repeat_of": "s024",
+  "id": "b033",
+  "duration": 0.2
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "xing.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\xing.wav",
+  "repeat_of": "s029",
+  "id": "b034",
+  "duration": 0.3472
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "tun.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\tun.wav",
+  "repeat_of": null,
+  "id": "b035",
+  "duration": 0.2667
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "kiu.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\kiu.wav",
+  "repeat_of": null,
+  "id": "b036",
+  "duration": 0.4376
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "diao.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\diao.wav",
+  "repeat_of": null,
+  "id": "b037",
+  "duration": 0.2085
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "cuo.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\cuo.wav",
+  "repeat_of": null,
+  "id": "b038",
+  "duration": 0.3667
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "que.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\que.wav",
+  "repeat_of": "s015",
+  "id": "b039",
+  "duration": 0.4
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "gang.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\gang.wav",
+  "repeat_of": "s001",
+  "id": "b040",
+  "duration": 0.24
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "sheng.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\sheng.wav",
+  "repeat_of": null,
+  "id": "b041",
+  "duration": 0.2667
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "ne.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\ne.wav",
+  "repeat_of": null,
+  "id": "b042",
+  "duration": 0.3
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "nian.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\nian.wav",
+  "repeat_of": null,
+  "id": "b043",
+  "duration": 0.3333
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "zeng.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\zeng.wav",
+  "repeat_of": null,
+  "id": "b044",
+  "duration": 0.1466
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "ci.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\ci.wav",
+  "repeat_of": null,
+  "id": "b045",
+  "duration": 0.2667
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "xin.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\xin.wav",
+  "repeat_of": null,
+  "id": "b046",
+  "duration": 0.2708
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "lin.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\lin.wav",
+  "repeat_of": null,
+  "id": "b047",
+  "duration": 0.1667
+ },
+ {
+  "folder": "张顺飞素材/张顺飞活字印刷",
+  "file": "qiang.wav",
+  "src": "D:\\杠氏老方\\张顺飞素材\\张顺飞活字印刷\\qiang.wav",
+  "repeat_of": null,
+  "id": "b048",
+  "duration": 0.3333
+ },
+ {
+  "folder": "棍の音/棍音源",
+  "file": "ku.wav",
+  "src": "D:\\杠氏老方\\棍の音\\棍音源\\ku.wav",
+  "repeat_of": null,
+  "id": "b049",
+  "duration": 0.2333
+ }
+]

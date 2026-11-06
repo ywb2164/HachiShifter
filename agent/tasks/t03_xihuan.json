@@ -1,0 +1,99 @@
+{
+ "id": "t03_xihuan",
+ "title": "我喜欢你你喜欢我，你可以攻击我的段位",
+ "lyrics": "我喜欢你，你喜欢我，你可以攻击我的段位",
+ "bpm": 120,
+ "melody": [
+  {
+   "start_beat": 0.0,
+   "beats": 0.5,
+   "midi": 67
+  },
+  {
+   "start_beat": 0.5,
+   "beats": 0.5,
+   "midi": 67
+  },
+  {
+   "start_beat": 1.0,
+   "beats": 0.5,
+   "midi": 69
+  },
+  {
+   "start_beat": 1.5,
+   "beats": 1.5,
+   "midi": 67
+  },
+  {
+   "start_beat": 3.0,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 3.5,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 4.0,
+   "beats": 0.5,
+   "midi": 65
+  },
+  {
+   "start_beat": 4.5,
+   "beats": 1.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 6.0,
+   "beats": 0.5,
+   "midi": 62
+  },
+  {
+   "start_beat": 6.5,
+   "beats": 0.5,
+   "midi": 62
+  },
+  {
+   "start_beat": 7.0,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 7.5,
+   "beats": 0.5,
+   "midi": 65
+  },
+  {
+   "start_beat": 8.0,
+   "beats": 1,
+   "midi": 67
+  },
+  {
+   "start_beat": 9.0,
+   "beats": 0.5,
+   "midi": 65
+  },
+  {
+   "start_beat": 9.5,
+   "beats": 0.5,
+   "midi": 64
+  },
+  {
+   "start_beat": 10.0,
+   "beats": 1,
+   "midi": 62
+  },
+  {
+   "start_beat": 11.0,
+   "beats": 2,
+   "midi": 60
+  }
+ ],
+ "brief": "两个乐句，长短音混合，需要整段取用和逐字补齐配合。",
+ "roots": [
+  "棍の音/棍音源",
+  "棍の音/水母卡组",
+  "张顺飞素材/张顺飞活字印刷"
+ ]
+}

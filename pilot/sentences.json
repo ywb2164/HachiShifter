@@ -1,0 +1,5883 @@
+[
+ {
+  "id": "t000",
+  "file": "输了叫爹.wav",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "输了叫爹",
+  "text": "输叫爹",
+  "asr_text": "输叫爹",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "输",
+    "pinyin": "shu",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.15,
+    "p": 0.0549,
+    "consonant_ms": 34.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "叫",
+    "pinyin": "jiao",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.15,
+    "end": 0.33,
+    "p": 0.1497,
+    "consonant_ms": -0.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "爹",
+    "pinyin": "die",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.33,
+    "end": 0.775,
+    "p": 0.3991,
+    "consonant_ms": 69.1,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "了",
+  "asr_match": 0.75
+ },
+ {
+  "id": "t001",
+  "file": "我疯掉了.mp3",
+  "folder": "棍の音\\山泥若语音包",
+  "name_text": "我疯掉了",
+  "text": "我疯掉了进",
+  "asr_text": "我疯掉了进",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.96,
+    "end": 1.23,
+    "p": 0.9603,
+    "consonant_ms": 0.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "疯",
+    "pinyin": "feng",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 1.36,
+    "end": 1.63,
+    "p": 1.4293,
+    "consonant_ms": 69.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "掉",
+    "pinyin": "diao",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.82,
+    "end": 1.91,
+    "p": 1.8608,
+    "consonant_ms": 40.8,
+    "verdict": "存疑",
+    "reasons": [
+     "字长短于 60 ms",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.91,
+    "end": 2.15,
+    "p": 1.9107,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "进",
+    "pinyin": "jin",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.36,
+    "end": 2.63,
+    "p": 2.3596,
+    "consonant_ms": -0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t002",
+  "file": "在这穷抬杠.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "在这穷抬杠",
+  "text": "在穷抬杠有什么意义吗",
+  "asr_text": "在穷抬杠有什么意义吗",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "在",
+    "pinyin": "zai",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.06,
+    "end": 0.31,
+    "p": 0.0748,
+    "consonant_ms": 14.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "穷",
+    "pinyin": "qiong",
+    "source": "both",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 0.31,
+    "end": 0.47,
+    "p": 0.3417,
+    "consonant_ms": 31.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "抬",
+    "pinyin": "tai",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 0.47,
+    "end": 0.65,
+    "p": 0.4689,
+    "consonant_ms": -1.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "杠",
+    "pinyin": "gang",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.65,
+    "end": 0.79,
+    "p": 0.6535,
+    "consonant_ms": 3.5,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "有",
+    "pinyin": "you",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.79,
+    "end": 0.87,
+    "p": 0.7907,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.87,
+    "end": 0.99,
+    "p": 0.8705,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.99,
+    "end": 1.11,
+    "p": 1.0152,
+    "consonant_ms": 25.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "意",
+    "pinyin": "yi",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.11,
+    "end": 1.25,
+    "p": 1.11,
+    "consonant_ms": 0.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "义",
+    "pinyin": "yi",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.25,
+    "end": 1.47,
+    "p": 1.2497,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "吗",
+    "pinyin": "ma",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.47,
+    "end": 1.735,
+    "p": 1.4692,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "这",
+  "asr_match": 0.8
+ },
+ {
+  "id": "t003",
+  "file": "我草尼玛好气人啊.mp3",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "我草尼玛好气人啊",
+  "text": "我前面我草尼玛好气人啊",
+  "asr_text": "我前面我草尼玛好气人啊",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.32,
+    "end": 0.59,
+    "p": 0.3941,
+    "consonant_ms": 74.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "前",
+    "pinyin": "qian",
+    "source": "asr_only",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 0.59,
+    "end": 0.83,
+    "p": 0.6111,
+    "consonant_ms": 21.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "面",
+    "pinyin": "mian",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.84,
+    "end": 1.11,
+    "p": 0.863,
+    "consonant_ms": 23.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 1.34,
+    "end": 1.61,
+    "p": 1.3968,
+    "consonant_ms": 56.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "草",
+    "pinyin": "cao",
+    "source": "both",
+    "initial": "c",
+    "initial_kind": "unvoiced",
+    "start": 1.68,
+    "end": 1.95,
+    "p": 1.7186,
+    "consonant_ms": 38.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "尼",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 2.08,
+    "end": 2.35,
+    "p": 2.3247,
+    "consonant_ms": 244.7,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "玛",
+    "pinyin": "ma",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 2.35,
+    "end": 2.59,
+    "p": 2.3497,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "好",
+    "pinyin": "hao",
+    "source": "both",
+    "initial": "h",
+    "initial_kind": "unvoiced",
+    "start": 2.96,
+    "end": 3.23,
+    "p": 3.0156,
+    "consonant_ms": 55.6,
+    "verdict": "存疑",
+    "reasons": [
+     "h 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "气",
+    "pinyin": "qi",
+    "source": "both",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 3.28,
+    "end": 3.55,
+    "p": 3.3923,
+    "consonant_ms": 112.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "人",
+    "pinyin": "ren",
+    "source": "both",
+    "initial": "r",
+    "initial_kind": "sonorant",
+    "start": 3.56,
+    "end": 3.83,
+    "p": 3.5594,
+    "consonant_ms": -0.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "啊",
+    "pinyin": "a",
+    "source": "both",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 3.84,
+    "end": 4.605,
+    "p": 3.8388,
+    "consonant_ms": -1.2,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t004",
+  "file": "主播不犯法，主播什么都不懂，就懂法.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "主播不犯法主播什么都不懂就懂法",
+  "text": "主播不犯法啊主播主播什么都不懂就懂法",
+  "asr_text": "主播不犯法啊主播主播什么都不懂就懂法",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "主",
+    "pinyin": "zhu",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.14,
+    "end": 0.39,
+    "p": 0.1971,
+    "consonant_ms": 57.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "播",
+    "pinyin": "bo",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.39,
+    "end": 0.53,
+    "p": 0.4091,
+    "consonant_ms": 19.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.53,
+    "end": 0.69,
+    "p": 0.5862,
+    "consonant_ms": 56.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "犯",
+    "pinyin": "fan",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 0.69,
+    "end": 0.87,
+    "p": 0.6934,
+    "consonant_ms": 3.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "法",
+    "pinyin": "fa",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 0.87,
+    "end": 1.03,
+    "p": 0.9005,
+    "consonant_ms": 30.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "啊",
+    "pinyin": "a",
+    "source": "asr_only",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 1.03,
+    "end": 1.23,
+    "p": 1.0302,
+    "consonant_ms": 0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "主",
+    "pinyin": "zhu",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 1.23,
+    "end": 1.45,
+    "p": 1.2397,
+    "consonant_ms": 9.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "播",
+    "pinyin": "bo",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.45,
+    "end": 1.69,
+    "p": 1.5041,
+    "consonant_ms": 54.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "主",
+    "pinyin": "zhu",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 1.74,
+    "end": 1.93,
+    "p": 1.7735,
+    "consonant_ms": 33.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "播",
+    "pinyin": "bo",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.93,
+    "end": 2.11,
+    "p": 2.0079,
+    "consonant_ms": 77.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.11,
+    "end": 2.25,
+    "p": 2.185,
+    "consonant_ms": 75.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 2.25,
+    "end": 2.41,
+    "p": 2.2923,
+    "consonant_ms": 42.3,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "都",
+    "pinyin": "dou",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.41,
+    "end": 2.65,
+    "p": 2.4245,
+    "consonant_ms": 14.5,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 2.72,
+    "end": 2.93,
+    "p": 2.8385,
+    "consonant_ms": 118.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "懂",
+    "pinyin": "dong",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.93,
+    "end": 3.17,
+    "p": 2.9608,
+    "consonant_ms": 30.8,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "就",
+    "pinyin": "jiu",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 3.42,
+    "end": 3.65,
+    "p": 3.5619,
+    "consonant_ms": 141.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "懂",
+    "pinyin": "dong",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 3.65,
+    "end": 3.89,
+    "p": 3.7265,
+    "consonant_ms": 76.5,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "法",
+    "pinyin": "fa",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 3.92,
+    "end": 4.195,
+    "p": 3.956,
+    "consonant_ms": 36.0,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t005",
+  "file": "（炫）来咯.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "来咯",
+  "text": "来咯",
+  "asr_text": "来咯",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.18,
+    "end": 0.45,
+    "p": 0.1821,
+    "consonant_ms": 2.1,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "咯",
+    "pinyin": "ge",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.5,
+    "end": 1.675,
+    "p": 0.4989,
+    "consonant_ms": -1.1,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t006",
+  "file": "哇哇哇、.mp3",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "哇哇哇",
+  "text": "哇哇哇",
+  "asr_text": "哇哇哇",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "哇",
+    "pinyin": "wa",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.72,
+    "end": 0.99,
+    "p": 0.7333,
+    "consonant_ms": 13.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "哇",
+    "pinyin": "wa",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 1.08,
+    "end": 1.35,
+    "p": 1.08,
+    "consonant_ms": 0.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "哇",
+    "pinyin": "wa",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 1.46,
+    "end": 2.095,
+    "p": 1.4592,
+    "consonant_ms": -0.8,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t007",
+  "file": "夺走它们的一切，成为世界的终结者.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "夺走它们的一切成为世界的终结者",
+  "text": "夺走它们的一切成为世界的终结者",
+  "asr_text": "夺走它们的一切成为世界的终结者",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "夺",
+    "pinyin": "duo",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.16,
+    "end": 0.43,
+    "p": 0.2694,
+    "consonant_ms": 109.4,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "走",
+    "pinyin": "zou",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.5,
+    "end": 0.77,
+    "p": 0.5413,
+    "consonant_ms": 41.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "它",
+    "pinyin": "ta",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 0.77,
+    "end": 0.89,
+    "p": 0.8007,
+    "consonant_ms": 30.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "们",
+    "pinyin": "men",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.89,
+    "end": 1.01,
+    "p": 0.8905,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.01,
+    "end": 1.17,
+    "p": 1.0351,
+    "consonant_ms": 25.1,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "一",
+    "pinyin": "yi",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.17,
+    "end": 1.41,
+    "p": 1.1748,
+    "consonant_ms": 4.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "切",
+    "pinyin": "qie",
+    "source": "both",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 1.44,
+    "end": 1.71,
+    "p": 1.4617,
+    "consonant_ms": 21.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "成",
+    "pinyin": "cheng",
+    "source": "both",
+    "initial": "ch",
+    "initial_kind": "unvoiced",
+    "start": 2.62,
+    "end": 2.89,
+    "p": 2.7188,
+    "consonant_ms": 98.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "为",
+    "pinyin": "wei",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 2.89,
+    "end": 3.13,
+    "p": 2.8909,
+    "consonant_ms": 0.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "世",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 3.13,
+    "end": 3.37,
+    "p": 3.1628,
+    "consonant_ms": 32.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "界",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 3.46,
+    "end": 3.73,
+    "p": 3.537,
+    "consonant_ms": 77.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 3.73,
+    "end": 3.99,
+    "p": 3.7689,
+    "consonant_ms": 38.9,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "终",
+    "pinyin": "zhong",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 4.48,
+    "end": 4.75,
+    "p": 4.5247,
+    "consonant_ms": 44.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "结",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 4.86,
+    "end": 5.13,
+    "p": 4.9213,
+    "consonant_ms": 61.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "者",
+    "pinyin": "zhe",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 5.18,
+    "end": 6.415,
+    "p": 5.2955,
+    "consonant_ms": 115.5,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t008",
+  "file": "没有什么能逃过世界的终结者.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "没有什么能逃过世界的终结者",
+  "text": "没有什么能逃过世界的终结者",
+  "asr_text": "没有什么能逃过世界的终结者",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "没",
+    "pinyin": "mei",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.26,
+    "end": 0.53,
+    "p": 0.2594,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "有",
+    "pinyin": "you",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.56,
+    "end": 0.81,
+    "p": 0.5912,
+    "consonant_ms": 31.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.81,
+    "end": 0.99,
+    "p": 0.9753,
+    "consonant_ms": 165.3,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.99,
+    "end": 1.23,
+    "p": 0.9902,
+    "consonant_ms": 0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "能",
+    "pinyin": "neng",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.38,
+    "end": 1.65,
+    "p": 1.4193,
+    "consonant_ms": 39.3,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "逃",
+    "pinyin": "tao",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 1.65,
+    "end": 1.89,
+    "p": 1.741,
+    "consonant_ms": 91.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "过",
+    "pinyin": "guo",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 1.89,
+    "end": 2.13,
+    "p": 1.9082,
+    "consonant_ms": 18.2,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "世",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.13,
+    "end": 2.39,
+    "p": 2.19,
+    "consonant_ms": 60.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "界",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.44,
+    "end": 2.65,
+    "p": 2.5143,
+    "consonant_ms": 74.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.65,
+    "end": 2.83,
+    "p": 2.6889,
+    "consonant_ms": 38.9,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "终",
+    "pinyin": "zhong",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 2.83,
+    "end": 3.07,
+    "p": 2.871,
+    "consonant_ms": 41.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "结",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 3.12,
+    "end": 3.39,
+    "p": 3.2152,
+    "consonant_ms": 95.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "者",
+    "pinyin": "zhe",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 3.39,
+    "end": 4.855,
+    "p": 3.4721,
+    "consonant_ms": 82.1,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t009",
+  "file": "西厂怎么能封东厂.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "西厂怎么能封东厂",
+  "text": "你们西厂西么么么能封东厂呢",
+  "asr_text": "你们西厂西么么么能封东厂呢",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 0.02,
+    "end": 0.15,
+    "p": 0.0449,
+    "consonant_ms": 24.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "们",
+    "pinyin": "men",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.15,
+    "end": 0.23,
+    "p": 0.1497,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "西",
+    "pinyin": "xi",
+    "source": "both",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.23,
+    "end": 0.37,
+    "p": 0.2544,
+    "consonant_ms": 24.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "厂",
+    "pinyin": "chang",
+    "source": "both",
+    "initial": "ch",
+    "initial_kind": "unvoiced",
+    "start": 0.37,
+    "end": 0.51,
+    "p": 0.3692,
+    "consonant_ms": -0.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "西",
+    "pinyin": "xi",
+    "source": "asr_only",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.51,
+    "end": 0.59,
+    "p": 0.5313,
+    "consonant_ms": 21.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.59,
+    "end": 0.67,
+    "p": 0.5912,
+    "consonant_ms": 1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.67,
+    "end": 0.77,
+    "p": 0.671,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.77,
+    "end": 0.87,
+    "p": 0.7882,
+    "consonant_ms": 18.2,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "能",
+    "pinyin": "neng",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 0.87,
+    "end": 0.97,
+    "p": 0.8705,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "封",
+    "pinyin": "feng",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 0.97,
+    "end": 1.09,
+    "p": 1.0077,
+    "consonant_ms": 37.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "东",
+    "pinyin": "dong",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.09,
+    "end": 1.27,
+    "p": 1.09,
+    "consonant_ms": 0.0,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "厂",
+    "pinyin": "chang",
+    "source": "both",
+    "initial": "ch",
+    "initial_kind": "unvoiced",
+    "start": 1.27,
+    "end": 1.43,
+    "p": 1.2696,
+    "consonant_ms": -0.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "呢",
+    "pinyin": "ne",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.43,
+    "end": 1.625,
+    "p": 1.5016,
+    "consonant_ms": 71.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "怎",
+  "asr_match": 0.88
+ },
+ {
+  "id": "t010",
+  "file": "扛大总管怎么被封了.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "扛大总管怎么被封了",
+  "text": "扛大总管怎么不说话了扛大总管怎么被封了谁封的我们大总管啊",
+  "asr_text": "扛大总管怎么不说话了扛大总管怎么被封了谁封的我们大总管啊",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "扛",
+    "pinyin": "kang",
+    "source": "asr_only",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.13,
+    "p": 0.0274,
+    "consonant_ms": 7.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "大",
+    "pinyin": "da",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.13,
+    "end": 0.25,
+    "p": 0.1297,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "总",
+    "pinyin": "zong",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.25,
+    "end": 0.37,
+    "p": 0.2494,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "管",
+    "pinyin": "guan",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.37,
+    "end": 0.45,
+    "p": 0.3692,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "怎",
+    "pinyin": "zen",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.53,
+    "p": 0.4515,
+    "consonant_ms": 1.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.53,
+    "end": 0.61,
+    "p": 0.5288,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.61,
+    "end": 0.69,
+    "p": 0.6385,
+    "consonant_ms": 28.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "说",
+    "pinyin": "shuo",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.69,
+    "end": 0.81,
+    "p": 0.7209,
+    "consonant_ms": 30.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "话",
+    "pinyin": "hua",
+    "source": "asr_only",
+    "initial": "h",
+    "initial_kind": "unvoiced",
+    "start": 0.81,
+    "end": 0.93,
+    "p": 0.8107,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "h 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.93,
+    "end": 1.05,
+    "p": 0.9304,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "扛",
+    "pinyin": "kang",
+    "source": "both",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 1.05,
+    "end": 1.19,
+    "p": 1.0626,
+    "consonant_ms": 12.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "大",
+    "pinyin": "da",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.19,
+    "end": 1.31,
+    "p": 1.2247,
+    "consonant_ms": 34.7,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "总",
+    "pinyin": "zong",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.31,
+    "end": 1.43,
+    "p": 1.3095,
+    "consonant_ms": -0.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "管",
+    "pinyin": "guan",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 1.43,
+    "end": 1.51,
+    "p": 1.4417,
+    "consonant_ms": 11.7,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "怎",
+    "pinyin": "zen",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.51,
+    "end": 1.59,
+    "p": 1.5639,
+    "consonant_ms": 53.9,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.59,
+    "end": 1.69,
+    "p": 1.6463,
+    "consonant_ms": 56.3,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "被",
+    "pinyin": "bei",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.69,
+    "end": 1.87,
+    "p": 1.7236,
+    "consonant_ms": 33.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "封",
+    "pinyin": "feng",
+    "source": "both",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 1.87,
+    "end": 2.05,
+    "p": 1.8882,
+    "consonant_ms": 18.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.05,
+    "end": 2.29,
+    "p": 2.0503,
+    "consonant_ms": 0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "谁",
+    "pinyin": "shui",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.6,
+    "end": 2.83,
+    "p": 2.6515,
+    "consonant_ms": 51.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "封",
+    "pinyin": "feng",
+    "source": "asr_only",
+    "initial": "f",
+    "initial_kind": "unvoiced",
+    "start": 2.83,
+    "end": 2.97,
+    "p": 2.8336,
+    "consonant_ms": 3.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.97,
+    "end": 3.05,
+    "p": 2.9707,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 3.05,
+    "end": 3.13,
+    "p": 3.0506,
+    "consonant_ms": 0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "们",
+    "pinyin": "men",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 3.13,
+    "end": 3.25,
+    "p": 3.1304,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "大",
+    "pinyin": "da",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 3.25,
+    "end": 3.41,
+    "p": 3.2501,
+    "consonant_ms": 0.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "总",
+    "pinyin": "zong",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 3.41,
+    "end": 3.59,
+    "p": 3.4571,
+    "consonant_ms": 47.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "管",
+    "pinyin": "guan",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 3.59,
+    "end": 3.83,
+    "p": 3.5893,
+    "consonant_ms": -0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "啊",
+    "pinyin": "a",
+    "source": "asr_only",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 3.88,
+    "end": 4.094,
+    "p": 3.8812,
+    "consonant_ms": 1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t011",
+  "file": "嘟嘟嘟，给你马愉悦送走.mp3",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "嘟嘟嘟给你马愉悦送走",
+  "text": "给你马愉悦送走",
+  "asr_text": "给你妈愉悦送走",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "给",
+    "pinyin": "gei",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.52,
+    "end": 0.63,
+    "p": 0.5188,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 0.63,
+    "end": 0.79,
+    "p": 0.6311,
+    "consonant_ms": 1.1,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "马",
+    "pinyin": "ma",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.79,
+    "end": 1.03,
+    "p": 0.7907,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "愉",
+    "pinyin": "yu",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.08,
+    "end": 1.27,
+    "p": 1.0975,
+    "consonant_ms": 17.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "悦",
+    "pinyin": "yue",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.27,
+    "end": 1.43,
+    "p": 1.2696,
+    "consonant_ms": -0.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "送",
+    "pinyin": "song",
+    "source": "both",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 1.43,
+    "end": 1.61,
+    "p": 1.4293,
+    "consonant_ms": -0.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "走",
+    "pinyin": "zou",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.61,
+    "end": 1.795,
+    "p": 1.6088,
+    "consonant_ms": -1.2,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "嘟嘟嘟",
+  "asr_match": 0.7
+ },
+ {
+  "id": "t012",
+  "file": "我不需要炫耀我的技艺，一切不言自明.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "我不需要炫耀我的技艺一切不言自明",
+  "text": "我不需要炫耀我的技艺一切不言自明",
+  "asr_text": "我不需要炫耀我的记忆一切不言自明",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.14,
+    "end": 0.41,
+    "p": 0.1771,
+    "consonant_ms": 37.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.41,
+    "end": 0.59,
+    "p": 0.4091,
+    "consonant_ms": -0.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "需",
+    "pinyin": "xu",
+    "source": "both",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.59,
+    "end": 0.77,
+    "p": 0.7358,
+    "consonant_ms": 145.8,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms"
+    ]
+   },
+   {
+    "char": "要",
+    "pinyin": "yao",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.77,
+    "end": 0.93,
+    "p": 0.7707,
+    "consonant_ms": 0.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "炫",
+    "pinyin": "xuan",
+    "source": "both",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.93,
+    "end": 1.17,
+    "p": 0.9853,
+    "consonant_ms": 55.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "耀",
+    "pinyin": "yao",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.17,
+    "end": 1.41,
+    "p": 1.2098,
+    "consonant_ms": 39.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 1.41,
+    "end": 1.53,
+    "p": 1.4193,
+    "consonant_ms": 9.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.53,
+    "end": 1.73,
+    "p": 1.5615,
+    "consonant_ms": 31.5,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "技",
+    "pinyin": "ji",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 1.73,
+    "end": 1.97,
+    "p": 1.7385,
+    "consonant_ms": 8.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "艺",
+    "pinyin": "yi",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.98,
+    "end": 2.25,
+    "p": 1.9805,
+    "consonant_ms": 0.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "一",
+    "pinyin": "yi",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 2.92,
+    "end": 3.19,
+    "p": 2.9882,
+    "consonant_ms": 68.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "切",
+    "pinyin": "qie",
+    "source": "both",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 3.32,
+    "end": 3.59,
+    "p": 3.32,
+    "consonant_ms": -0.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 3.59,
+    "end": 3.85,
+    "p": 3.6617,
+    "consonant_ms": 71.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "言",
+    "pinyin": "yan",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 3.85,
+    "end": 4.11,
+    "p": 3.9136,
+    "consonant_ms": 63.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "自",
+    "pinyin": "zi",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 4.18,
+    "end": 4.45,
+    "p": 4.2728,
+    "consonant_ms": 92.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "明",
+    "pinyin": "ming",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 4.52,
+    "end": 5.905,
+    "p": 4.829,
+    "consonant_ms": 309.0,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t013",
+  "file": "世界的终结者来了.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "世界的终结者来了",
+  "text": "时间到了世界的终结者来了",
+  "asr_text": "时间到了世界的终结者来了",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "时",
+    "pinyin": "shi",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.32,
+    "end": 0.59,
+    "p": 0.3492,
+    "consonant_ms": 29.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "间",
+    "pinyin": "jian",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.72,
+    "end": 0.99,
+    "p": 0.7209,
+    "consonant_ms": 0.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "到",
+    "pinyin": "dao",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.08,
+    "end": 1.35,
+    "p": 1.1274,
+    "consonant_ms": 47.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.44,
+    "end": 1.71,
+    "p": 1.4392,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "世",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.46,
+    "end": 2.73,
+    "p": 2.4893,
+    "consonant_ms": 29.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "界",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.76,
+    "end": 2.91,
+    "p": 2.8186,
+    "consonant_ms": 58.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.91,
+    "end": 3.13,
+    "p": 2.9583,
+    "consonant_ms": 48.3,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "终",
+    "pinyin": "zhong",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 3.13,
+    "end": 3.37,
+    "p": 3.1304,
+    "consonant_ms": 0.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "结",
+    "pinyin": "jie",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 3.44,
+    "end": 3.71,
+    "p": 3.5145,
+    "consonant_ms": 74.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "者",
+    "pinyin": "zhe",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 3.74,
+    "end": 4.01,
+    "p": 3.7864,
+    "consonant_ms": 46.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 4.48,
+    "end": 4.75,
+    "p": 4.4823,
+    "consonant_ms": 2.3,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 4.86,
+    "end": 6.325,
+    "p": 4.9263,
+    "consonant_ms": 66.3,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t014",
+  "file": "跟我没关系.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "跟我没关系",
+  "text": "跟我没关系",
+  "asr_text": "跟我没关系",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "跟",
+    "pinyin": "gen",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.11,
+    "p": 0.0549,
+    "consonant_ms": 34.9,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.11,
+    "end": 0.19,
+    "p": 0.1098,
+    "consonant_ms": -0.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "没",
+    "pinyin": "mei",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.19,
+    "end": 0.31,
+    "p": 0.232,
+    "consonant_ms": 42.0,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "关",
+    "pinyin": "guan",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.31,
+    "end": 0.51,
+    "p": 0.3542,
+    "consonant_ms": 44.2,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "系",
+    "pinyin": "xi",
+    "source": "both",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.51,
+    "end": 0.715,
+    "p": 0.5912,
+    "consonant_ms": 81.2,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t015",
+  "file": "这么痛吗卧槽.mp3",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "这么痛吗卧槽",
+  "text": "有这么痛吗卧槽",
+  "asr_text": "有这么痛吗卧槽",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "有",
+    "pinyin": "you",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.08,
+    "end": 0.35,
+    "p": 0.0798,
+    "consonant_ms": -0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.42,
+    "end": 0.69,
+    "p": 0.4265,
+    "consonant_ms": 6.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.76,
+    "end": 1.03,
+    "p": 0.7608,
+    "consonant_ms": 0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "痛",
+    "pinyin": "tong",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 1.1,
+    "end": 1.37,
+    "p": 1.2098,
+    "consonant_ms": 109.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "吗",
+    "pinyin": "ma",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.54,
+    "end": 1.79,
+    "p": 1.539,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "卧",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 1.79,
+    "end": 2.03,
+    "p": 1.7909,
+    "consonant_ms": 0.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "槽",
+    "pinyin": "cao",
+    "source": "both",
+    "initial": "c",
+    "initial_kind": "unvoiced",
+    "start": 2.06,
+    "end": 2.335,
+    "p": 2.1451,
+    "consonant_ms": 85.1,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t016",
+  "file": "真实伤害.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "真实伤害",
+  "text": "真实伤害是属于这个游戏里最真实的",
+  "asr_text": "真实伤害是属于这个游戏里最真实的",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "真",
+    "pinyin": "zhen",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.19,
+    "p": 0.0549,
+    "consonant_ms": 34.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "实",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.19,
+    "end": 0.33,
+    "p": 0.2195,
+    "consonant_ms": 29.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "伤",
+    "pinyin": "shang",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.33,
+    "end": 0.45,
+    "p": 0.3317,
+    "consonant_ms": 1.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "害",
+    "pinyin": "hai",
+    "source": "both",
+    "initial": "h",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.57,
+    "p": 0.449,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "h 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "是",
+    "pinyin": "shi",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.57,
+    "end": 0.69,
+    "p": 0.6161,
+    "consonant_ms": 46.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "属",
+    "pinyin": "shu",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.69,
+    "end": 0.79,
+    "p": 0.7583,
+    "consonant_ms": 68.3,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "于",
+    "pinyin": "yu",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.79,
+    "end": 0.87,
+    "p": 0.7907,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.87,
+    "end": 0.93,
+    "p": 0.9204,
+    "consonant_ms": 50.4,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "个",
+    "pinyin": "ge",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.93,
+    "end": 1.03,
+    "p": 0.9304,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "游",
+    "pinyin": "you",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.03,
+    "end": 1.15,
+    "p": 1.0302,
+    "consonant_ms": 0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "戏",
+    "pinyin": "xi",
+    "source": "asr_only",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 1.15,
+    "end": 1.27,
+    "p": 1.2147,
+    "consonant_ms": 64.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "里",
+    "pinyin": "li",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.27,
+    "end": 1.37,
+    "p": 1.302,
+    "consonant_ms": 32.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "最",
+    "pinyin": "zui",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.37,
+    "end": 1.55,
+    "p": 1.4492,
+    "consonant_ms": 79.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "真",
+    "pinyin": "zhen",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 1.55,
+    "end": 1.75,
+    "p": 1.5939,
+    "consonant_ms": 43.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "实",
+    "pinyin": "shi",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 1.75,
+    "end": 1.91,
+    "p": 1.8358,
+    "consonant_ms": 85.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.91,
+    "end": 2.035,
+    "p": 1.9456,
+    "consonant_ms": 35.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t017",
+  "file": "这不就拿下了么，你在装什么？.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "这不就拿下了么你在装什么",
+  "text": "这不就拿下了么他装什么你在装什么",
+  "asr_text": "这不就拿下了么他装什么你在装什么",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.13,
+    "p": 0.0723,
+    "consonant_ms": 52.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.13,
+    "end": 0.25,
+    "p": 0.1696,
+    "consonant_ms": 39.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "就",
+    "pinyin": "jiu",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.25,
+    "end": 0.35,
+    "p": 0.2494,
+    "consonant_ms": -0.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "拿",
+    "pinyin": "na",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 0.35,
+    "end": 0.57,
+    "p": 0.3492,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "下",
+    "pinyin": "xia",
+    "source": "both",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 0.57,
+    "end": 0.75,
+    "p": 0.5712,
+    "consonant_ms": 1.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.75,
+    "end": 0.87,
+    "p": 0.7508,
+    "consonant_ms": 0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.87,
+    "end": 1.07,
+    "p": 0.8705,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "他",
+    "pinyin": "ta",
+    "source": "asr_only",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 1.07,
+    "end": 1.19,
+    "p": 1.085,
+    "consonant_ms": 15.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "装",
+    "pinyin": "zhuang",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 1.19,
+    "end": 1.35,
+    "p": 1.2172,
+    "consonant_ms": 27.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 1.35,
+    "end": 1.47,
+    "p": 1.3943,
+    "consonant_ms": 44.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.47,
+    "end": 1.71,
+    "p": 1.4916,
+    "consonant_ms": 21.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.84,
+    "end": 1.97,
+    "p": 1.9281,
+    "consonant_ms": 88.1,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "在",
+    "pinyin": "zai",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.97,
+    "end": 2.13,
+    "p": 2.0304,
+    "consonant_ms": 60.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "装",
+    "pinyin": "zhuang",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 2.13,
+    "end": 2.33,
+    "p": 2.1776,
+    "consonant_ms": 47.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.33,
+    "end": 2.45,
+    "p": 2.3297,
+    "consonant_ms": -0.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 2.45,
+    "end": 2.755,
+    "p": 2.4744,
+    "consonant_ms": 24.4,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t018",
+  "file": "你为了抬杠你连话都不听全啊.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "你为了抬杠你连话都不听全啊",
+  "text": "我他妈有说五个人都不怕空吗你个傻逼你连话都听不全的你为了抬杠你话都不听全啊",
+  "asr_text": "我他妈有说五个人都不怕空吗你个傻逼你连话都听不全的你为了抬杠你话都不听全啊",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.08,
+    "end": 0.23,
+    "p": 0.1048,
+    "consonant_ms": 24.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "他",
+    "pinyin": "ta",
+    "source": "asr_only",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 0.23,
+    "end": 0.35,
+    "p": 0.2395,
+    "consonant_ms": 9.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "妈",
+    "pinyin": "ma",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.35,
+    "end": 0.43,
+    "p": 0.3492,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "有",
+    "pinyin": "you",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.43,
+    "end": 0.53,
+    "p": 0.429,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "说",
+    "pinyin": "shuo",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.53,
+    "end": 0.65,
+    "p": 0.5862,
+    "consonant_ms": 56.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "五",
+    "pinyin": "wu",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.65,
+    "end": 0.79,
+    "p": 0.651,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "个",
+    "pinyin": "ge",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.79,
+    "end": 0.89,
+    "p": 0.7907,
+    "consonant_ms": 0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "人",
+    "pinyin": "ren",
+    "source": "asr_only",
+    "initial": "r",
+    "initial_kind": "sonorant",
+    "start": 0.89,
+    "end": 1.01,
+    "p": 0.9379,
+    "consonant_ms": 47.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "都",
+    "pinyin": "dou",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.01,
+    "end": 1.15,
+    "p": 1.1399,
+    "consonant_ms": 129.9,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.15,
+    "end": 1.27,
+    "p": 1.1499,
+    "consonant_ms": -0.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "怕",
+    "pinyin": "pa",
+    "source": "asr_only",
+    "initial": "p",
+    "initial_kind": "unvoiced",
+    "start": 1.27,
+    "end": 1.39,
+    "p": 1.2846,
+    "consonant_ms": 14.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "空",
+    "pinyin": "kong",
+    "source": "asr_only",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 1.39,
+    "end": 1.49,
+    "p": 1.4717,
+    "consonant_ms": 81.7,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "吗",
+    "pinyin": "ma",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.49,
+    "end": 1.65,
+    "p": 1.4891,
+    "consonant_ms": -0.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.65,
+    "end": 1.79,
+    "p": 1.6787,
+    "consonant_ms": 28.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "个",
+    "pinyin": "ge",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 1.79,
+    "end": 1.91,
+    "p": 1.8009,
+    "consonant_ms": 10.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "傻",
+    "pinyin": "sha",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 1.91,
+    "end": 2.03,
+    "p": 1.963,
+    "consonant_ms": 53.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "逼",
+    "pinyin": "bi",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 2.03,
+    "end": 2.19,
+    "p": 2.0678,
+    "consonant_ms": 37.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 2.19,
+    "end": 2.35,
+    "p": 2.19,
+    "consonant_ms": 0.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "连",
+    "pinyin": "lian",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.35,
+    "end": 2.45,
+    "p": 2.3497,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "话",
+    "pinyin": "hua",
+    "source": "asr_only",
+    "initial": "h",
+    "initial_kind": "unvoiced",
+    "start": 2.45,
+    "end": 2.57,
+    "p": 2.4968,
+    "consonant_ms": 46.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "h 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "都",
+    "pinyin": "dou",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.57,
+    "end": 2.75,
+    "p": 2.6664,
+    "consonant_ms": 96.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "听",
+    "pinyin": "ting",
+    "source": "asr_only",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 2.75,
+    "end": 2.85,
+    "p": 2.7488,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 2.85,
+    "end": 2.97,
+    "p": 2.9259,
+    "consonant_ms": 75.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "全",
+    "pinyin": "quan",
+    "source": "asr_only",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 2.97,
+    "end": 3.13,
+    "p": 3.0281,
+    "consonant_ms": 58.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 3.13,
+    "end": 3.31,
+    "p": 3.1678,
+    "consonant_ms": 37.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 3.31,
+    "end": 3.55,
+    "p": 3.3349,
+    "consonant_ms": 24.9,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "为",
+    "pinyin": "wei",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 3.8,
+    "end": 3.95,
+    "p": 3.9236,
+    "consonant_ms": 123.6,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 3.95,
+    "end": 4.07,
+    "p": 3.9984,
+    "consonant_ms": 48.4,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "抬",
+    "pinyin": "tai",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 4.07,
+    "end": 4.17,
+    "p": 4.0707,
+    "consonant_ms": 0.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "杠",
+    "pinyin": "gang",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 4.17,
+    "end": 4.29,
+    "p": 4.2104,
+    "consonant_ms": 40.4,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 4.29,
+    "end": 4.43,
+    "p": 4.2902,
+    "consonant_ms": 0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "话",
+    "pinyin": "hua",
+    "source": "both",
+    "initial": "h",
+    "initial_kind": "unvoiced",
+    "start": 4.43,
+    "end": 4.55,
+    "p": 4.4499,
+    "consonant_ms": 19.9,
+    "verdict": "存疑",
+    "reasons": [
+     "h 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "都",
+    "pinyin": "dou",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 4.55,
+    "end": 4.69,
+    "p": 4.5497,
+    "consonant_ms": -0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "不",
+    "pinyin": "bu",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 4.69,
+    "end": 4.81,
+    "p": 4.6893,
+    "consonant_ms": -0.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "听",
+    "pinyin": "ting",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 4.81,
+    "end": 4.91,
+    "p": 4.819,
+    "consonant_ms": 9.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "全",
+    "pinyin": "quan",
+    "source": "both",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 4.91,
+    "end": 5.09,
+    "p": 5.051,
+    "consonant_ms": 141.0,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms"
+    ]
+   },
+   {
+    "char": "啊",
+    "pinyin": "a",
+    "source": "both",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 5.09,
+    "end": 5.455,
+    "p": 5.0909,
+    "consonant_ms": 0.9,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "连",
+  "asr_match": 0.92
+ },
+ {
+  "id": "t019",
+  "file": "自己也知道自己.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "自己也知道自己",
+  "text": "自己也知道自己",
+  "asr_text": "自己也知道自己",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "自",
+    "pinyin": "zi",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.0,
+    "end": 0.15,
+    "p": 0.0723,
+    "consonant_ms": 72.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "己",
+    "pinyin": "ji",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.15,
+    "end": 0.29,
+    "p": 0.1721,
+    "consonant_ms": 22.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "也",
+    "pinyin": "ye",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.29,
+    "end": 0.35,
+    "p": 0.2893,
+    "consonant_ms": -0.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "知",
+    "pinyin": "zhi",
+    "source": "both",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.35,
+    "end": 0.45,
+    "p": 0.3667,
+    "consonant_ms": 16.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "道",
+    "pinyin": "dao",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.57,
+    "p": 0.4615,
+    "consonant_ms": 11.5,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "自",
+    "pinyin": "zi",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 0.57,
+    "end": 0.69,
+    "p": 0.6061,
+    "consonant_ms": 36.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "己",
+    "pinyin": "ji",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.69,
+    "end": 0.855,
+    "p": 0.6909,
+    "consonant_ms": 0.9,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t020",
+  "file": "说的道理.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "说的道理",
+  "text": "说的道理",
+  "asr_text": "说的道理",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "说",
+    "pinyin": "shuo",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.12,
+    "end": 0.39,
+    "p": 0.1546,
+    "consonant_ms": 34.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.42,
+    "end": 0.69,
+    "p": 0.4689,
+    "consonant_ms": 48.9,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "道",
+    "pinyin": "dao",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.76,
+    "end": 1.03,
+    "p": 0.7608,
+    "consonant_ms": 0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "理",
+    "pinyin": "li",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.36,
+    "end": 1.845,
+    "p": 1.3594,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t021",
+  "file": "零杠零.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "零杠零",
+  "text": "零杠零开局你在那里比如说零杠零",
+  "asr_text": "零杠零开局你在那里比如说零杠零",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "零",
+    "pinyin": "ling",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.2,
+    "end": 0.39,
+    "p": 0.227,
+    "consonant_ms": 27.0,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "杠",
+    "pinyin": "gang",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.39,
+    "end": 0.53,
+    "p": 0.3891,
+    "consonant_ms": -0.9,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "零",
+    "pinyin": "ling",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.53,
+    "end": 0.71,
+    "p": 0.5288,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "开",
+    "pinyin": "kai",
+    "source": "asr_only",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 0.71,
+    "end": 0.95,
+    "p": 0.7184,
+    "consonant_ms": 8.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "局",
+    "pinyin": "ju",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.95,
+    "end": 1.19,
+    "p": 1.0277,
+    "consonant_ms": 77.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.19,
+    "end": 1.35,
+    "p": 1.1898,
+    "consonant_ms": -0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "在",
+    "pinyin": "zai",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 1.35,
+    "end": 1.49,
+    "p": 1.3619,
+    "consonant_ms": 11.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "那",
+    "pinyin": "na",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.49,
+    "end": 1.65,
+    "p": 1.5041,
+    "consonant_ms": 14.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "里",
+    "pinyin": "li",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.65,
+    "end": 1.87,
+    "p": 1.6537,
+    "consonant_ms": 3.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "比",
+    "pinyin": "bi",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.87,
+    "end": 2.01,
+    "p": 1.958,
+    "consonant_ms": 88.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "如",
+    "pinyin": "ru",
+    "source": "asr_only",
+    "initial": "r",
+    "initial_kind": "sonorant",
+    "start": 2.01,
+    "end": 2.11,
+    "p": 2.0104,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "说",
+    "pinyin": "shuo",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.11,
+    "end": 2.23,
+    "p": 2.1302,
+    "consonant_ms": 20.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "零",
+    "pinyin": "ling",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.23,
+    "end": 2.39,
+    "p": 2.2574,
+    "consonant_ms": 27.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "杠",
+    "pinyin": "gang",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 2.39,
+    "end": 2.51,
+    "p": 2.3896,
+    "consonant_ms": -0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "零",
+    "pinyin": "ling",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.51,
+    "end": 2.685,
+    "p": 2.5891,
+    "consonant_ms": 79.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t022",
+  "file": "我是来上路打架的.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "我是来上路打架的",
+  "text": "但是我这波上来我是一定要打架的我要打架我这波多了一千一百块钱我是来上路打架的",
+  "asr_text": "但是我这波上来我是一定要打架的我要打架我这波多了一千一百块钱我是来上路打架的",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "但",
+    "pinyin": "dan",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.02,
+    "end": 0.17,
+    "p": 0.0873,
+    "consonant_ms": 67.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "是",
+    "pinyin": "shi",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.17,
+    "end": 0.25,
+    "p": 0.1921,
+    "consonant_ms": 22.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.25,
+    "end": 0.37,
+    "p": 0.2494,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.37,
+    "end": 0.45,
+    "p": 0.3966,
+    "consonant_ms": 26.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "波",
+    "pinyin": "bo",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.55,
+    "p": 0.449,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "上",
+    "pinyin": "shang",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.55,
+    "end": 0.67,
+    "p": 0.5712,
+    "consonant_ms": 21.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 0.67,
+    "end": 0.75,
+    "p": 0.671,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.75,
+    "end": 0.83,
+    "p": 0.7807,
+    "consonant_ms": 30.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "是",
+    "pinyin": "shi",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.83,
+    "end": 0.93,
+    "p": 0.8306,
+    "consonant_ms": 0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "一",
+    "pinyin": "yi",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.93,
+    "end": 1.01,
+    "p": 0.9304,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "定",
+    "pinyin": "ding",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.01,
+    "end": 1.09,
+    "p": 1.0277,
+    "consonant_ms": 17.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "要",
+    "pinyin": "yao",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.09,
+    "end": 1.17,
+    "p": 1.09,
+    "consonant_ms": 0.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "打",
+    "pinyin": "da",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.17,
+    "end": 1.35,
+    "p": 1.1773,
+    "consonant_ms": 7.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "架",
+    "pinyin": "jia",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 1.35,
+    "end": 1.53,
+    "p": 1.3494,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 1.53,
+    "end": 1.77,
+    "p": 1.5315,
+    "consonant_ms": 1.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 2.18,
+    "end": 2.37,
+    "p": 2.2698,
+    "consonant_ms": 89.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "要",
+    "pinyin": "yao",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 2.37,
+    "end": 2.55,
+    "p": 2.3696,
+    "consonant_ms": -0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "打",
+    "pinyin": "da",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.55,
+    "end": 2.79,
+    "p": 2.5492,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "架",
+    "pinyin": "jia",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.79,
+    "end": 3.03,
+    "p": 2.7912,
+    "consonant_ms": 1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 3.03,
+    "end": 3.11,
+    "p": 3.0306,
+    "consonant_ms": 0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 3.11,
+    "end": 3.25,
+    "p": 3.1104,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "波",
+    "pinyin": "bo",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 3.25,
+    "end": 3.37,
+    "p": 3.2626,
+    "consonant_ms": 12.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "多",
+    "pinyin": "duo",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 3.37,
+    "end": 3.47,
+    "p": 3.4347,
+    "consonant_ms": 64.7,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 3.47,
+    "end": 3.55,
+    "p": 3.4696,
+    "consonant_ms": -0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "一",
+    "pinyin": "yi",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 3.55,
+    "end": 3.65,
+    "p": 3.5494,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "千",
+    "pinyin": "qian",
+    "source": "asr_only",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 3.65,
+    "end": 3.73,
+    "p": 3.6492,
+    "consonant_ms": -0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "一",
+    "pinyin": "yi",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 3.73,
+    "end": 3.85,
+    "p": 3.729,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "百",
+    "pinyin": "bai",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 3.85,
+    "end": 3.95,
+    "p": 3.8512,
+    "consonant_ms": 1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "块",
+    "pinyin": "kuai",
+    "source": "asr_only",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 3.95,
+    "end": 4.03,
+    "p": 3.951,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "钱",
+    "pinyin": "qian",
+    "source": "asr_only",
+    "initial": "q",
+    "initial_kind": "unvoiced",
+    "start": 4.03,
+    "end": 4.13,
+    "p": 4.0308,
+    "consonant_ms": 0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 4.13,
+    "end": 4.21,
+    "p": 4.1306,
+    "consonant_ms": 0.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "是",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 4.21,
+    "end": 4.31,
+    "p": 4.2104,
+    "consonant_ms": 0.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 4.31,
+    "end": 4.39,
+    "p": 4.3327,
+    "consonant_ms": 22.7,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "上",
+    "pinyin": "shang",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 4.39,
+    "end": 4.49,
+    "p": 4.39,
+    "consonant_ms": 0.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "路",
+    "pinyin": "lu",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 4.49,
+    "end": 4.61,
+    "p": 4.4898,
+    "consonant_ms": -0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "打",
+    "pinyin": "da",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 4.61,
+    "end": 4.79,
+    "p": 4.6594,
+    "consonant_ms": 49.4,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "架",
+    "pinyin": "jia",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 4.79,
+    "end": 4.95,
+    "p": 4.8365,
+    "consonant_ms": 46.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 4.95,
+    "end": 5.185,
+    "p": 4.9488,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t023",
+  "file": "看到我的剑刃了吗？死亡在等你.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "看到我的剑刃了吗死亡在等你",
+  "text": "看到我的剑刃了吗死亡在等你",
+  "asr_text": "看到我的剑刃了吗死亡在等你",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "看",
+    "pinyin": "kan",
+    "source": "both",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 0.18,
+    "end": 0.45,
+    "p": 0.1871,
+    "consonant_ms": 7.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "到",
+    "pinyin": "dao",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.65,
+    "p": 0.4889,
+    "consonant_ms": 38.9,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.65,
+    "end": 0.77,
+    "p": 0.651,
+    "consonant_ms": 1.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.77,
+    "end": 0.99,
+    "p": 0.7857,
+    "consonant_ms": 15.7,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "剑",
+    "pinyin": "jian",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.99,
+    "end": 1.23,
+    "p": 1.0476,
+    "consonant_ms": 57.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "刃",
+    "pinyin": "ren",
+    "source": "both",
+    "initial": "r",
+    "initial_kind": "sonorant",
+    "start": 1.28,
+    "end": 1.55,
+    "p": 1.302,
+    "consonant_ms": 22.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "both",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.55,
+    "end": 1.77,
+    "p": 1.6063,
+    "consonant_ms": 56.3,
+    "verdict": "存疑",
+    "reasons": [
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "吗",
+    "pinyin": "ma",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 1.77,
+    "end": 2.01,
+    "p": 1.771,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "死",
+    "pinyin": "si",
+    "source": "both",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 2.7,
+    "end": 2.97,
+    "p": 2.7737,
+    "consonant_ms": 73.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "亡",
+    "pinyin": "wang",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 3.1,
+    "end": 3.37,
+    "p": 3.1279,
+    "consonant_ms": 27.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "在",
+    "pinyin": "zai",
+    "source": "both",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 3.8,
+    "end": 4.07,
+    "p": 3.8737,
+    "consonant_ms": 73.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "等",
+    "pinyin": "deng",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 4.16,
+    "end": 4.43,
+    "p": 4.1905,
+    "consonant_ms": 30.5,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 4.7,
+    "end": 6.265,
+    "p": 4.6993,
+    "consonant_ms": -0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t024",
+  "file": "那就是我的锅消音.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "那就是我的锅消音",
+  "text": "那就是我的锅",
+  "asr_text": "那就是我的锅",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "那",
+    "pinyin": "na",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 0.0,
+    "end": 0.15,
+    "p": 0.02,
+    "consonant_ms": 20.0,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "就",
+    "pinyin": "jiu",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 0.15,
+    "end": 0.27,
+    "p": 0.1621,
+    "consonant_ms": 12.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "是",
+    "pinyin": "shi",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.27,
+    "end": 0.37,
+    "p": 0.3193,
+    "consonant_ms": 49.3,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.37,
+    "end": 0.45,
+    "p": 0.3692,
+    "consonant_ms": -0.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.45,
+    "end": 0.59,
+    "p": 0.449,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "锅",
+    "pinyin": "guo",
+    "source": "both",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.59,
+    "end": 0.755,
+    "p": 0.671,
+    "consonant_ms": 81.0,
+    "verdict": "存疑",
+    "reasons": [
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "消音",
+  "asr_match": 0.75
+ },
+ {
+  "id": "t025",
+  "file": "你觉得你能杀死我.wav",
+  "folder": "剑魔语音+文字对照\\文字语音",
+  "name_text": "你觉得你能杀死我",
+  "text": "你觉得你能杀死我",
+  "asr_text": "你觉得你能杀死我",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 1.94,
+    "end": 2.21,
+    "p": 1.9506,
+    "consonant_ms": 10.6,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "觉",
+    "pinyin": "jue",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.38,
+    "end": 2.65,
+    "p": 2.5218,
+    "consonant_ms": 141.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "得",
+    "pinyin": "de",
+    "source": "both",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 2.65,
+    "end": 2.85,
+    "p": 2.6814,
+    "consonant_ms": 31.4,
+    "verdict": "存疑",
+    "reasons": [
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 2.85,
+    "end": 3.09,
+    "p": 2.851,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "能",
+    "pinyin": "neng",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 3.14,
+    "end": 3.41,
+    "p": 3.1404,
+    "consonant_ms": 0.4,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "杀",
+    "pinyin": "sha",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 4.28,
+    "end": 4.55,
+    "p": 4.3027,
+    "consonant_ms": 22.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "死",
+    "pinyin": "si",
+    "source": "both",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 4.74,
+    "end": 5.01,
+    "p": 4.8565,
+    "consonant_ms": 116.5,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 5.1,
+    "end": 6.495,
+    "p": 5.1009,
+    "consonant_ms": 0.9,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t026",
+  "file": "2机上3 3及圣4 你玩尼玛呢.mp3",
+  "folder": "棍の音\\电棍语音包",
+  "name_text": "机上及圣你玩尼玛呢",
+  "text": "妈傻逼吧二机来中路圣三三级来中路升四级你玩尼玛呢你在",
+  "asr_text": "妈傻逼吧二级来中路升三三级来中路升四级你玩尼玛呢你在",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "妈",
+    "pinyin": "ma",
+    "source": "asr_only",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.56,
+    "end": 0.83,
+    "p": 0.6336,
+    "consonant_ms": 73.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "傻",
+    "pinyin": "sha",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.83,
+    "end": 1.09,
+    "p": 0.8306,
+    "consonant_ms": 0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "逼",
+    "pinyin": "bi",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.18,
+    "end": 1.37,
+    "p": 1.3195,
+    "consonant_ms": 139.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "吧",
+    "pinyin": "ba",
+    "source": "asr_only",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 1.37,
+    "end": 1.53,
+    "p": 1.4243,
+    "consonant_ms": 54.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "二",
+    "pinyin": "er",
+    "source": "asr_only",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 1.53,
+    "end": 1.69,
+    "p": 1.529,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "机",
+    "pinyin": "ji",
+    "source": "both",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 1.69,
+    "end": 1.81,
+    "p": 1.6912,
+    "consonant_ms": 1.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.81,
+    "end": 1.93,
+    "p": 1.8259,
+    "consonant_ms": 15.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "中",
+    "pinyin": "zhong",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 1.93,
+    "end": 2.05,
+    "p": 1.9306,
+    "consonant_ms": 0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "路",
+    "pinyin": "lu",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.05,
+    "end": 2.15,
+    "p": 2.0503,
+    "consonant_ms": 0.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "圣",
+    "pinyin": "sheng",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 2.15,
+    "end": 2.33,
+    "p": 2.1501,
+    "consonant_ms": 0.1,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "三",
+    "pinyin": "san",
+    "source": "asr_only",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 2.33,
+    "end": 2.51,
+    "p": 2.3995,
+    "consonant_ms": 69.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "三",
+    "pinyin": "san",
+    "source": "asr_only",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 2.51,
+    "end": 2.63,
+    "p": 2.5766,
+    "consonant_ms": 66.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "级",
+    "pinyin": "ji",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 2.63,
+    "end": 2.73,
+    "p": 2.629,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "来",
+    "pinyin": "lai",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.73,
+    "end": 2.83,
+    "p": 2.7488,
+    "consonant_ms": 18.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "中",
+    "pinyin": "zhong",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 2.83,
+    "end": 2.95,
+    "p": 2.8311,
+    "consonant_ms": 1.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "路",
+    "pinyin": "lu",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 2.95,
+    "end": 3.05,
+    "p": 2.9508,
+    "consonant_ms": 0.8,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "升",
+    "pinyin": "sheng",
+    "source": "asr_only",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 3.05,
+    "end": 3.23,
+    "p": 3.1204,
+    "consonant_ms": 70.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "四",
+    "pinyin": "si",
+    "source": "asr_only",
+    "initial": "s",
+    "initial_kind": "unvoiced",
+    "start": 3.23,
+    "end": 3.41,
+    "p": 3.3424,
+    "consonant_ms": 112.4,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "级",
+    "pinyin": "ji",
+    "source": "asr_only",
+    "initial": "j",
+    "initial_kind": "unvoiced",
+    "start": 3.41,
+    "end": 3.53,
+    "p": 3.5095,
+    "consonant_ms": 99.5,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 3.53,
+    "end": 3.65,
+    "p": 3.5295,
+    "consonant_ms": -0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "玩",
+    "pinyin": "wan",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 3.65,
+    "end": 3.81,
+    "p": 3.719,
+    "consonant_ms": 69.0,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "尼",
+    "pinyin": "ni",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 3.81,
+    "end": 3.99,
+    "p": 3.8088,
+    "consonant_ms": -1.2,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "玛",
+    "pinyin": "ma",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 3.99,
+    "end": 4.19,
+    "p": 4.0358,
+    "consonant_ms": 45.8,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "呢",
+    "pinyin": "ne",
+    "source": "both",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 4.19,
+    "end": 4.31,
+    "p": 4.1905,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "你",
+    "pinyin": "ni",
+    "source": "asr_only",
+    "initial": "n",
+    "initial_kind": "sonorant",
+    "start": 4.31,
+    "end": 4.49,
+    "p": 4.3102,
+    "consonant_ms": 0.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "n 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "在",
+    "pinyin": "zai",
+    "source": "asr_only",
+    "initial": "z",
+    "initial_kind": "unvoiced",
+    "start": 4.49,
+    "end": 4.805,
+    "p": 4.5172,
+    "consonant_ms": 27.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   }
+  ],
+  "dropped": "上及",
+  "asr_match": 0.78
+ },
+ {
+  "id": "t027",
+  "file": "卧槽冰（撕裂.wav",
+  "folder": "棍の音\\山泥若语音包",
+  "name_text": "卧槽冰撕裂",
+  "text": "卧槽冰行我的",
+  "asr_text": "卧槽冰行我的",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "卧",
+    "pinyin": "wo",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.38,
+    "end": 0.65,
+    "p": 0.3791,
+    "consonant_ms": -0.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "槽",
+    "pinyin": "cao",
+    "source": "both",
+    "initial": "c",
+    "initial_kind": "unvoiced",
+    "start": 0.92,
+    "end": 1.19,
+    "p": 0.9429,
+    "consonant_ms": 22.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "冰",
+    "pinyin": "bing",
+    "source": "both",
+    "initial": "b",
+    "initial_kind": "unvoiced",
+    "start": 3.68,
+    "end": 3.95,
+    "p": 3.6791,
+    "consonant_ms": -0.9,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "行",
+    "pinyin": "xing",
+    "source": "asr_only",
+    "initial": "x",
+    "initial_kind": "unvoiced",
+    "start": 4.2,
+    "end": 4.47,
+    "p": 4.2005,
+    "consonant_ms": 0.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "我",
+    "pinyin": "wo",
+    "source": "asr_only",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 5.78,
+    "end": 6.05,
+    "p": 5.8442,
+    "consonant_ms": 64.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "的",
+    "pinyin": "de",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 6.16,
+    "end": 7.035,
+    "p": 6.161,
+    "consonant_ms": 1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   }
+  ],
+  "dropped": "撕裂",
+  "asr_match": 0.6
+ },
+ {
+  "id": "t028",
+  "file": "（阴阳怪气）为什么呀.wav",
+  "folder": "棍の音\\水母卡组",
+  "name_text": "为什么呀",
+  "text": "为什么呀",
+  "asr_text": "为什么呀",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "为",
+    "pinyin": "wei",
+    "source": "both",
+    "initial": "w",
+    "initial_kind": "zero",
+    "start": 0.02,
+    "end": 0.21,
+    "p": 0.0424,
+    "consonant_ms": 22.4,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "什",
+    "pinyin": "shen",
+    "source": "both",
+    "initial": "sh",
+    "initial_kind": "unvoiced",
+    "start": 0.21,
+    "end": 0.39,
+    "p": 0.2968,
+    "consonant_ms": 86.8,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "么",
+    "pinyin": "me",
+    "source": "both",
+    "initial": "m",
+    "initial_kind": "sonorant",
+    "start": 0.39,
+    "end": 0.63,
+    "p": 0.424,
+    "consonant_ms": 34.0,
+    "verdict": "存疑",
+    "reasons": [
+     "m 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "呀",
+    "pinyin": "ya",
+    "source": "both",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.63,
+    "end": 0.885,
+    "p": 0.6311,
+    "consonant_ms": 1.1,
+    "verdict": "自信",
+    "reasons": []
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ },
+ {
+  "id": "t029",
+  "file": "太可爱.wav",
+  "folder": "棍の音\\电棍原声大碟",
+  "name_text": "太可爱",
+  "text": "这这呆哥也太可爱了呀太可爱了呀",
+  "asr_text": "这这呆哥也太可爱了呀太可爱了呀",
+  "status": "ok",
+  "chars": [
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.0,
+    "end": 0.13,
+    "p": 0.0125,
+    "consonant_ms": 12.5,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "这",
+    "pinyin": "zhe",
+    "source": "asr_only",
+    "initial": "zh",
+    "initial_kind": "unvoiced",
+    "start": 0.13,
+    "end": 0.29,
+    "p": 0.1322,
+    "consonant_ms": 2.2,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "呆",
+    "pinyin": "dai",
+    "source": "asr_only",
+    "initial": "d",
+    "initial_kind": "unvoiced",
+    "start": 0.29,
+    "end": 0.49,
+    "p": 0.2893,
+    "consonant_ms": -0.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "d 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "哥",
+    "pinyin": "ge",
+    "source": "asr_only",
+    "initial": "g",
+    "initial_kind": "unvoiced",
+    "start": 0.49,
+    "end": 0.65,
+    "p": 0.4889,
+    "consonant_ms": -1.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "g 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "也",
+    "pinyin": "ye",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 0.65,
+    "end": 0.89,
+    "p": 0.6909,
+    "consonant_ms": 40.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "太",
+    "pinyin": "tai",
+    "source": "both",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 0.9,
+    "end": 1.17,
+    "p": 1.0227,
+    "consonant_ms": 122.7,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "可",
+    "pinyin": "ke",
+    "source": "both",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 1.17,
+    "end": 1.37,
+    "p": 1.1698,
+    "consonant_ms": -0.2,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "爱",
+    "pinyin": "ai",
+    "source": "both",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 1.37,
+    "end": 1.55,
+    "p": 1.3694,
+    "consonant_ms": -0.6,
+    "verdict": "自信",
+    "reasons": []
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 1.55,
+    "end": 1.79,
+    "p": 1.549,
+    "consonant_ms": -1.0,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "呀",
+    "pinyin": "ya",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 1.79,
+    "end": 2.05,
+    "p": 1.7909,
+    "consonant_ms": 0.9,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "太",
+    "pinyin": "tai",
+    "source": "asr_only",
+    "initial": "t",
+    "initial_kind": "unvoiced",
+    "start": 2.66,
+    "end": 2.93,
+    "p": 2.7587,
+    "consonant_ms": 98.7,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "可",
+    "pinyin": "ke",
+    "source": "asr_only",
+    "initial": "k",
+    "initial_kind": "unvoiced",
+    "start": 2.94,
+    "end": 3.17,
+    "p": 3.1454,
+    "consonant_ms": 205.4,
+    "verdict": "存疑",
+    "reasons": [
+     "元音段短于 40 ms",
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "爱",
+    "pinyin": "ai",
+    "source": "asr_only",
+    "initial": "",
+    "initial_kind": "zero",
+    "start": 3.17,
+    "end": 3.35,
+    "p": 3.1753,
+    "consonant_ms": 5.3,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   },
+   {
+    "char": "了",
+    "pinyin": "le",
+    "source": "asr_only",
+    "initial": "l",
+    "initial_kind": "sonorant",
+    "start": 3.35,
+    "end": 3.57,
+    "p": 3.3499,
+    "consonant_ms": -0.1,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）",
+     "l 声母：单字标注中 P 偏早较多"
+    ]
+   },
+   {
+    "char": "呀",
+    "pinyin": "ya",
+    "source": "asr_only",
+    "initial": "y",
+    "initial_kind": "zero",
+    "start": 3.57,
+    "end": 3.835,
+    "p": 3.5694,
+    "consonant_ms": -0.6,
+    "verdict": "存疑",
+    "reasons": [
+     "文件名里没有这个字（仅 ASR 听到）"
+    ]
+   }
+  ],
+  "dropped": "",
+  "asr_match": 1.0
+ }
+]

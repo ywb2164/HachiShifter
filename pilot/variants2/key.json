@@ -1,0 +1,51 @@
+{
+ "1": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "wcsndm-nonloop",
+  "backend": "WORLD+melodyne-hybrid",
+  "orig": "B"
+ },
+ "2": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "melodyne-hybrid",
+  "backend": "WORLD+melodyne-hybrid",
+  "orig": "D"
+ },
+ "3": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "soundtouch",
+  "backend": "WORLD+soundtouch",
+  "orig": "E"
+ },
+ "4": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "nsf-shift-then-splice",
+  "backend": "WORLD+nsf-shift-then-splice",
+  "orig": "C"
+ },
+ "5": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "loop",
+  "backend": "WORLD+loop",
+  "orig": "G"
+ },
+ "6": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "hifishifter-mel",
+  "backend": "WORLD+hifishifter-mel",
+  "orig": "A"
+ },
+ "7": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "stretch": "variable-mel-hop",
+  "backend": "WORLD+variable-mel-hop-splice-first",
+  "orig": "F"
+ }
+}

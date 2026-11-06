@@ -1,0 +1,32 @@
+{
+ "1": {
+  "algorithm": "nsf-hifigan",
+  "pitch": "拉平",
+  "backend": "nsf-hifigan-onnx[cpu+hnsep]+melodyne-hybrid"
+ },
+ "2": {
+  "algorithm": "world",
+  "pitch": "拉平",
+  "backend": "WORLD+melodyne-hybrid"
+ },
+ "3": {
+  "algorithm": "mld5",
+  "pitch": "拉平",
+  "backend": "mld5-recovered-period-v5-voicing-join-source-first-source-recovered:0+melodyne-hybrid"
+ },
+ "4": {
+  "algorithm": "nsf-hifigan",
+  "pitch": "保留一半原音起伏",
+  "backend": "nsf-hifigan-onnx[cpu+hnsep]+melodyne-hybrid"
+ },
+ "5": {
+  "algorithm": "mld5",
+  "pitch": "保留一半原音起伏",
+  "backend": "mld5-recovered-period-v5-voicing-join-source-first-source-recovered:0+melodyne-hybrid"
+ },
+ "6": {
+  "algorithm": "world",
+  "pitch": "保留一半原音起伏",
+  "backend": "WORLD+melodyne-hybrid"
+ }
+}

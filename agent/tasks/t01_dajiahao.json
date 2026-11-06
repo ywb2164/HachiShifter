@@ -1,0 +1,64 @@
+{
+ "id": "t01_dajiahao",
+ "title": "大家好我是电棍你们好",
+ "lyrics": "大家好，我是电棍，你们好",
+ "bpm": 120,
+ "melody": [
+  {
+   "start_beat": 0.0,
+   "beats": 1,
+   "midi": 60
+  },
+  {
+   "start_beat": 1.0,
+   "beats": 1,
+   "midi": 62
+  },
+  {
+   "start_beat": 2.0,
+   "beats": 2,
+   "midi": 64
+  },
+  {
+   "start_beat": 4.0,
+   "beats": 1,
+   "midi": 64
+  },
+  {
+   "start_beat": 5.0,
+   "beats": 1,
+   "midi": 62
+  },
+  {
+   "start_beat": 6.0,
+   "beats": 1,
+   "midi": 60
+  },
+  {
+   "start_beat": 7.0,
+   "beats": 2,
+   "midi": 62
+  },
+  {
+   "start_beat": 9.0,
+   "beats": 1,
+   "midi": 64
+  },
+  {
+   "start_beat": 10.0,
+   "beats": 1,
+   "midi": 65
+  },
+  {
+   "start_beat": 11.0,
+   "beats": 2,
+   "midi": 67
+  }
+ ],
+ "brief": "热身任务：逐字找单字素材即可。",
+ "roots": [
+  "棍の音/棍音源",
+  "棍の音/水母卡组",
+  "张顺飞素材/张顺飞活字印刷"
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "1": {
+  "task": "t01_dajiahao",
+  "render": 1,
+  "auto_score": 60,
+  "src": "agent\\runs\\t01_dajiahao_1106-105608\\render_1.wav",
+  "md5": "884c07630f0f168ef708ac924b9b9cb1"
+ },
+ "2": {
+  "task": "t01_dajiahao",
+  "render": 3,
+  "auto_score": 65,
+  "src": "agent\\runs\\t01_dajiahao_1106-105608\\render_3.wav",
+  "md5": "47d79173ffd5d32a63fbca836d161b87"
+ },
+ "3": {
+  "task": "t02_duanwei",
+  "render": 1,
+  "auto_score": 91,
+  "src": "agent\\runs\\t02_duanwei_1106-105449\\render_1.wav",
+  "md5": "1f40d8b24561375fd07a78fa1ad55bf7"
+ },
+ "4": {
+  "task": "t03_xihuan",
+  "render": 2,
+  "auto_score": 94,
+  "src": "agent\\runs\\t03_xihuan_1106-105802\\render_2.wav",
+  "md5": "b53dbd7483abbba9f976476c5a9b0a3f"
+ },
+ "5": {
+  "task": "t03_xihuan",
+  "render": 1,
+  "auto_score": 98,
+  "src": "agent\\runs\\t03_xihuan_1106-105802\\render_1.wav",
+  "md5": "6fdc3df9e4ee98efe16efd34680eda2a"
+ },
+ "6": {
+  "task": "t02_duanwei",
+  "render": 2,
+  "auto_score": 86,
+  "src": "agent\\runs\\t02_duanwei_1106-105449\\render_2.wav",
+  "md5": "62a7c9602b189c8f426012a65b207e28"
+ },
+ "7": {
+  "task": "t01_dajiahao",
+  "render": 2,
+  "auto_score": 47,
+  "src": "agent\\runs\\t01_dajiahao_1106-105608\\render_2.wav",
+  "md5": "cd61a6b115bb945f5b95b6c81413a419"
+ }
+}

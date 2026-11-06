@@ -1,0 +1,31 @@
+# 白名单：默认什么都不入库，只放行代码、文档、任务定义和人工标注/评分数据。
+# 任何音频（素材、渲染）、模型、第三方仓库、素材镜像一律不入库。
+*
+!*/
+!.gitignore
+!*.py
+!*.md
+!agent/tasks/*.json
+
+# 人工标注与盲听评分（评测基准），以及它们引用的样本清单
+!pilot/labels_*.json
+!pilot/results.json
+!pilot/results_v2.json
+!pilot/blind.json
+!pilot/sentences.json
+!pilot/agent_renders/key.json
+!pilot/variants/key.json
+!pilot/variants2/key.json
+!bench/blind_rule.json
+!bench/mfa_initials.json
+
+# 即使是 .py/.md/.json，这些目录也不要
+library/
+aligners/HubertFA/
+aligners/SOFA/
+aligners/hfa_model/
+aligners/sofa_model/
+tools/cmake/
+agent/runs/
+materials_test/
+demo/
