@@ -26,7 +26,7 @@ class HachiMcp:
             if reply.get("id") == self._id:
                 return reply
 
-    def call(self, name: str, **arguments) -> tuple[bool, str]:
+    def call(self, name: str, /, **arguments) -> tuple[bool, str]:
         reply = self.request("tools/call", {"name": name, "arguments": arguments})
         if "error" in reply:
             return False, json.dumps(reply["error"], ensure_ascii=False)
@@ -34,7 +34,7 @@ class HachiMcp:
         text = "".join(c.get("text", "") for c in res.get("content", []))
         return not res.get("isError", False), text
 
-    def call_json(self, name: str, **arguments):
+    def call_json(self, name: str, /, **arguments):
         ok, text = self.call(name, **arguments)
         if not ok:
             raise RuntimeError(f"{name} failed: {text}")

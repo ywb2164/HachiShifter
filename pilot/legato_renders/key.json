@@ -1,0 +1,18 @@
+{
+ "1": {
+  "version": "legato120",
+  "md5": "5e4e02a829ec5b8d66978a38988ce232"
+ },
+ "2": {
+  "version": "base",
+  "md5": "a4fad5a612294016feea0533699552e5"
+ },
+ "3": {
+  "version": "legato60_head",
+  "md5": "6810d1b7598ddfa19dd5ecc478639bc8"
+ },
+ "4": {
+  "version": "legato60",
+  "md5": "84050614027a8b971b5d6c852d93d7c9"
+ }
+}
