@@ -26,12 +26,14 @@ from mcp_client import HachiMcp  # noqa: E402
 sys.path.insert(0, str(AGENT / "annotator"))
 from kana import candidates as kana_candidates, to_romaji  # noqa: E402
 from legato import apply_legato, split_alternate  # noqa: E402
+from pitchfit import fit_note  # noqa: E402
 
 MIRROR = AGENT / "library"
 EXE = str(cfg.EXE)
 MODELS = cfg.MODELS
 RENDER = {"pitch_algorithm": "world"}  # 盲听结论：world + 完全拉平
 FLAT = {"drift": 0, "modulation": 0}
+FIT = {}  # replace_note_material vowel fit, e.g. {"vowel_fit": "trim"}: MLD5 needs trim (no 10x vowel squeeze)
 
 _ASR = None
 
@@ -105,6 +107,7 @@ class Session:
         self.legato_done = False
         self.final_picks = None
         self.pitch_source = None
+        self.pitch_mode = "curve"
         self._qcache: dict = {}
         # 日语歌声切片等“本身就不纯净”的素材库：音质按相对素材自身基线打分
         self.qref = None
@@ -238,8 +241,10 @@ class Session:
                 score -= 0.12 * max(0.0, np.log2(max(stretch, 1e-3)) - 1.0)  # 拉伸超过 2 倍开始扣分（盲听：拉太长电音重）
                 score -= 0.15 * max(0.0, 0.5 - stretch)  # 素材比音符长很多也扣一点
                 if shift is not None:
-                    if self.lang == "ja":  # 歌声素材：源音高可信，移调越少越不电
-                        score -= 0.05 * max(0.0, abs(shift) - 3)
+                    if self.lang == "ja":
+                        # 人工范例 teio：90% 的音往上移（中位 +5），下移 ≥3 半音只有 2%；
+                        # MLD5 下移越多越虚越电。往下重罚，往上到 +10 基本不罚。
+                        score -= 0.10 * max(0.0, -shift - 1) + 0.03 * max(0.0, shift - 10)
                     else:
                         score -= 0.04 * max(0.0, abs(shift) - 5)  # 移调超过 5 个半音开始扣分
                 robust = meta.get("robust")
@@ -321,7 +326,7 @@ class Session:
         req = [{"note_id": self.notes[i]["id"], "audio_path": picks[i]["audio_path"], "audio_id": picks[i]["audio_id"],
                 "region_id": picks[i]["region_id"], "alias": picks[i]["alias"]} for i in order]
         ok, text = self.mcp.call("replace_note_material", roots=self.roots, choices=req,
-                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"))
+                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"), **FIT)
         if not ok:
             return {"error": text[:400]}
         for i in order:
@@ -371,7 +376,7 @@ class Session:
             req.append({"note_id": self.notes[i]["id"], **{f: pk[f] for f in ("audio_path", "audio_id", "region_id", "alias")}})
             idx.append(i)
         ok, text = self.mcp.call("replace_note_material", roots=self.roots, choices=req,
-                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"))
+                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"), **FIT)
         if not ok:
             raise RuntimeError(text)
         for i, k in zip(idx, picks):
@@ -396,6 +401,71 @@ class Session:
         self.pitch_source = source
         return {"ok": True, "source": source, "notes_with_curve": drawn, "notes_total": len(self.notes),
                 "tuning_offset_cents": round(self._tune() * 100), "hint": "没画线的音保持拉平（参考里那段不可信或没有素材）；音准检查会和画上的线比较，不是和乐谱比"}
+
+    # ---------- Melodyne 式音高（中心 + 部分拉平 + 少量切分），不画逐点曲线 ----------
+    def _target_line(self, n: dict, curves):
+        tune = self._tune()
+        absolute = self.pitch_source in set(self.task.get("pitch_curves_absolute", ["reference"]))
+        pts = [(float(t), float(v) + (0.0 if absolute else tune)) for t, v in ((curves or {}).get(str(n["index"])) or [])
+               if 0 <= float(t) <= n["duration"]]
+        return pts if len(pts) >= 2 else [(0.0, n["midi"] + tune), (n["duration"], n["midi"] + tune)]
+
+    def _note_snapshot(self, note_id: str):
+        for t in self.mcp.call_json("project_snapshot")["tracks"]:
+            for c in t["clips"]:
+                for x in c["notes"]:
+                    if x["id"] == note_id:
+                        return x
+        return None
+
+    # 切分按音高线复杂度：偏差 > tol 才考虑，最优分段（每多一段 penalty 音分·帧），段 ≥ min_piece，台阶 ≥ min_step；不限刀数
+    SPLIT = {"tol": 30.0, "min_piece": 0.03, "min_step": 35.0, "penalty": 600.0, "smooth": 0.06}
+
+    def _fit_one(self, base: dict, note_id: str, curves, allow_split: bool, max_splits: int | None = None, snap: dict | None = None):
+        x = snap or self._note_snapshot(note_id)
+        if x is None:
+            return None
+        R = self._target_line(base, curves)
+        plan = fit_note(x["contour"], min(base["duration"], x["duration_seconds"]), R, max_splits=max_splits if allow_split else 0, **self.SPLIT)
+        self.mcp.call("edit_notes_pitch", note_id=note_id, action="set", midi=plan["center_midi"])
+        self.mcp.call("set_note", note_id=note_id, drift=plan["drift"], modulation=plan["modulation"])
+        made = 0
+        cur = note_id; offset = 0.0
+        for t_cut, center in plan["splits"]:
+            ok, text = self.mcp.call("split_note", note_id=cur, local_seconds=round(t_cut - offset, 4))
+            if not ok:
+                break
+            r = json.loads(text); cur = r["new_note_id"]; offset = t_cut; made += 1
+            self.mcp.call("edit_notes_pitch", note_id=cur, action="set", midi=center)
+        base["target"] = plan["center_midi"]
+        base["target_pieces"] = [(0.0, plan["center_midi"])] + [(tc, c) for tc, c in plan["splits"][:made]]
+        return dict(plan, splits_made=made)
+
+    def apply_melodyne_pitch(self, source: str = "reference", allow_split: bool = False, max_splits: int | None = None):
+        """所有有素材的音（含两轨交替后的 B 轨）按 Melodyne 式拟合：中心 + 漂移/调制，可选切分。"""
+        srcs = self.task.get("pitch_curves", {})
+        if source != "flat" and source not in srcs:
+            return {"error": f"任务没有这个音高线来源：{source}"}
+        self.pitch_mode = "melodyne"; self.pitch_source = source
+        curves = self._curves(source)
+        snap = self.mcp.call_json("project_snapshot")
+        starts = [n["start"] for n in self.notes]
+        stats = {"notes": 0, "splits": 0, "flattened_drift": 0, "err": []}
+        for t in snap["tracks"]:
+            if t.get("muted") or t.get("pitch_algorithm") is None:
+                continue
+            for c in t["clips"]:
+                for x in c["notes"]:
+                    k = int(np.argmin([abs(c["start_seconds"] + x["start_seconds"] - s0) for s0 in starts]))
+                    base = self.notes[k]
+                    if not base.get("pick") or abs(c["start_seconds"] + x["start_seconds"] - base["start"]) > 0.01:
+                        continue
+                    plan = self._fit_one(base, x["id"], curves, allow_split, max_splits, snap=x)
+                    if plan:
+                        stats["notes"] += 1; stats["splits"] += plan["splits_made"]
+                        stats["flattened_drift"] += plan["drift"] < 0.5; stats["err"].append(plan["err_cents"])
+        e = stats.pop("err")
+        return {"ok": True, **stats, "mean_err_cents": round(float(np.mean(e)), 1) if e else None}
 
     def balance_loudness(self, max_db: float = 6.0):
         """按最近一次渲染，把每个音元音段响度拉向全曲中位数（±max_db）。"""
@@ -431,16 +501,56 @@ class Session:
         return {"ok": True, "median_db": round(med, 1), "spread_before_db": round(spread, 1), "adjusted": len(changed),
                 "largest": sorted(changed, key=lambda c: -abs(c["db"]))[:8], "hint": "再 render_and_check 看效果"}
 
-    def finalize_legato(self, tail_ratio: float = 0.35, tail_min_ms: float = 20.0):
+    def finalize_legato(self, tail_ratio: float = 0.35, tail_min_ms: float = 20.0, edge_fade_ms: float | None = None):
         """收尾：两轨交替 + 元音尾部按音符时长延长 tail_ratio（默认 12.5%，夹在 20～200 ms）并淡出叠到下一个音头上。"""
         if self.legato_done:
             return {"error": "已经做过了"}
         tail_ratio = float(np.clip(tail_ratio, 0.05, 0.5))
         self.final_picks = {n["index"]: dict(n["pick"], material=n["material"]) for n in self.notes if n.get("pick")}
         a_tr, b_tr = split_alternate(self.mcp, self.track_id, dict(RENDER, volume=self.volume))
-        info = apply_legato(self.mcp, a_tr, b_tr, tail_ratio=tail_ratio, tail_min_ms=float(tail_min_ms))
+        info = apply_legato(self.mcp, a_tr, b_tr, tail_ratio=tail_ratio, tail_min_ms=float(tail_min_ms), rebind=self._rebind_extended, edge_fade_ms=edge_fade_ms)
         self.legato_done = True
         return {"ok": True, **info, "tail_ratio": tail_ratio}
+
+    def _rebind_extended(self, resized):
+        """延长过的音按新时长重新绑定同一素材（多读真实元音），再恢复拉平/音高线/音量。resized = [(全局序号, 音符快照, 新时长)]"""
+        choices, redo = [], []
+        for k, snap, new_dur in resized:  # legato 的全局序号与 self.notes 同序（都不含休止符）
+            if k >= len(self.notes) or not self.notes[k].get("pick"):
+                continue
+            base = self.notes[k]
+            choices.append({"note_id": snap["id"], **{f: base["pick"][f] for f in ("audio_path", "audio_id", "region_id", "alias")}})
+            redo.append((base, snap["id"]))
+        if not choices:
+            return 0
+        ok, text = self.mcp.call("replace_note_material", roots=self.roots, choices=choices,
+                                 game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"), **FIT)
+        if not ok:
+            raise RuntimeError("rebind after tail extension: " + text[:300])
+        curves = self._curves(self.pitch_source)
+        for base, nid in redo:
+            if self.pitch_mode == "melodyne":
+                self._fit_one(base, nid, curves, allow_split=False)
+            else:
+                self.mcp.call("set_note", note_id=nid, **FLAT)
+                self._draw(dict(base, id=nid), self.pitch_source, curves)
+            if base.get("gain"):
+                self.mcp.call("set_note", note_id=nid, gain=round(base["gain"], 4))
+        return len(choices)
+
+    def disconnect_all(self):
+        """断开音频：每个音符成为独立的块（自己的音频时钟和音高线），挪动或拉长一个音不再压缩/拉伸相邻的音。"""
+        done = 0
+        for t in self.mcp.call_json("project_snapshot")["tracks"]:
+            if t.get("muted") or not t.get("compose", True):
+                continue
+            ids = [x["id"] for c in t["clips"] for x in c["notes"] if (x.get("label") or "").upper() != "R"]
+            if len(ids) >= 2:
+                ok, text = self.mcp.call("disconnect_notes", note_ids=ids)
+                if not ok:
+                    return {"error": text[:200]}
+                done += len(ids)
+        return {"ok": True, "notes_disconnected": done}
 
     def render_and_check(self):
         self.renders += 1
@@ -476,7 +586,14 @@ class Session:
             loud = float(np.median(rms[: len(m)][m[: len(rms)]])) / peak if m.any() else 0.0
             cents = None
             if len(seg) >= 3:
-                cents = round(100 * (float(np.median(librosa.hz_to_midi(seg))) - n.get("target", n["midi"] + self._tune())))
+                pieces = n.get("target_pieces")
+                if pieces:  # 切开的音：每个渲染帧和它所在那一段的中心比，不和第一段比
+                    local = t[m & vf] - (n["start"] + pre)
+                    starts = np.array([q[0] for q in pieces]); centers = np.array([q[1] for q in pieces])
+                    expect = centers[np.clip(np.searchsorted(starts, local, side="right") - 1, 0, len(centers) - 1)]
+                    cents = round(100 * float(np.median(librosa.hz_to_midi(seg) - expect)))
+                else:
+                    cents = round(100 * (float(np.median(librosa.hz_to_midi(seg))) - n.get("target", n["midi"] + self._tune())))
             voicing = float(np.nanmean(vp[m])) if m.any() else 0.0
             per.append({"note": n["index"], "lyric": n["char"], "has_material": bool(n["material"]),
                         "pitch_error_cents": cents, "loudness": round(loud, 2), "voicing": round(voicing, 2)})
@@ -536,7 +653,7 @@ class Session:
             req = [{"note_id": self.notes[i]["id"], **{k: picks[i][k] for k in ("audio_path", "audio_id", "region_id", "alias")}}
                    for i in sorted(picks)]
             self.mcp.call("replace_note_material", roots=self.roots, choices=req,
-                          game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"))
+                          game_model_dir=str(MODELS / "game" / "medium"), fcpe_model=str(MODELS / "fcpe" / "fcpe.onnx"), **FIT)
             for i in sorted(picks):
                 self.mcp.call("set_note", note_id=self.notes[i]["id"], **FLAT)
                 self.notes[i]["pick"] = picks[i]

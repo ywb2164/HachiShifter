@@ -28,13 +28,24 @@ def main():
     ap.add_argument("--no-legato", action="store_true", help="不做两轨交替衔接")
     ap.add_argument("--split", type=int, default=1, help="把音符轮流铺到 K 条轨（不延长、不加包络）")
     ap.add_argument("--save", default=None, help="渲染后另存工程 .hjpx")
+    ap.add_argument("--pitch-splits", type=int, default=0, help="--pitch melodyne 时：0=不切，-1=按音高线复杂度不限刀数，N=最多 N 刀")
+    ap.add_argument("--split-gain", type=float, default=None)
+    ap.add_argument("--min-piece", type=float, default=None)
+    ap.add_argument("--min-step", type=float, default=None)
+    ap.add_argument("--edge-fade-ms", type=float, default=None, help="尾巴全音量重叠、只在最后 N ms 淡出（Melodyne 式交叉）")
+    ap.add_argument("--disconnect", action="store_true", help="最后把所有音符断开为独立的块（断开音频）")
+    ap.add_argument("--vowel-fit", default=None, help="stretch|trim，传给 replace_note_material")
+    ap.add_argument("--max-vowel-compression", type=float, default=None)
     ap.add_argument("--ref-audio", default=None, help="另存前加一条静音参考轨（从 0 秒开始的原唱片段）")
     a = ap.parse_args()
     run = Path(a.run)
     summ = json.loads((run / "summary.json").read_text(encoding="utf-8"))
     task = json.loads(Path(a.task).read_text(encoding="utf-8"))
     tools.RENDER.clear()
-    tools.RENDER.update(json.loads(a.render))  # Session 建轨和 legato 复制轨都读这个全局
+    tools.RENDER.update(json.loads(a.render))
+    tools.FIT.clear()
+    if a.vowel_fit: tools.FIT["vowel_fit"] = a.vowel_fit
+    if a.max_vowel_compression: tools.FIT["max_vowel_compression"] = a.max_vowel_compression  # Session 建轨和 legato 复制轨都读这个全局
     out = run / "replay"
     out.mkdir(exist_ok=True)
     d = out / a.name
@@ -42,6 +53,9 @@ def main():
         shutil.rmtree(d)
     d.mkdir()
     s = Session(task, d)
+    for k, v in (("tol", a.split_gain), ("min_piece", a.min_piece), ("min_step", a.min_step)):
+        if v is not None:
+            s.SPLIT = dict(s.SPLIT, **{k: v})
     s.apply_picks(summ["picks"])
     if a.pitch == "none":
         tune = s._tune()
@@ -50,6 +64,8 @@ def main():
                 s.mcp.call("edit_notes_pitch", note_id=n["id"], action="set", midi=n["midi"] + tune)
                 n["target"] = n["midi"] + tune
         s.pitch_source = "none"
+    elif a.pitch == "melodyne":
+        print("melodyne pitch (no split):", s.apply_melodyne_pitch("reference", allow_split=False))
     else:
         s.apply_pitch_curves(summ.get("pitch_source") or "reference")
     if a.drift is not None or a.modulation is not None:
@@ -64,7 +80,11 @@ def main():
     if not a.no_balance:
         s.balance_loudness()
     if not a.no_legato:
-        s.finalize_legato(tail_ratio=a.tail_ratio, tail_min_ms=20.0)
+        s.finalize_legato(tail_ratio=a.tail_ratio, tail_min_ms=20.0, edge_fade_ms=a.edge_fade_ms)
+    if a.pitch == "melodyne" and a.pitch_splits != 0:
+        print("melodyne pitch (with splits):", s.apply_melodyne_pitch("reference", allow_split=True, max_splits=None if a.pitch_splits < 0 else a.pitch_splits))
+    if a.disconnect:
+        print("disconnect:", s.disconnect_all())
     chk = s.render_and_check()
     snap = s.mcp.call_json("project_snapshot")
     notes_sample = [{k: n.get(k) for k in ("midi", "drift", "modulation", "flattened")} | {"curve_points": len(n.get("pitch_control_points") or [])}

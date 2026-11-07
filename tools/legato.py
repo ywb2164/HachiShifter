@@ -37,7 +37,9 @@ def split_alternate(mcp, track_id, settings: dict) -> tuple[str, str]:
 
 def apply_legato(mcp, a_track: str, b_track: str, tail_ms: float = 60.0, fade_floor_db: float = -40.0,
                  head_cut: dict[int, float] | None = None, tail_ratio: float | None = None,
-                 tail_min_ms: float = 20.0, tail_max_ms: float = 200.0) -> dict:
+                 tail_min_ms: float = 20.0, tail_max_ms: float = 200.0, rebind=None, edge_fade_ms: float | None = None) -> dict:
+    """edge_fade_ms 给定时按 Melodyne 方式交叉：延长的尾巴全音量叠在下一个音上，只在最后 edge_fade_ms 淡出
+    （人工范例 teio：重叠处两块都是全音量，只有 ~5 ms 的边缘淡化）；否则沿用旧方式（从下一个辅音起点一路淡到 -40 dB）。"""
     """tail_ratio 给定时，音尾延长 = 音符时长 × tail_ratio（夹在 tail_min_ms～tail_max_ms），否则固定 tail_ms。"""
     """在交替的两轨上延长音尾并淡出；head_cut = {全局音符序号: 压低 dB}。"""
     _, a_clip, a_notes = notes_of(mcp, a_track)
@@ -46,6 +48,9 @@ def apply_legato(mcp, a_track: str, b_track: str, tail_ms: float = 60.0, fade_fl
     tagged += [(b_clip.get("start_seconds", 0.0) + n["start_seconds"], n, b_clip) for n in b_notes if n.get("label", "").upper() != "R"]
     tagged.sort(key=lambda x: x[0])
     extended = cut = 0
+    # resize_note 只拉长音符和音高数据，不会多读素材音频（score 素材音的时钟不变）：
+    # MLD5 拿到的源音高与音频错位。所以先全部拉长，再由 rebind 按新时长重新绑定素材，最后才设包络。
+    resized, envs = [], []
     for k, (start, n, clip) in enumerate(tagged):
         env = []
         if head_cut and head_cut.get(k):
@@ -63,13 +68,19 @@ def apply_legato(mcp, a_track: str, b_track: str, tail_ms: float = 60.0, fade_fl
                 ext = min(want / 1000.0, 0.5 * nxt["duration_seconds"])
                 ncons = float(nxt.get("consonant_seconds") or 0.03)
                 fade_from = max(0.5 * dur, (nstart - ncons) - start)
+                if edge_fade_ms is not None:
+                    fade_from = max(dur, dur + ext - edge_fade_ms / 1000.0)
                 new_dur = dur + ext
                 mcp.call("resize_note", note_id=n["id"], start_seconds=n["start_seconds"], duration_seconds=new_dur)
+                resized.append((k, n, new_dur))
                 env += [[fade_from, 0.0], [new_dur, fade_floor_db]]
                 extended += 1
+        envs.append((n, env))
+    rebound = rebind(resized) if (rebind and resized) else None
+    for n, env in envs:
         if env:
             env.sort(key=lambda p: p[0])
             if env[0][0] > 0:
                 env.insert(0, [0.0, 0.0])
             mcp.call("set_note", note_id=n["id"], amplitude_envelope=env)
-    return {"notes": len(tagged), "extended": extended, "head_cut": cut}
+    return {"notes": len(tagged), "extended": extended, "head_cut": cut, "rebound": rebound}
