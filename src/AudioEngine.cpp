@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <map>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <unordered_map>
 #include <unordered_set>
@@ -100,8 +101,12 @@ std::pair<float, float> panGains(float pan, bool mono)
              pan < 0.0f ? std::sqrt(1.0f + pan) : 1.0f };
 }
 
+// holdOwnPitch: a track that allows audio overlap lets a note's audio run on
+// past where the next note takes over the shared line.  That overhang is still
+// this note's voice: it holds this note's own pitch instead of being bent to
+// the next note's (which made overlapping score-material tails unusable).
 void applyNativeSharedPitch(backend::Mld5FileRenderRequest& request, const ClipData& clip,
-    const SharedPitchLines& lines, double requestOffset = 0.0)
+    const SharedPitchLines& lines, double requestOffset = 0.0, bool holdOwnPitch = false)
 {
     const auto period = request.framePeriodMs / 1000.0;
     for (std::size_t frame = 0; frame < request.targetMidi.size(); ++frame)
@@ -119,7 +124,9 @@ void applyNativeSharedPitch(backend::Mld5FileRenderRequest& request, const ClipD
             const auto absoluteTime = clip.startSeconds + local;
             if (member->connectionPitchOnly && std::none_of(member->connectionPitchWindows.begin(),member->connectionPitchWindows.end(),
                 [&](const auto& window){return absoluteTime>=window.getStart()-1.0e-9&&absoluteTime<=window.getEnd()+1.0e-9;})) continue;
-            const auto target=member->line->midiAt(clip.startSeconds + local)
+            auto lineTime = clip.startSeconds + local;
+            if (holdOwnPitch && std::isfinite(member->ownTo) && lineTime > member->ownTo) lineTime = member->ownTo;
+            const auto target=member->line->midiAt(lineTime)
                 + (member->virtualSinglePitch ? 0.f : static_cast<float>(vibratoCentsAt(note,
                     juce::jlimit(0.0, note.durationSeconds, local - note.startSeconds)) / 100.0));
             if(voiced)request.targetMidi[frame]=target;
@@ -373,7 +380,7 @@ backend::Mld5FileRenderRequest makeRenderRequest(const ClipData& clip, const Tra
     trace("adjacent-controls-ready");
     const auto localLines = sharedLines ? SharedPitchLines{} : sharedPitchLines(track);
     trace("shared-lines-ready");
-    applyNativeSharedPitch(request, clip, sharedLines ? *sharedLines : localLines);
+    applyNativeSharedPitch(request, clip, sharedLines ? *sharedLines : localLines, 0.0, track.allowNativeAudioOverlap);
     for(std::size_t i=0;i<request.mld5TargetMidiIntent.size();++i)if(request.targetMidi[i]>0)request.mld5TargetMidiIntent[i]=request.targetMidi[i];
     trace("done");
     return request;
@@ -874,7 +881,22 @@ void writeNativePitchContext(juce::MemoryOutputStream& stream, const ClipData& c
     stream.writeString("native-shared-pitch-envelope-131");
     const auto group = clip.nativePitchGroupId.isNotEmpty() ? clip.nativePitchGroupId : clip.id;
     std::vector<NoteData> notes;
+    // Expanding a parent copies all its parts, notes and contours.  Called for
+    // every clip, that made each rebuild O(N^2) copies on the message thread
+    // (seconds per edit on a 700-clip import).  The group of each expanded
+    // part is known from the parent alone, so skip parents that cannot match.
+    const auto mayContribute = [&](const ClipData& parent)
+    {
+        if (parent.parts.empty())
+            return (parent.nativePitchGroupId.isNotEmpty() ? parent.nativePitchGroupId : parent.id) == group;
+        return std::any_of(parent.parts.begin(), parent.parts.end(), [&](const ClipData& part)
+        {
+            return (part.nativePitchGroupId.isNotEmpty() ? part.nativePitchGroupId
+                : parent.nativeAudioLinked ? parent.id : parent.id + ":" + part.id) == group;
+        });
+    };
     for (const auto& parent : track.clips)
+        if (mayContribute(parent))
         for (const auto& part : expandedClipParts(parent))
         {
             const auto otherGroup = part.nativePitchGroupId.isNotEmpty() ? part.nativePitchGroupId
@@ -899,18 +921,92 @@ backend::RequestedVoicebankFamily requestedVoicebankFamily(const TrackData& trac
         : backend::RequestedVoicebankFamily::utau;
 }
 
-void writeMld5SourceSessionContext(juce::MemoryOutputStream& stream,const ClipData& clip,const TrackData& track)
+// MLD5 renders a whole source session, so each clip's cache identity depends on
+// every clip cut from the same recording.  Writing that session verbatim into
+// every clip key made each key O(session) bytes and building all keys O(N^2):
+// a 745-clip Melodyne import (526 clips from one MP3) built GBs of key strings
+// (4.5 GB peak) before rendering anything.  The session is now reduced to a
+// SHA-256 once per (track, source) per rebuild; the key stays content-exact.
+struct Mld5SessionDigest { juce::MemoryBlock digest; double origin = 0.0; };
+using Mld5SessionDigestMemo = std::unordered_map<std::string, Mld5SessionDigest>;
+Mld5SessionDigestMemo*& activeMld5SessionDigestMemo()
 {
-    if(track.pitchAlgorithm!=PitchAlgorithm::mld5)return;
-    stream.writeString("mld5-source-session-context-v2");
-    for(const auto& parent:track.clips)for(const auto& owner:expandedClipParts(parent))if(owner.sourceFile==clip.sourceFile)
+    static thread_local Mld5SessionDigestMemo* memo = nullptr;
+    return memo;
+}
+struct Mld5SessionDigestScope
+{
+    Mld5SessionDigestScope() { if (activeMld5SessionDigestMemo() == nullptr) { activeMld5SessionDigestMemo() = &memo; owner = true; } }
+    ~Mld5SessionDigestScope() { if (owner) activeMld5SessionDigestMemo() = nullptr; }
+    Mld5SessionDigestScope(const Mld5SessionDigestScope&) = delete;
+    Mld5SessionDigestScope& operator=(const Mld5SessionDigestScope&) = delete;
+    Mld5SessionDigestMemo memo;
+    bool owner = false;
+};
+
+Mld5SessionDigest computeMld5SourceSessionDigest(const TrackData& track, const juce::File& source)
+{
+    std::vector<ClipData> owners;
+    for(const auto& parent:track.clips)for(auto& owner:expandedClipParts(parent))if(owner.sourceFile==source)owners.push_back(std::move(owner));
+    Mld5SessionDigest result;
+    if(!owners.empty())
+    {
+        result.origin=owners.front().startSeconds;
+        for(const auto& owner:owners)result.origin=std::min(result.origin,owner.startSeconds);
+    }
+    juce::MemoryOutputStream stream;
+    for(const auto& owner:owners)
     {
         stream.writeString(owner.id);stream.writeString(owner.materialSourceUsageGroupId);stream.writeBool(owner.muted);
-        stream.writeDouble(owner.startSeconds-clip.startSeconds);stream.writeDouble(owner.durationSeconds);stream.writeDouble(owner.sourceOffsetSeconds);stream.writeDouble(owner.sourceDurationSeconds);
+        stream.writeDouble(owner.startSeconds-result.origin);stream.writeDouble(owner.durationSeconds);stream.writeDouble(owner.sourceOffsetSeconds);stream.writeDouble(owner.sourceDurationSeconds);
         stream.writeDouble(owner.fadeInSeconds);stream.writeDouble(owner.fadeOutSeconds);stream.writeDouble(owner.crossfadeInSeconds);stream.writeDouble(owner.crossfadeOutSeconds);
         for(const auto& p:owner.sourceTimeMap){stream.writeDouble(p.targetSeconds);stream.writeDouble(p.sourceSeconds);}
         for(const auto& note:owner.notes)writeNoteRenderFields(stream,note);
     }
+    const juce::SHA256 sha(stream.getData(),stream.getDataSize());
+    result.digest=sha.getRawData();
+    return result;
+}
+
+// Memo identity inside one rebuild: the track object and a cheap structural
+// fingerprint.  Contents cannot change during a rebuild; the fingerprint only
+// guards against a temporary copy being re-created at the same address.
+std::string mld5SessionMemoKey(const TrackData& track, const juce::File& source)
+{
+    std::uint64_t h=1469598103934665603ull;
+    const auto mix=[&](std::uint64_t v){h^=v+0x9e3779b97f4a7c15ull+(h<<6)+(h>>2);};
+    const auto mixDouble=[&](double v){std::uint64_t bits=0;std::memcpy(&bits,&v,sizeof bits);mix(bits);};
+    for(const auto& clip:track.clips)
+    {
+        mix(static_cast<std::uint64_t>(clip.id.hashCode64()));mixDouble(clip.startSeconds);mixDouble(clip.durationSeconds);
+        mixDouble(clip.sourceOffsetSeconds);mixDouble(clip.sourceDurationSeconds);mix(clip.muted?1u:0u);
+        mix(clip.parts.size());mix(clip.sourceTimeMap.size());mix(clip.notes.size());
+        for(const auto& note:clip.notes)
+        {
+            mixDouble(note.startSeconds);mixDouble(note.durationSeconds);mixDouble(note.midiNote);mix(note.contour.size());
+            if(!note.contour.empty()){mixDouble(note.contour.front().relativeCents);mixDouble(note.contour[note.contour.size()/2].relativeCents);mixDouble(note.contour.back().relativeCents);}
+        }
+    }
+    return (track.id+"|"+source.getFullPathName()+"|"+juce::String::toHexString(static_cast<juce::int64>(reinterpret_cast<std::uintptr_t>(track.clips.data())))
+        +"|"+juce::String::toHexString(static_cast<juce::int64>(h))).toStdString();
+}
+
+Mld5SessionDigest mld5SourceSessionDigest(const TrackData& track, const juce::File& source)
+{
+    auto* memo=activeMld5SessionDigestMemo();
+    if(memo==nullptr)return computeMld5SourceSessionDigest(track,source);
+    const auto key=mld5SessionMemoKey(track,source);
+    if(const auto found=memo->find(key);found!=memo->end())return found->second;
+    return memo->emplace(key,computeMld5SourceSessionDigest(track,source)).first->second;
+}
+
+void writeMld5SourceSessionContext(juce::MemoryOutputStream& stream,const ClipData& clip,const TrackData& track)
+{
+    if(track.pitchAlgorithm!=PitchAlgorithm::mld5)return;
+    stream.writeString("mld5-source-session-context-v3");
+    const auto session=mld5SourceSessionDigest(track,clip.sourceFile);
+    stream.write(session.digest.getData(),session.digest.getSize());
+    stream.writeDouble(clip.startSeconds-session.origin);
 }
 
 std::string renderKey(const ClipData& clip, const TrackData& track,
@@ -2461,6 +2557,7 @@ void AudioEngine::setInferenceConfiguration(backend::InferenceBackend inference,
 
 void AudioEngine::rebuildLoadedClips(const ProjectData& originalProject, bool diffSingerExport)
 {
+    const Mld5SessionDigestScope mld5SessionDigests;
     const auto tracePath=juce::SystemStats::getEnvironmentVariable("HACHI_NATIVE_REQUEST_TRACE",{});
     const auto traceStart=tracePath.isNotEmpty()?juce::Time::getMillisecondCounterHiRes():0.;
     const auto trace=[&](const juce::String& stage){if(tracePath.isNotEmpty())juce::File(tracePath).appendText("engine: "+stage+" elapsed_ms="+juce::String(juce::Time::getMillisecondCounterHiRes()-traceStart,3)+"\n");};
@@ -2800,7 +2897,7 @@ void AudioEngine::rebuildLoadedClips(const ProjectData& originalProject, bool di
                 if(parent.parts.empty())owners[parent.id]=track.id+":"+parent.id;
                 else for(const auto& part:parent.parts)owners[parent.id+":"+part.id]=track.id+":"+parent.id+(parent.nativeAudioLinked?juce::String{}:":"+part.id); // explicit shared-warp parent is source-use proof
             }
-            struct Bucket{std::vector<const ClipData*> clips;std::vector<backend::Mld5FileRenderRequest> requests;Mld5ContinuousSourcePlan plan;};
+            struct Bucket{std::vector<const ClipData*> clips;std::vector<backend::Mld5FileRenderRequest> requests;Mld5ContinuousSourcePlan plan;double end=0;};
             std::vector<Bucket> buckets;std::map<juce::String,double> rates;
             std::map<juce::String,juce::StringArray> rejectedCandidates;
             for(const auto* clip:orderedClips)
@@ -2809,14 +2906,37 @@ void AudioEngine::rebuildLoadedClips(const ProjectData& originalProject, bool di
                 const auto path=clip->sourceFile.getFullPathName();if(!rates.count(path)){std::unique_ptr<juce::AudioFormatReader> reader(formatManager.createReaderFor(clip->sourceFile));rates[path]=reader?reader->sampleRate:48000.;}
                 auto request=makeRenderRequest(*clip,track,hifiganModelDirectory,inferenceConfiguration,false,false,&nativePitchLines,&nativeEnvelopes);request.exportComponent=renderComponent;
                 bool appended=false;
+                // Clips arrive in start order, so a clip starting after a
+                // bucket's end can only be refused as a target gap.  Checking
+                // that first avoids copying and re-planning every earlier
+                // bucket for every clip: O(N^2) full plans on the message
+                // thread froze the editor for 15+ s on a 526-clip 人力 source.
+                const auto reject=[&](const Bucket& bucket,const juce::String& why)
+                {auto& list=rejectedCandidates[clip->id];if(list.size()<16)list.addIfNotAlreadyThere(bucket.clips.front()->id+" -> "+clip->id+": "+why);};
                 for(auto bucket=buckets.rbegin();bucket!=buckets.rend();++bucket)
                 {
                     if(bucket->clips.front()->sourceFile!=clip->sourceFile)continue;
-                    auto clips=bucket->clips;auto requests=bucket->requests;clips.push_back(clip);requests.push_back(request);
-                    auto plan=planMld5ContinuousSource(clips,requests,owners,rates[path]);if(!plan.ready){rejectedCandidates[clip->id].addIfNotAlreadyThere(bucket->clips.front()->id+" -> "+clip->id+": "+plan.error);continue;}
-                    bucket->clips=std::move(clips);bucket->requests=std::move(requests);bucket->plan=std::move(plan);appended=true;break;
+                    if(clip->startSeconds>bucket->end+1.e-9){reject(*bucket,"Target gap");continue;}
+                    // The clip sorts last, right after the bucket's last clip:
+                    // the planner's pairwise checks for that join need only
+                    // these two clips, so refuse here without re-planning.
+                    {
+                        const auto* previous=bucket->clips.back();
+                        const auto ownerOf=[&](const ClipData& c){const auto found=owners.find(c.id);return found==owners.end()?c.id:found->second;};
+                        const auto owner=ownerOf(*clip);
+                        const bool sameOwner=owner.isNotEmpty()&&owner==ownerOf(*previous);
+                        const bool sameUsage=clip->materialSourceUsageGroupId.isNotEmpty()&&clip->materialSourceUsageGroupId==previous->materialSourceUsageGroupId;
+                        if(!sameOwner&&!sameUsage&&!(previous->glideConnectedToNext&&clip->glideConnectedFromPrevious)){reject(*bucket,"No physical-owner/source-use/bidirectional-glide identity");continue;}
+                        if(request.sourceOffsetSeconds<=bucket->requests.back().sourceOffsetSeconds+1.e-9){reject(*bucket,"Source offset does not advance to a new physical slice");continue;}
+                        if(clip->startSeconds+clip->durationSeconds<=bucket->end+1.e-9){reject(*bucket,"Contained or duplicated owner is a layer, not source continuation");continue;}
+                    }
+                    bucket->clips.push_back(clip);bucket->requests.push_back(request);
+                    auto plan=planMld5ContinuousSource(bucket->clips,bucket->requests,owners,rates[path]);
+                    if(!plan.ready){bucket->clips.pop_back();bucket->requests.pop_back();reject(*bucket,plan.error);continue;}
+                    bucket->plan=std::move(plan);
+                    bucket->end=std::max(bucket->end,clip->startSeconds+clip->durationSeconds);appended=true;break;
                 }
-                if(!appended)buckets.push_back({{clip},{std::move(request)},{}});
+                if(!appended)buckets.push_back({{clip},{std::move(request)},{},clip->startSeconds+clip->durationSeconds});
             }
             for(const auto& bucket:buckets)for(const auto* member:bucket.clips)
             {

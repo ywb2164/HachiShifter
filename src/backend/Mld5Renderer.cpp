@@ -67,6 +67,10 @@ struct Controls
         }
         for(std::size_t i=0;i+1<count;++i)if(!voiced(i*frameSeconds)&&voiced((i+1)*frameSeconds))
         {pitchCarrier[i]=pitchCarrier[i+1];probeCarrier[i]=probeCarrier[i+1];}
+        // 音MAD/人力 projects deliberately drag notes 4+ octaves (e.g. MIDI 79
+        // -> 25).  The DSP supports 1/16..16; one such note used to throw and
+        // silence the whole track render.  Hold the extreme note at the limit.
+        for(auto* lane:{&pitchCarrier,&probeCarrier})for(auto& value:*lane)value=std::clamp(value,1.f/16.f,16.f);
         // Carrier controls prewarm the wet path through UV. The audible UV mask
         // stays untouched; never open the gate at unity then jump pitch/Q later.
     }
@@ -102,7 +106,53 @@ Mld5Renderer::ControlSnapshot Mld5Renderer::diagnosticControlAt(const Mld5Render
     return {control.ratio(seconds),control.q(seconds),control.gate(seconds)};
 }
 
+// Diagnostic only: HACHI_MLD5_DUMP=<folder> writes every request's input PCM,
+// control arrays and output, so host-side inputs can be audited per note.
+namespace
+{
+void dumpMld5(const Mld5RenderRequest& request,const juce::AudioBuffer<float>* output,int index)
+{
+    const auto folder=juce::SystemStats::getEnvironmentVariable("HACHI_MLD5_DUMP",{});
+    if(folder.isEmpty())return;
+    const juce::File dir(folder);dir.createDirectory();
+    const auto stem=juce::String(index).paddedLeft('0',5);
+    const auto writeWav=[&](const juce::AudioBuffer<float>& buffer,const juce::String& name)
+    {
+        const auto file=dir.getChildFile(name);file.deleteFile();
+        std::unique_ptr<juce::OutputStream> stream(file.createOutputStream());if(!stream)return;
+        juce::WavAudioFormat wav;
+        std::unique_ptr<juce::AudioFormatWriter> writer(wav.createWriterFor(stream.get(),request.sampleRate,juce::uint32(buffer.getNumChannels()),32,{},0));
+        if(!writer)return;stream.release();writer->writeFromAudioSampleBuffer(buffer,0,buffer.getNumSamples());
+    };
+    if(output==nullptr)
+    {
+        if(request.input)writeWav(*request.input,stem+"_in.wav");
+        auto* json=new juce::DynamicObject();
+        const auto arr=[](const std::vector<float>& v){juce::Array<juce::var> a;for(auto x:v)a.add(x);return juce::var(a);};
+        json->setProperty("sample_rate",request.sampleRate);json->setProperty("frame_period_ms",request.framePeriodMs);
+        json->setProperty("target_samples",request.targetSamples);json->setProperty("input_samples",request.input?request.input->getNumSamples():0);
+        json->setProperty("source_midi",arr(request.sourceMidi));json->setProperty("target_midi",arr(request.targetMidi));
+        json->setProperty("formant",arr(request.formantSemitones));json->setProperty("note_gain",arr(request.noteGain));
+        json->setProperty("source_hint",arr(request.sourceMidiHint));json->setProperty("target_intent",arr(request.targetMidiIntent));
+        juce::Array<juce::var> map;for(const auto& p:request.timeMap){juce::Array<juce::var> pt;pt.add(p.targetSeconds);pt.add(p.sourceSeconds);map.add(juce::var(pt));}
+        json->setProperty("time_map",juce::var(map));
+        dir.getChildFile(stem+"_req.json").replaceWithText(juce::JSON::toString(juce::var(json),true));
+    }
+    else writeWav(*output,stem+"_out.wav");
+}
+std::atomic<int> mld5DumpCounter{0};
+}
+
 juce::AudioBuffer<float> Mld5Renderer::render(const Mld5RenderRequest& inputRequest,juce::String* error) const
+{
+    const auto dumpIndex=juce::SystemStats::getEnvironmentVariable("HACHI_MLD5_DUMP",{}).isNotEmpty()?mld5DumpCounter.fetch_add(1):-1;
+    if(dumpIndex>=0)dumpMld5(inputRequest,nullptr,dumpIndex);
+    auto rendered=renderImpl(inputRequest,error);
+    if(dumpIndex>=0)dumpMld5(inputRequest,&rendered,dumpIndex);
+    return rendered;
+}
+
+juce::AudioBuffer<float> Mld5Renderer::renderImpl(const Mld5RenderRequest& inputRequest,juce::String* error) const
 {
     auto request=inputRequest; // only render-local acoustic evidence may be repaired
     if(error)error->clear();

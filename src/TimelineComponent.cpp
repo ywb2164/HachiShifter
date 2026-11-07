@@ -293,6 +293,7 @@ void TimelineComponent::rebuild()
 void TimelineComponent::paint(juce::Graphics& g)
 {
     g.fillAll(Palette::base);
+    const auto paintArea = g.getClipBounds();
     const auto light = Palette::background.getPerceivedBrightness() > 0.5f;
     clipHits.clear();
     g.setColour(Palette::background);
@@ -383,9 +384,27 @@ void TimelineComponent::paint(juce::Graphics& g)
             g.setColour(Palette::accent.withAlpha(0.06f));
             g.fillRect(row);
         }
-        auto shown=track;shown.clips.clear();for(const auto* c:displayedClips[trackIndex])
-        {auto value=*c;if(dragMode==DragMode::move&&isClipSelected(value.id))value.startSeconds+=draggedClipPreviewStart-draggedClipStart;shown.clips.push_back(std::move(value));}
-        const auto opacity=[&](const auto* c){for(const auto& value:shown.clips)if(value.id==c->id)return nativeOverlapFocusOpacity(shown,value,nativeFocusedNote,selectedClip);return 1.f;};
+        // Focus is judged at preview positions only while clips are being
+        // dragged; otherwise the track itself is the truth.  Deep-copying the
+        // track (every clip, note and pitch contour) and looking each clip up
+        // linearly on every repaint pegged the message thread during playback
+        // of large Melodyne imports.
+        const auto previewMove=dragMode==DragMode::move&&draggedClip.isNotEmpty();
+        TrackData shown;
+        std::vector<const ClipData*> focusCandidates;
+        if(previewMove)
+        {
+            shown=track;shown.clips.clear();shown.clips.reserve(displayedClips[trackIndex].size());
+            for(const auto* c:displayedClips[trackIndex])
+            {auto value=*c;if(isClipSelected(value.id))value.startSeconds+=draggedClipPreviewStart-draggedClipStart;shown.clips.push_back(std::move(value));}
+            for(const auto& value:shown.clips)focusCandidates.push_back(&value);
+        }
+        else focusCandidates=displayedClips[trackIndex];
+        const auto& focusTrack=previewMove?shown:track;
+        const auto focusOpacity=nativeOverlapFocusOpacities(focusTrack,focusCandidates,nativeFocusedNote,selectedClip);
+        std::unordered_map<const ClipData*,float> opacityOf;opacityOf.reserve(focusOpacity.size());
+        for(std::size_t i=0;i<focusOpacity.size();++i)opacityOf[displayedClips[trackIndex][i]]=focusOpacity[i];
+        const auto opacity=[&](const ClipData* c){const auto found=opacityOf.find(c);return found==opacityOf.end()?1.f:found->second;};
         std::stable_partition(displayedClips[trackIndex].begin(),displayedClips[trackIndex].end(),[&](const auto* c){return opacity(c)<1.f;});
         for (const auto* displayedClip : displayedClips[trackIndex])
         {
@@ -416,6 +435,12 @@ void TimelineComponent::paint(juce::Graphics& g)
             clipHits.push_back({ clip.id, bounds, clip.startSeconds, clip.durationSeconds,
                                  clip.fadeInSeconds, clip.fadeOutSeconds, clip.muted,
                                  clip.startSeconds + clip.audioStartSeconds, contentDuration, clip.gain });
+            // Hit boxes are kept for every clip; drawing is skipped outside the
+            // repainted area (the timeline is as wide as the song, and every
+            // clip was drawn, waveform and parts included, on each frame).
+            if (bounds.getRight() < static_cast<float>(paintArea.getX()) - 240.0f
+                || bounds.getX() > static_cast<float>(paintArea.getRight()) + 240.0f)
+                continue;
             const auto rowSurface = std::find(selectedTracks.begin(), selectedTracks.end(), track.id) != selectedTracks.end()
                 ? Palette::base.overlaidWith(Palette::accent.withAlpha(0.06f)) : Palette::base;
             const auto clipInk = track.muted || clip.muted ? Palette::clipBackground.withAlpha(0.55f)
@@ -622,8 +647,9 @@ void TimelineComponent::paint(juce::Graphics& g)
         }
         if(trackShowsAllNativeRegions(track))
         {
-            const auto windows=nativeAudioWindows(shown);
-            for(std::size_t i=0;i<windows.size();++i)for(std::size_t j=i+1;j<windows.size();++j)
+            auto windows=nativeAudioWindows(focusTrack);
+            std::sort(windows.begin(),windows.end(),[](const auto& a,const auto& b){return a.start<b.start;});
+            for(std::size_t i=0;i<windows.size();++i)for(std::size_t j=i+1;j<windows.size()&&windows[j].start<windows[i].end-1.e-7;++j)
             {
                 const auto first=std::max(windows[i].start,windows[j].start),last=std::min(windows[i].end,windows[j].end);if(last-first<=1.e-7)continue;
                 const juce::Rectangle<float> band(timeToX(first),static_cast<float>(row.getY()+19),timeToX(last)-timeToX(first),static_cast<float>(rowHeight-22));

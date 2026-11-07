@@ -52,5 +52,8 @@ public:
     [[nodiscard]] static ControlSnapshot diagnosticControlAt(const Mld5RenderRequest&,double seconds);
     [[nodiscard]] juce::AudioBuffer<float> render(const Mld5RenderRequest& request,
                                                  juce::String* error=nullptr) const;
+private:
+    [[nodiscard]] juce::AudioBuffer<float> renderImpl(const Mld5RenderRequest& request,
+                                                     juce::String* error) const;
 };
 }

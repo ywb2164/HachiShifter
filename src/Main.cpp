@@ -1486,6 +1486,51 @@ public:
                 arguments.size()>2 ? juce::File(arguments[2].unquoted()) : juce::File{});
             setApplicationReturnValue(ok?0:3);juce::MessageManager::callAsync([this]{quit();});return;
         }
+        if (arguments.size() >= 2 && arguments[0] == "--smoke-otomad-drag")
+        {
+            // Real piano-roll mouse gestures on a loaded project: report whether
+            // body/vertical/edge drags commit to the model.
+            I18n dragStrings; ProjectModel dragModel; juce::String dragError;
+            if (!dragModel.load(juce::File(arguments[1].unquoted()), dragError))
+            { std::cout << "loaded=0|error=" << dragError << std::endl; setApplicationReturnValue(3); juce::MessageManager::callAsync([this]{quit();}); return; }
+            const auto original = dragModel.snapshot();
+            PianoRollComponent roll(dragModel, dragStrings);
+            roll.setBounds(0, 0, 1600, 900); roll.resized();
+            roll.setFocusedTrack(original.tracks[0].id); roll.setFocusedClip(original.tracks[0].clips[0].id);
+            roll.setTool(PianoRollComponent::Tool::note); roll.setPixelsPerSecond(400); roll.setRowHeight(26);
+            roll.diagnosticRefresh();
+            const auto event=[&](juce::Point<float> at,juce::Point<float> down,bool dragged)
+            {return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(),at,juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier),0,0,0,0,0,
+                &roll,&roll,juce::Time::getCurrentTime(),down,juce::Time::getCurrentTime(),1,dragged);};
+            const auto dump=[&](const char* tag)
+            {
+                const auto s=dragModel.snapshot();
+                std::cout<<tag<<"|rev="<<dragModel.revisionNumber()<<"|clipStart="<<s.tracks[0].clips[0].startSeconds;
+                for(const auto& n:s.tracks[0].clips[0].notes)std::cout<<"|note midi="<<n.midiNote<<" start="<<n.startSeconds<<" dur="<<n.durationSeconds<<" unp="<<n.nativeUnpitched;
+                std::cout<<std::endl;
+            };
+            const auto gesture=[&](const char* tag,bool preselect,float dx,float dy,bool rightEdge)
+            {
+                dragModel.replace(original); dragModel.dispatchPendingMessages(); roll.clearNoteSelection(); roll.diagnosticRefresh();
+                const auto box=roll.diagnosticHitBounds(0);
+                const auto begin=rightEdge?juce::Point<float>(box.getRight()-2.0f,box.getCentreY()):juce::Point<float>(box.getX()+box.getWidth()*0.5f,box.getCentreY());
+                std::cout<<tag<<"|hits="<<roll.diagnosticHitCount()<<"|box="<<box.toString()<<"|begin="<<begin.toString()<<std::endl;
+                if(preselect){roll.mouseDown(event(begin,begin,false));roll.mouseUp(event(begin,begin,false));dragModel.dispatchPendingMessages();roll.diagnosticRefresh();juce::Thread::sleep(600);}
+                const auto end=begin.translated(dx,dy);
+                roll.mouseDown(event(begin,begin,false));
+                for(int k=1;k<=8;++k){const auto mid=begin.translated(dx*k/8.0f,dy*k/8.0f);roll.mouseDrag(event(mid,begin,true));}
+                roll.mouseUp(event(end,begin,true));dragModel.dispatchPendingMessages();roll.diagnosticRefresh();
+                dump(tag);
+            };
+            dump("original");
+            gesture("vertical_up2",false,0,-52,false);
+            gesture("vertical_up2_preselected",true,0,-52,false);
+            gesture("horizontal_right",false,80,0,false);
+            gesture("horizontal_right_preselected",true,80,0,false);
+            gesture("edge_stretch",false,120,0,true);
+            gesture("edge_stretch_preselected",true,120,0,true);
+            setApplicationReturnValue(0); juce::MessageManager::callAsync([this]{quit();}); return;
+        }
         if (arguments.size() >= 2 && arguments[0] == "--smoke-native-note-move")
         {
             MainComponent component;

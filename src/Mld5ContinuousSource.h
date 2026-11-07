@@ -218,9 +218,13 @@ inline void uniqueTimes(std::vector<double>& times)
         for (const auto& p : result.requests[i].timeMap) times.push_back(c.startSeconds + p.targetSeconds);
     }
     uniqueTimes(times);
+    // Both callers walk forward in time, and the first clip whose end is not
+    // passed can only move right as t grows: a cursor gives the same owner as
+    // rescanning from clip 0, without O(clips) work per time point and frame.
+    std::size_t ownerCursor = 0;
     const auto ownerAt = [&](double t)
     {
-        std::size_t i = 0;
+        auto& i = ownerCursor;
         while (i + 1 < result.clips.size() && t > result.clips[i]->startSeconds + result.clips[i]->durationSeconds + epsilon) ++i;
         return i; // All overlaps were proved equal; choose, never average.
     };
@@ -236,6 +240,7 @@ inline void uniqueTimes(std::vector<double>& times)
     const double frames = std::ceil(merged.targetDurationSeconds / step) + 1;
     if (!std::isfinite(frames) || frames > 10000000.) return fail("Excessive merged control grid");
     for (const auto member : curves) (merged.*member).clear();
+    ownerCursor = 0;
     for (std::size_t frame = 0; frame < std::size_t(frames); ++frame)
     {
         const double t = result.startSeconds + std::min(merged.targetDurationSeconds, double(frame)*step);

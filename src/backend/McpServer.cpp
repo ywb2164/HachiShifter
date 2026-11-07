@@ -2,6 +2,7 @@
 #include "../MelodyneImportOptimization.h"
 #include "../MaterialPronunciationCatalog.h"
 #include "../OttoMaterialIO.h"
+#include "../PronunciationTiming.h"
 #include "LegacyTextCodec.h"
 #include "MelodyneProvider.h"
 #include "AudioFileReader.h"
@@ -422,6 +423,38 @@ std::vector<SampleRegionSetting> sampleRowsFromJson(const juce::var& source)
 }
 }
 
+// MPD imports through MCP used to keep the importer's NSF-HiFiGAN default no
+// matter what was wanted, so an agent's first render after import was always
+// the heaviest backend.  pitch_algorithm applies the choice before the
+// document exists, exactly as the editor's import preference does.
+static bool applyImportedPitchAlgorithm(const juce::var& args, ProjectData& project, juce::String& error)
+{
+    if (!args.hasProperty("pitch_algorithm")) return true;
+    const auto value = args["pitch_algorithm"].toString().toLowerCase();
+    const auto algorithm = value == "mld5" ? std::optional<PitchAlgorithm>(PitchAlgorithm::mld5)
+        : value == "world" ? std::optional<PitchAlgorithm>(PitchAlgorithm::world)
+        : value == "nsf-hifigan" ? std::optional<PitchAlgorithm>(PitchAlgorithm::nsfHifigan)
+        : value == "llsm2" ? std::optional<PitchAlgorithm>(PitchAlgorithm::llsm2)
+        : std::nullopt;
+    if (!algorithm) { error = "Unknown pitch_algorithm for import: " + value; return false; }
+    for (auto& track : project.tracks)
+    {
+        if (track.accompaniment) continue;
+        track.pitchAlgorithm = *algorithm;
+        track.nativeNsfAudio = *algorithm == PitchAlgorithm::nsfHifigan;
+        track.trackType = TrackType::hachi;
+        if (*algorithm != PitchAlgorithm::nsfHifigan
+            && (track.stretchAlgorithm == StretchAlgorithm::variableMelHop
+                || track.stretchAlgorithm == StretchAlgorithm::nsfShiftThenSplice
+                || track.stretchAlgorithm == StretchAlgorithm::hifiShifterMel
+                || track.stretchAlgorithm == StretchAlgorithm::wcsNonLoop))
+            track.stretchAlgorithm = StretchAlgorithm::melodyneHybrid;
+        track.renderOrder = defaultRenderOrder();
+        initialiseMld5RenderPolicy(track);
+    }
+    return true;
+}
+
 // material_query / replace_note_material: shared implementation.  Kept out of
 // dispatch() so each tool has its own branch there (tools/check_mcp_schemas.py
 // attributes argument reads per branch).
@@ -546,8 +579,20 @@ juce::var materialQueryTool(const std::vector<MaterialPronunciationCatalog::Root
 }
 
 juce::var replaceNoteMaterialTool(ProjectModel& project, const std::vector<MaterialPronunciationCatalog::Root>& roots,
-                                  const juce::var& choicesValue, bool analyse, AnalysisConfig config)
+                                  const juce::var& choicesValue, bool analyse, AnalysisConfig config,
+                                  double trimCompression = 0.0)
 {
+    // vowel_fit "trim": a material longer than its note used to be squeezed
+    // whole into the note (the clock anchors region end to note end), e.g. a
+    // 2 s vowel into 0.14 s = 14x.  MLD5's period renderer turns that into a
+    // buzzy, barely pitched sound.  Melodyne-style: cap the vowel's speed-up
+    // and cut the rest of the material at the note end instead.
+    std::map<juce::String, double> noteDurations;
+    if (trimCompression > 0.0)
+        for (const auto& track : project.snapshot().tracks)
+            for (const auto& clip : track.clips)
+                for (const auto& note : clip.notes) noteDurations[note.id] = note.durationSeconds;
+    int trimmed = 0;
     MaterialPronunciationCatalog::Result catalog;
     juce::String error;
     if (!indexMaterials(roots, catalog, error)) return McpServer::result(error, true);
@@ -573,11 +618,33 @@ juce::var replaceNoteMaterialTool(ProjectModel& project, const std::vector<Mater
         std::vector<SampleRegionSetting> rows;
         if (!MaterialPronunciationCatalog::resolve(*found, current, error, &rows))
             return McpServer::result("Material changed on disk: " + error, true);
+        juce::String trimKey;
+        if (trimCompression > 0.0)
+            if (const auto duration = noteDurations.find(string(c, "note_id")); duration != noteDurations.end())
+                for (auto& row : rows)
+                    // A region whose end is declared connected to the next mora
+                    // (a word/phrase chain) must keep that end: trimming it
+                    // would break the chain's shared source clock.
+                    if (row.materialRegionId == current.regionId && row.pronunciationKind != PronunciationKind::transition
+                        && row.connectedNextRegionId.isEmpty())
+                    {
+                        auto timing = pronunciationTimingFor(row);
+                        const auto keep = timing.alignmentSeconds + duration->second * trimCompression;
+                        const auto floor = std::max(timing.alignmentSeconds, timing.consonantEndSeconds) + 0.005;
+                        if (keep < timing.sourceEndSeconds - 1.0e-6 && keep > floor)
+                        {
+                            timing.sourceEndSeconds = keep;
+                            juce::String trimError;
+                            if (!applyPronunciationTiming(row, timing, trimError))
+                                return McpServer::result("Cannot trim material " + current.regionId + ": " + trimError, true);
+                            trimKey = "|trim=" + current.regionId + "@" + juce::String(keep, 6); ++trimmed;
+                        }
+                    }
         OttoMaterialIO::Document document;
         document.audio = { { current.audioId, current.audio.getFileName(), rows } };
         juce::String canonical;
         if (!OttoMaterialIO::encode(document, canonical, error)) return McpServer::result(error, true);
-        const auto key = current.manifest.getFullPathName() + "\n" + current.audio.getFullPathName() + "\n" + current.audioId;
+        const auto key = current.manifest.getFullPathName() + "\n" + current.audio.getFullPathName() + "\n" + current.audioId + (trimKey.isEmpty() ? juce::String() : "|" + canonical);
         auto cached = rowCache.find(key);
         if (cached == rowCache.end())
             cached = rowCache.emplace(key, std::make_pair(
@@ -628,6 +695,7 @@ juce::var replaceNoteMaterialTool(ProjectModel& project, const std::vector<Mater
     auto value = object();
     set(value, "changed", report.changed);
     set(value, "notes", static_cast<int>(choices.size()));
+    set(value, "vowel_trimmed", trimmed);
     set(value, "pending_analysis", static_cast<int>(tickets.size()));
     set(value, "analysed", analysed);
     set(value, "analysis_from_cache", fromCache);
@@ -701,6 +769,8 @@ juce::var McpServer::diagnosticTools()
                     { .name="auto_virtual_connections", .type="boolean", .description="MPD only. Discover cross-source virtual routes. Default false." },
                     { .name="auto_virtual_pitch", .type="boolean", .description="MPD only. Generate local glides on newly created routes. Default false." },
                     { .name="auto_register_transitions", .type="boolean", .description="MPD annotation policy. Default true; does not enable audio optimization." },
+                    { .name="pitch_algorithm", .type="string", .description="MPD only. Render algorithm for the imported tracks, set before any render. Default keeps nsf-hifigan; mld5 is far lighter for large imports.",
+                      .choices={ "mld5", "world", "nsf-hifigan", "llsm2" } },
                 })),
             makeTool("project_save", "Save current project as HJPX / 保存工程", {
                 { .name = "path", .type = "string",
@@ -763,6 +833,8 @@ juce::var McpServer::diagnosticTools()
                     { .name="auto_virtual_connections", .type="boolean", .description="MPD only. Discover cross-source virtual routes. Default false." },
                     { .name="auto_virtual_pitch", .type="boolean", .description="MPD only. Generate local glides on newly created routes. Default false." },
                     { .name="auto_register_transitions", .type="boolean", .description="MPD annotation policy. Default true; does not enable audio optimization." },
+                    { .name="pitch_algorithm", .type="string", .description="MPD only. Render algorithm for the imported tracks, set before any render. Default keeps nsf-hifigan; mld5 is far lighter for large imports.",
+                      .choices={ "mld5", "world", "nsf-hifigan", "llsm2" } },
                 })),
             makeTool("restore_merged_consonant", "Restore archived original consonant/vowel fragments through the common Model authority", {
                 { .name="note_id", .type="string", .description="Merged note ID", .required=true },
@@ -798,6 +870,8 @@ juce::var McpServer::diagnosticTools()
                   .description = "Where it sits, -1 left to 1 right" },
                 { .name = "smooth_overlaps", .type = "boolean",
                   .description = "Crossfade where notes overlap" },
+                { .name = "native_audio_overlap", .type = "boolean",
+                  .description = "Native tracks: allow audio regions to overlap (the editor's 允许音频重叠). Turning it off crops overlapping heads" },
                 { .name = "nsf_smooth_pitch_transitions", .type = "boolean",
                   .description = "Native NSF automatic pitch-jump smoothing; false retains authored discontinuities" },
                 { .name = "nsf_noise_protection", .type = "boolean",
@@ -1014,6 +1088,15 @@ juce::var McpServer::diagnosticTools()
                   .description = "Where to cut, in seconds from the note's own start; must lie strictly inside it",
                   .required = true },
             }),
+            makeTool("move_native_notes", "Move native notes in time the way the editor drags them: inside a linked run the neighbours' source clock stretches; disconnected notes move alone / 按编辑器拖动方式移动原生音符", {
+                { .name = "note_ids", .type = "array", .description = "Notes to move together", .required = true, .shape = [](){ return typedSchema({}); } },
+                { .name = "seconds", .type = "number", .description = "Time shift, seconds (negative = earlier)", .required = true },
+                { .name = "semitones", .type = "number", .description = "Optional pitch move. Default 0" },
+            }),
+            makeTool("disconnect_notes", "Separate linked native notes into independent regions (the editor's 断开音频): each gets its own audio clock and pitch line, so moving or stretching one no longer drags its neighbours / 断开音频", {
+                { .name = "note_ids", .type = "array", .description = "Two or more linked native notes; boundaries next to them are cut",
+                  .required = true, .shape = [](){ return typedSchema({}); } },
+            }),
             makeTool("merge_notes", "Merge adjacent notes of one clip into one / 合并相邻音符", {
                 { .name = "note_ids", .type = "array", .description = "Two or more adjacent notes in one clip",
                   .required = true, .shape = [](){ return typedSchema({}); } },
@@ -1033,6 +1116,11 @@ juce::var McpServer::diagnosticTools()
                   .description = "Also list continuous same-recording chains that sing 2+ consecutive lyrics; default true" },
             }),
             makeTool("replace_note_material", "Bind score notes to chosen material pronunciations, aligning P to note start / 把素材替换到乐谱音符上（P 对齐音符起点）", withAnalysis({
+                { .name = "vowel_fit", .type = "string",
+                  .description = "When the material after P is longer than the note: stretch (default) squeezes all of it into the note; trim plays the vowel at natural speed (up to max_vowel_compression) and cuts the rest at the note end, as when shortening a blob in Melodyne. Use trim for MLD5",
+                  .choices = { "stretch", "trim" } },
+                { .name = "max_vowel_compression", .type = "number",
+                  .description = "With vowel_fit=trim: largest allowed vowel speed-up, >= 1. Default 1 (pure trim)" },
                 { .name = "roots", .type = "array", .description = "Material folders the choices came from (as given to material_query)",
                   .required = true, .shape = [](){ return typedSchema({}); } },
                 { .name = "choices", .type = "array",
@@ -1321,6 +1409,7 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
             if(!readMelodyneImportOptimizationOptions(args,optimization,error))return toolResult(error,true);
             if (auto imported = MelodyneImporter::importProject(file, error))
             {
+                if (!applyImportedPitchAlgorithm(args, imported->project, error)) return toolResult(error, true);
                 juce::StringArray annotationWarnings=prepareMelodyneImportOptimization(imported->project,imported->continuousSourceJoins,optimization).skipped;
                 if(!imported->missingFiles.isEmpty())annotationWarnings.add("Missing source recordings: "+imported->missingFiles.joinIntoString(" | "));
                 SampleSettings::convertMelodyneProject(imported->project,
@@ -1421,6 +1510,7 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
         if (auto imported = MelodyneImporter::importProject(
                 juce::File(string(args, "path")), error, {}, options))
         {
+            if (!applyImportedPitchAlgorithm(args, imported->project, error)) return toolResult(error, true);
             const auto sourcePitch = string(args, "source_pitch").toLowerCase();
             if (sourcePitch == "native" || sourcePitch == "reanalyze"
                 || sourcePitch == "reanalyse" || sourcePitch == "game+fcpe"
@@ -1494,6 +1584,8 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
         if (args.hasProperty("solo")) project.setTrackSolo(id, static_cast<bool>(args["solo"]));
         if (args.hasProperty("volume")) project.setTrackVolume(id, static_cast<float>(number(args, "volume", 1.0)));
         if (args.hasProperty("pan")) project.setTrackPan(id, static_cast<float>(number(args, "pan")));
+        if (args.hasProperty("native_audio_overlap"))
+            (void) project.setNativeAudioOverlap(id, static_cast<bool>(args["native_audio_overlap"]));
         if (args.hasProperty("smooth_overlaps"))
             project.setTrackSmoothOverlaps(id, static_cast<bool>(args["smooth_overlaps"]));
         if (args.hasProperty("nsf_smooth_pitch_transitions"))
@@ -1860,6 +1952,24 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
         set(value, "new_note_id", created);
         return toolResult(juce::JSON::toString(value, false));
     }
+    else if (name == "move_native_notes")
+    {
+        const auto ids = strings(args, "note_ids");
+        juce::String moveError;
+        if (project.moveNativeNotes({ ids.begin(), ids.end() }, number(args, "seconds"),
+                                    static_cast<float>(number(args, "semitones")), &moveError))
+            return toolResult("ok");
+        return toolResult("Move rejected" + (moveError.isNotEmpty() ? ": " + moveError : juce::String()), true);
+    }
+    else if (name == "disconnect_notes")
+    {
+        const auto ids = strings(args, "note_ids");
+        std::vector<juce::String> list(ids.begin(), ids.end());
+        if (list.size() < 2) return toolResult("At least two note IDs are required", true);
+        if (!project.disconnectNativeAudio(list))
+            return toolResult("Disconnect rejected: notes must be linked native notes on a composing native track", true);
+        return toolResult("ok");
+    }
     else if (name == "merge_notes")
     {
         const auto ids = strings(args, "note_ids");
@@ -1876,7 +1986,8 @@ juce::var McpServer::dispatch(const juce::String& name, const juce::var& args)
     else if (name == "replace_note_material")
         return replaceNoteMaterialTool(project, materialRoots(strings(args, "roots"), string(args, "oto_mode")),
                                        args.getProperty("choices", {}),
-                                       static_cast<bool>(args.getProperty("analyse", true)), analysisConfig(args));
+                                       static_cast<bool>(args.getProperty("analyse", true)), analysisConfig(args),
+                                       string(args, "vowel_fit") == "trim" ? std::max(1.0, number(args, "max_vowel_compression", 1.0)) : 0.0);
     else if (name == "remove_clip")
     {
         project.removeClip(string(args, "clip_id"));
@@ -2324,6 +2435,7 @@ juce::var McpServer::projectJson() const
         set(trackValue, "volume", track.volume);
         set(trackValue, "pan", track.pan);
         set(trackValue, "smooth_overlaps", track.smoothOverlaps);
+        set(trackValue, "native_audio_overlap", track.allowNativeAudioOverlap);
         set(trackValue, "normalize_volume", track.normalizeVolume);
         set(trackValue, "nsf_smooth_pitch_transitions", track.nsfSmoothPitchTransitions);
         set(trackValue, "nsf_noise_protection", track.nsfNoiseProtection);
